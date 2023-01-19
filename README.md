@@ -1,20 +1,46 @@
-# Introduction 
-TODO: Give a short introduction of your project. Let this section explain the objectives or the motivation behind this project. 
+# Matkakertomus - websovellus
 
-# Getting Started
-TODO: Guide users through getting your code up and running on their own system. In this section you can talk about:
-1.	Installation process
-2.	Software dependencies
-3.	Latest releases
-4.	API references
+Harrasteporukkamme Kuopion Kulkijat haluaa tilata teiltä web-sovelluksen, johon voimme tallettaa matkakertomuksiamme, esitellä uusia matkakohteita ja tutustua toistemme matkoihin. Sovellus tulee sekä meidän porukkamme omaan käyttöön että julkiseen käyttöön. Jotkut reissut ovat niin henkilökohtaisia, että vain tekijä itse saa niitä katsella.
 
-# Build and Test
-TODO: Describe and show how to build your code and run the tests. 
+Tekniset vaatimukset: web-sovellus, jossa on erillinen selainkäyttöliittymä ja erillinen backend-koodi, jotka keskustelevat keskenään REST-rajapinnan kautta. Tiedot pitää tallettaa tietokantaan, kannaksi käy joku SQL-kanta tai vaikka MongoDB-kanta. Meillä ei ole vielä palvelinympäristöä tarjota, joten sovelluksen täytyy pyöriä kehityksen aikana kokonaan toimittajan ympäristössä.
 
-# Contribute
-TODO: Explain how other users and developers can contribute to make your code better. 
+Oheisessa kuvassa olemme hahmotelleet mitä tietoja haluaisimme pystyä tallettamaan. Yksityiskohtia saa muuttaa, esimerkiksi pääavainten tai kuvien toteutus eri tavoin. Jos kantana on MongoDB, sen dokumenttirakenteen saa muodostaa parhaaksi katsomallaan tavalla.
+Sivuston ulkoasun täytyy olla siisti ja toteutettu CSS:ää tai CSS-kirjastoja käyttäen.
 
-If you want to learn more about creating good readme files then refer the following [guidelines](https://docs.microsoft.com/en-us/azure/devops/repos/git/create-a-readme?view=azure-devops). You can also seek inspiration from the below readme files:
-- [ASP.NET Core](https://github.com/aspnet/Home)
-- [Visual Studio Code](https://github.com/Microsoft/vscode)
-- [Chakra Core](https://github.com/Microsoft/ChakraCore)
+![sheema](db.png)
+
+
+## Kuvaus käytöstä
+
+Sovelluksessa pitää pystyä rekisteröitymään (sign up). Rekisteröitymisessä annetaan vähintään nimitiedot, nimimerkki, sähköpostiosoite ja salasana. Muut tiedot voi antaa omissa tiedoissa.
+Kirjautuminen tapahtuu sähköpostiosoitteen ja salasanan avulla.
+
+## Kirjautumaton käyttäjä:
+
+```
+•	saa selata matkakohteita
+•	näkee rekisteröitymis- ja kirjautumislinkit
+•	näkee muuten valikoissa vain Koti- ja Matkakohde-sivun
+•	Koti-sivulla on sopiva kuva ja tervehdysteksti
+
+```
+## Kirjautunut käyttäjä:
+```
+•	näkee valikossa oman nimmarinsa
+•	näkee Koti-, Matkakohde-, Porukan matkat-, Omat matkat-, Omat tiedot-, Jäsenet-sivut
+•	Matkakohde-sivulla
+o	voi lisätä, poistaa, päivittää ja selata matkakohteita. Sellaista matkakohdetta, johon liittyy joku matkakertomus, ei saa poistaa tai päivittää
+•	Porukan matkat-sivulla
+o	voi selata (ei-yksityisiä) porukan matkoja ja niihin liitettyjä tarinoita ja kuvia
+•	Omat matkat-sivulla
+o	voi lisätä, selata, päivittää ja poistaa omia matkoja ja niihin liitettyjä tarinoita ja kuvia
+o	voi merkitä matkan yksityiseksi, jolloin kukaan muu ei saa nähdä kyseistä matkaa, eikä siihen kuuluvia tarinoita tai kuvia
+o	navigointi tarinat- ja kuvat-sivuille voi tapahtuma päävalikon tai sivukohtaisen valikon kautta oman harkinnan mukaan
+o	HUOM! Porukan matkat- ja Omat matkat-sivut saisivat olla mahdollisimman yhdenmukaisia
+•	Omat tiedot-sivulla
+o	voi päivittää omia tietojaan (matkaaja-taulu). Sähköpostin ja salasanan muuttamista ei tarvitse sallia, mutta jos sen sallii, niin se pitää huomioida kirjautumisessa.
+•	Jäsenet-sivulla näkee kaikkien jäsenten muut tiedot paitsi salasanan ja sähköpostiosoitteem
+
+
+```
+

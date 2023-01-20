@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyAPI", "..\MyAPI\MyAPI.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharedLib", "..\SharedLib\SharedLib.csproj", "{B0DB6AD7-8C82-46AD-81CE-C1AC4956C2EF}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ProjectFolder", "ProjectFolder", "{B39EE6F3-C5F0-42D4-A61B-94F21F2FBA47}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,6 +32,11 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{F28DDA4C-AE93-485D-A6D1-334354810717} = {B39EE6F3-C5F0-42D4-A61B-94F21F2FBA47}
+		{9B8E6010-D70A-4354-88FD-DA07FFCBA24C} = {B39EE6F3-C5F0-42D4-A61B-94F21F2FBA47}
+		{B0DB6AD7-8C82-46AD-81CE-C1AC4956C2EF} = {B39EE6F3-C5F0-42D4-A61B-94F21F2FBA47}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8938F9FE-2CD3-4FFF-888C-804440BED210}

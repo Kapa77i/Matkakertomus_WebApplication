@@ -9,10 +9,29 @@
     <link href="css/bootstrap/bootstrap.min.css" rel="stylesheet" />
     <link href="css/app.css" rel="stylesheet" />
     <link href="FrontEnd.styles.css" rel="stylesheet" />
-</head>
+    <style>
+        body {
+            background-color: #457b9d;
+        }
 
+        .lataus {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            z-index: 15;
+            top: 25%;
+            left: 50%;
+            margin: -100px 0 0 -150px;
+        }
+    </style>
+</head>
+ 
 <body>
-    <div id="app">Loading...</div>
+    <div id="app">
+        <div class="lataus">
+            <img src="/images/loading.gif"/>
+        </div>
+    </div>
 
     <div id="blazor-error-ui">
         An unhandled error has occurred.

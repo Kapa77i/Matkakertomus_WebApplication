@@ -12,7 +12,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\MyApi\MyApi.csproj" />
     <ProjectReference Include="..\SharedLib\SharedLib.csproj" />
   </ItemGroup>
 

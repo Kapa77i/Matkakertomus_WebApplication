@@ -1,0 +1,107 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using MyApi.Data;
+
+namespace MyApi.Controllers
+{
+    [Route("api/[controller]")]
+    [ApiController]
+    public class MatkaajasController : ControllerBase
+    {
+        private readonly MydbContext _context;
+
+        public MatkaajasController(MydbContext context)
+        {
+            _context = context;
+        }
+
+        // GET: api/Matkaajas
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<Matkaaja>>> GetMatkaajas()
+        {
+            return await _context.Matkaajas.ToListAsync();
+        }
+
+        // GET: api/Matkaajas/5
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Matkaaja>> GetMatkaaja(long id)
+        {
+            var matkaaja = await _context.Matkaajas.FindAsync(id);
+
+            if (matkaaja == null)
+            {
+                return NotFound();
+            }
+
+            return matkaaja;
+        }
+
+        // PUT: api/Matkaajas/5
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [HttpPut("{id}")]
+        public async Task<IActionResult> PutMatkaaja(long id, Matkaaja matkaaja)
+        {
+            if (id != matkaaja.Idmatkaaja)
+            {
+                return BadRequest();
+            }
+
+            _context.Entry(matkaaja).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!MatkaajaExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return NoContent();
+        }
+
+        // POST: api/Matkaajas
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [HttpPost]
+        public async Task<ActionResult<Matkaaja>> PostMatkaaja(Matkaaja matkaaja)
+        {
+            _context.Matkaajas.Add(matkaaja);
+            await _context.SaveChangesAsync();
+
+            return CreatedAtAction("GetMatkaaja", new { id = matkaaja.Idmatkaaja }, matkaaja);
+        }
+
+        // DELETE: api/Matkaajas/5
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteMatkaaja(long id)
+        {
+            var matkaaja = await _context.Matkaajas.FindAsync(id);
+            if (matkaaja == null)
+            {
+                return NotFound();
+            }
+
+            _context.Matkaajas.Remove(matkaaja);
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
+
+        private bool MatkaajaExists(long id)
+        {
+            return _context.Matkaajas.Any(e => e.Idmatkaaja == id);
+        }
+    }
+}

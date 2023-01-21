@@ -1,9 +1,28 @@
 ﻿@import url('open-iconic/font/css/open-iconic-bootstrap.min.css');
 
+
+
+
+.ikkuna {
+    background-color: rgb(88, 136, 167, 0.9);
+    padding: 25px;
+    min-height: 90vh; 
+    color: white;
+}
+
+main {
+    flex: 1;
+
+    background-image: url("/images/tausta2.jpg");
+}
+
+
 html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
-
+h1{
+    text-transform: uppercase;
+}
 h1:focus {
     outline: none;
 }
@@ -52,7 +71,6 @@ a, .btn-link {
         right: 0.75rem;
         top: 0.5rem;
     }
-
 
 
 

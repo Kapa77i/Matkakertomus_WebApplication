@@ -3,14 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32929.385
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyApi", "MyApi.csproj", "{34B71233-DAC4-448A-8090-3F582C32F4DB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyApi", "MyApi.csproj", "{34B71233-DAC4-448A-8090-3F582C32F4DB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FrontEnd", "..\FrontEnd\FrontEnd.csproj", "{88978DFB-22B9-4F3F-AC9F-668BD46207C6}"
-	ProjectSection(ProjectDependencies) = postProject
-		{34B71233-DAC4-448A-8090-3F582C32F4DB} = {34B71233-DAC4-448A-8090-3F582C32F4DB}
-	EndProjectSection
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FrontEnd", "..\FrontEnd\FrontEnd.csproj", "{88978DFB-22B9-4F3F-AC9F-668BD46207C6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharedLib", "..\SharedLib\SharedLib.csproj", "{9DA9954B-91C8-4452-8052-8A06123C42C0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SharedLib", "..\SharedLib\SharedLib.csproj", "{9DA9954B-91C8-4452-8052-8A06123C42C0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

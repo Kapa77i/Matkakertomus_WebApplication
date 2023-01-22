@@ -4,28 +4,32 @@
 
 
 .ikkuna {
-    background-color: rgb(88, 136, 167, 0.9);
+    background-color: rgb(88, 136, 167, 0.97);
     padding: 25px;
-    min-height: 90vh; 
-    color: white;
+   /* min-height: 90vh;*/
+    color: #d7d7d7;
 }
 
 main {
     flex: 1;
-
-    background-image: url("/images/tausta2.jpg");
+    background-image: url("/images/tausta.png");
+    background-size: cover;
 }
 
 
 html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
-h1{
+
+h1 {
     text-transform: uppercase;
 }
-h1:focus {
-    outline: none;
+a {
+    color: #d7d7d7 !important;
 }
+    h1:focus {
+        outline: none;
+    }
 
 a, .btn-link {
     color: #0071c1;

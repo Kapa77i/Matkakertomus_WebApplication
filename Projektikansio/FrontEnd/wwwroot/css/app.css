@@ -26,6 +26,7 @@ h1 {
 }
 a {
     color: #d7d7d7 !important;
+    text-decoration: none;
 }
     h1:focus {
         outline: none;
@@ -88,3 +89,14 @@ a, .btn-link {
     .blazor-error-boundary::after {
         content: "An error has occurred."
     }
+
+.alapalkki {
+    background: #457b9d;
+    text-align: right;
+    width: 100%;
+    display: grid;
+    padding: 15px;
+    border-bottom-left-radius: 25px;
+    border-bottom-right-radius: 25px;
+    text-decoration:none;
+}

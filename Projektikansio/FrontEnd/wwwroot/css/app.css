@@ -1,13 +1,29 @@
 ﻿@import url('open-iconic/font/css/open-iconic-bootstrap.min.css');
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@500&display=swap');
 
-
-
-
-.ikkuna {
-    background-color: rgb(88, 136, 167, 0.97);
+.logo {
     padding: 25px;
-   /* min-height: 90vh;*/
+}
+
+.kontti {
+    border-top-left-radius: 25px;
+    border-top-right-radius: 25px;
+    border-bottom-left-radius: 25px;
+    border-bottom-right-radius: 25px;
+    background-color: #457b9d;
+  /*  border: 5px dashed #a8dadc;*/
+}
+.ikkuna {
+   
+    padding: 25px;
+    /* min-height: 90vh;*/
     color: #d7d7d7;
+   
+
+}
+.alapalkki {
+    text-align: right;
+    padding: 15px;
 }
 
 main {
@@ -21,16 +37,22 @@ html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
-h1 {
+h1, h2, h3, h4, h5, h6 {
     text-transform: uppercase;
+    font-family: 'Oswald', sans-serif;
+    text-align: center;
+}
+p, a {
+    font-family: 'Oswald', sans-serif;
 }
 a {
     color: #d7d7d7 !important;
     text-decoration: none;
 }
-    h1:focus {
-        outline: none;
-    }
+
+h1:focus {
+    outline: none;
+}
 
 a, .btn-link {
     color: #0071c1;
@@ -90,13 +112,3 @@ a, .btn-link {
         content: "An error has occurred."
     }
 
-.alapalkki {
-    background: #457b9d;
-    text-align: right;
-    width: 100%;
-    display: grid;
-    padding: 15px;
-    border-bottom-left-radius: 25px;
-    border-bottom-right-radius: 25px;
-    text-decoration:none;
-}

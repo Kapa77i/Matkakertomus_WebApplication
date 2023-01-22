@@ -7,6 +7,7 @@
 
 .sidebar {
     background-color: #457b9d;
+    border-right: 5px dashed #a8dadc;
 }
 
 .top-row {

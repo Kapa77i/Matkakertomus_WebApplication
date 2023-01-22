@@ -11,16 +11,15 @@
     border-bottom-left-radius: 25px;
     border-bottom-right-radius: 25px;
     background-color: #457b9d;
-  /*  border: 5px dashed #a8dadc;*/
+    /*  border: 5px dashed #a8dadc;*/
 }
+
 .ikkuna {
-   
     padding: 25px;
     /* min-height: 90vh;*/
     color: #d7d7d7;
-   
-
 }
+
 .alapalkki {
     text-align: right;
     padding: 15px;
@@ -30,6 +29,31 @@ main {
     flex: 1;
     background-image: url("/images/tausta.png");
     background-size: cover;
+}
+
+table {
+    border-collapse: collapse;
+    width: 50%;
+}
+th, td {
+    padding: 8px;
+    text-align: left;
+    border: 1px solid #a8dadc;
+}
+
+tr:nth-child(odd) {
+    background-color: #a8dadc;
+    color: black;
+    border: 1px solid red;
+}
+
+th {
+
+    background-color: #a8dadc;
+    color: black;
+    text-transform: uppercase;
+    font-family: 'Oswald', sans-serif;
+    text-align: center;
 }
 
 
@@ -42,8 +66,12 @@ h1, h2, h3, h4, h5, h6 {
     font-family: 'Oswald', sans-serif;
     text-align: center;
 }
-p, a {
+
+p, a , li, th, td{
     font-family: 'Oswald', sans-serif;
+}
+th {
+
 }
 a {
     color: #d7d7d7 !important;
@@ -109,6 +137,5 @@ a, .btn-link {
 }
 
     .blazor-error-boundary::after {
-        content: "An error has occurred."
+        content: "Virhe tapahtunut."
     }
-

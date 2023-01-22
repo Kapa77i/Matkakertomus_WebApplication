@@ -46,7 +46,17 @@ tr:nth-child(odd) {
     color: black;
     border: 1px solid red;
 }
-
+.nappi {
+    background-color: #457b9d;
+    border: 2px solid #a8dadc;
+    padding: 10px;
+    border-radius: 50px;
+    color: #d7d7d7;
+    font-family: 'Oswald', sans-serif;
+}
+    .nappi:hover, .nappi:active {
+        background-color: #5888a7;
+    }
 th {
 
     background-color: #a8dadc;

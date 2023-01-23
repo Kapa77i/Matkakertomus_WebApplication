@@ -23,6 +23,7 @@
 .alapalkki {
     text-align: right;
     padding: 15px;
+    /*    border-top: 1px solid #a8dadc;*/
 }
 
 main {
@@ -35,6 +36,7 @@ table {
     border-collapse: collapse;
     width: 50%;
 }
+
 th, td {
     padding: 8px;
     text-align: left;
@@ -46,6 +48,7 @@ tr:nth-child(odd) {
     color: black;
     border: 1px solid red;
 }
+
 .nappi {
     background-color: #457b9d;
     border: 2px solid #a8dadc;
@@ -54,11 +57,12 @@ tr:nth-child(odd) {
     color: #d7d7d7;
     font-family: 'Oswald', sans-serif;
 }
+
     .nappi:hover, .nappi:active {
         background-color: #5888a7;
     }
-th {
 
+th {
     background-color: #a8dadc;
     color: black;
     text-transform: uppercase;
@@ -77,12 +81,13 @@ h1, h2, h3, h4, h5, h6 {
     text-align: center;
 }
 
-p, a , li, th, td{
+p, a, li, th, td {
     font-family: 'Oswald', sans-serif;
 }
-th {
 
+th {
 }
+
 a {
     color: #d7d7d7 !important;
     text-decoration: none;

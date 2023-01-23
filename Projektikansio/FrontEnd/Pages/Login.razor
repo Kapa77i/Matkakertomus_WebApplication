@@ -1,28 +1,47 @@
 ﻿@page "/login"
 
 <h1>Kirjaudu</h1>
+<div class="palsta">
+<form>
+    <div class="form-group">
+        <label for="email">Sähköpostiosoite</label>
+        <input @bind="Email" type="email" class="form-control" id="email" placeholder="Sähköpostiosoite">
+    </div>
 
-<div class="form-group">
-    <label for="username">Sähköpostiosoite</label>
-    <input type="text" class="form-control" id="username" @bind="username" placeholder="root@root.fi" />
+    <div class="form-group">
+        <label for="password">Salasana</label>
+        <input @bind="Password" type="password" class="form-control" id="password" placeholder="Salasana">
+    </div>
+
+    <button type="submit" class="btn btn-primary" @onclick="@login">Kirjaudu sisään</button>
+        <NavLink class="nav-link" href="signup">
+            <span class="oi oi-flag" aria-hidden="true"></span> Rekisteröidy
+        </NavLink>
+</form>
 </div>
-
-<div class="form-group">
-    <label for="password">Salasana</label>
-    <input type="password" class="form-control" id="password" @bind="password" placeholder="root" />
-</div>
-
-<button class="btn btn-primary" @onclick="login">Kirjaudu</button>
 
 @code {
-    private string username;
-    private string password;
+ 
 
     //NÄMÄ USERNAME JA PASSWORD ON NYT VAAN MALLINA. MIETITÄÄN MITÄN NÄMÄ YMPPÄYTYY SIIHEN DBHEN Kirjautuminen tapahtuu sähköpostiosoitteen ja salasanan avulla.
 
+    private string Email { get; set; }
+    private string Password { get; set; }
+
     private async Task login()
+    
     {
-        //lahjoitaSimolleRahaa();
+        //var result = await _db.Login(Email, Password);
+        //if (!result)
+        //{
+       
+        //    //lahjoitaSimolleRahaa();
+        //}
+        //else
+        //{
+        //    //meeToihinJaLahjoitaSimolleRahaa();
+        //}
+       
 
     }
 }

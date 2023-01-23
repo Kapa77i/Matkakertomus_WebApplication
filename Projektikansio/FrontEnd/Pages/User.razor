@@ -1,6 +1,41 @@
 ﻿@page "/user"
 <h1>Käyttäjä</h1>
 
+<div class="palsta"> 
+    <form>
+        <div class="form-group">
+            <label for="id">ID</label>
+            <input type="text" class="form-control" id="id" disabled>
+        </div>
+        <div class="form-group">
+            <label for="etunimi">Etunimi</label>
+            <input type="text" class="form-control" id="etunimi">
+        </div>
+        <div class="form-group">
+            <label for="sukunimi">Sukunimi</label>
+            <input type="text" class="form-control" id="sukunimi">
+        </div>
+        <div class="form-group">
+            <label for="nimimerkki">Nimimerkki</label>
+            <input type="text" class="form-control" id="nimimerkki">
+        </div>
+        <div class="form-group">
+            <label for="paikkakunta">Paikkakunta</label>
+            <input type="text" class="form-control" id="paikkakunta">
+        </div>
+        <div class="form-group">
+            <label for="esittely">Esittely</label>
+            <textarea class="form-control" id="esittely"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="kuva">Kuva</label>
+            <input type="file" class="form-control-file" id="kuva">
+        </div>
+
+        <button type="submit" class="btn btn-primary">Päivitä</button>
+    </form>
+</div>
+<div class="palsta"><img src="/images/profiilikuva.png" width="350px"/> </div>
 @*voi päivittää omia tietojaan (matkaaja-taulu). 
 Sähköpostin ja salasanan muuttamista ei tarvitse sallia, 
 mutta jos sen sallii, niin se pitää huomioida kirjautumisessa.*@

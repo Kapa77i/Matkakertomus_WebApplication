@@ -8,6 +8,7 @@ main {
     flex: 1;
     background-image: url("/images/tausta.png");
     background-size: cover;
+
 }
 
 .logo {
@@ -21,6 +22,7 @@ main {
     border-bottom-right-radius: 25px;
     background-color: #457b9d;
     /*  border: 5px dashed #a8dadc;*/
+    display: grid;
 }
 
 .ikkuna {
@@ -36,8 +38,10 @@ main {
 }
 
 .palsta {
-    width: 50%;
-
+    width: 40%;
+    float: left;
+    background-color: #457b9d;
+    margin-right: 25px
 }
 
 

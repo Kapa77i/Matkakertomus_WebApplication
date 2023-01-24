@@ -20,14 +20,18 @@ namespace MyApi.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Matkaaja>>> GetMatkaajas()
         {
-            List<tripsDTO> list = new List<tripsDTO>();
+            List<matkaDTO> list = new List<matkaDTO>();
 
             if (_context.Matkaajas == null)
             {
                 return NotFound();
             }
             var users = await _context.Matkaajas.OrderByDescending(x => x.Idmatkaaja).ToListAsync();
-            return await _context.Matkaajas.ToListAsync();
+            foreach (var user in users)
+            {
+                list.Add(user.ToQuoteDTO());
+            }
+            return Ok(list);
         }
 
         // GET: api/Matkaajas/5

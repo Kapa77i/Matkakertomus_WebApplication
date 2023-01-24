@@ -1,6 +1,11 @@
 ﻿namespace MyApi.Data;
+
+
 public partial class Matkaaja
 {
+    public Matkaaja() { }
+    public Matkaaja(userDTO userDTO) { }
+
     public long Idmatkaaja { get; set; }
 
     public string? Etunimi { get; set; }
@@ -20,8 +25,10 @@ public partial class Matkaaja
     public string? Password { get; set; }
 
     public virtual ICollection<Matka> Matkas { get; } = new List<Matka>();
-}
-internal userDTO toUserDTO();
-{
-return null;
+    internal userDTO toUserDTO()
+    {
+
+
+    }
+
 }

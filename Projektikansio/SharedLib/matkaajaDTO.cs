@@ -1,6 +1,6 @@
 ﻿namespace SharedLib
 {
-    internal class userDTO
+    internal class matkaajaDTO
     {
 
         public int idmatkaaja;

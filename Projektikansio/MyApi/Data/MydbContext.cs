@@ -57,11 +57,11 @@ public partial class MydbContext : DbContext
 
             entity.Property(e => e.Idmatka).HasColumnName("idmatka");
             entity.Property(e => e.Alkupvm)
-                .HasColumnType("DATE")
+                .HasColumnType("DATETIME")
                 .HasColumnName("alkupvm");
             entity.Property(e => e.Idmatkaaja).HasColumnName("idmatkaaja");
             entity.Property(e => e.Loppupvm)
-                .HasColumnType("DATE")
+                .HasColumnType("DATETIME")
                 .HasColumnName("loppupvm");
             entity.Property(e => e.Yksityinen).HasColumnName("yksityinen");
 
@@ -111,7 +111,7 @@ public partial class MydbContext : DbContext
             entity.Property(e => e.Idmatka).HasColumnName("idmatka");
             entity.Property(e => e.Idmatkakohde).HasColumnName("idmatkakohde");
             entity.Property(e => e.Pvm)
-                .HasColumnType("DATE")
+                .HasColumnType("DATETIME")
                 .HasColumnName("pvm");
             entity.Property(e => e.Teksti).HasColumnName("teksti");
 

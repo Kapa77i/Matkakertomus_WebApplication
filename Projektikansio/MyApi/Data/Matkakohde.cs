@@ -20,7 +20,6 @@ public partial class Matkakohde
             maa = this.Maa,
             paikkakunta = this.Paikkakunta,
             kuvausteksti = this.Kuvausteksti,
-            kuvausteksti = this.Kuvausteksti,
             kuva = this.Kuva
         };
     }
@@ -36,5 +35,5 @@ public partial class Matkakohde
 
     public string? Kuva { get; set; }
 
-    public virtual ICollection<Matkakohde> Matkakohdes { get; } = new List<Matkakohde>();
+    public virtual ICollection<Tarina> Tarinas { get; } = new List<Tarina>();
 }

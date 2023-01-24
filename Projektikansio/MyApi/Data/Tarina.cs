@@ -29,7 +29,7 @@ public partial class Tarina
 
     public long Idtarina { get; set; }
 
-    public byte[] Pvm { get; set; } = null!;
+    public DateTime? Pvm { get; set; } = null!;
 
     public string? Teksti { get; set; }
 

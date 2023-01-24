@@ -1,17 +1,35 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using SharedLib;
 
 namespace MyApi.Data;
 
 public partial class Matka
 {
-    public long Idmatkaaja { get; set; }
+    public Matka() { }
 
-    public byte[]? Alkupvm { get; set; }
+    internal Matka(matkaDTO Matkadto)
+    {
 
-    public byte[]? Loppupvm { get; set; }
 
-    public long? Yksityinen { get; set; }
+    }
+    internal matkaDTO toMatkaDTO()
+    {
+        return new matkaDTO
+        {
+            idmatkaaja = this.Idmatkaaja,
+            alkupvm = this.Alkupvm,
+            loppupvm = this.Loppupvm,
+            yksityinen = this.Yksityinen,
+            idmatka = this.Idmatkaaja
+        };
+    }
+
+    public int Idmatkaaja { get; set; }
+
+    public DateTime Alkupvm { get; set; }
+
+    public DateTime Loppupvm { get; set; }
+
+    public int Yksityinen { get; set; }
 
     public long Idmatka { get; set; }
 

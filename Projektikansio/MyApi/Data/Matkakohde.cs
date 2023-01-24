@@ -1,11 +1,30 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using SharedLib;
 
 namespace MyApi.Data;
 
 public partial class Matkakohde
 {
-    public long Idmatkakohde { get; set; }
+    public Matkakohde() { }
+
+    internal Matkakohde(matkakohdeDTO Matkakohdedto)
+    {
+
+
+    }
+    internal matkakohdeDTO toMatkakohdeDTO()
+    {
+        return new matkakohdeDTO
+        {
+            idmatkakohde = this.Idmatkakohde,
+            kohdenimi = this.Kohdenimi,
+            maa = this.Maa,
+            paikkakunta = this.Paikkakunta,
+            kuvausteksti = this.Kuvausteksti,
+            kuvausteksti = this.Kuvausteksti,
+            kuva = this.Kuva
+        };
+    }
+    public int Idmatkakohde { get; set; }
 
     public string? Kohdenimi { get; set; }
 
@@ -17,5 +36,5 @@ public partial class Matkakohde
 
     public string? Kuva { get; set; }
 
-    public virtual ICollection<Tarina> Tarinas { get; } = new List<Tarina>();
+    public virtual ICollection<Matkakohde> Matkakohdes { get; } = new List<Matkakohde>();
 }

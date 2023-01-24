@@ -20,7 +20,7 @@ namespace MyApi.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Matkaaja>>> GetMatkaajas()
         {
-            List<matkaDTO> list = new List<matkaDTO>();
+            List<matkaajaDTO> list = new List<matkaajaDTO>();
 
             if (_context.Matkaajas == null)
             {

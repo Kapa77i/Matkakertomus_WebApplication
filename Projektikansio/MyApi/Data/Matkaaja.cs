@@ -1,12 +1,44 @@
-﻿namespace MyApi.Data;
+﻿using SharedLib;
+namespace MyApi.Data;
 
 
 public partial class Matkaaja
 {
     public Matkaaja() { }
-    public Matkaaja(userDTO userDTO) { }
 
-    public long Idmatkaaja { get; set; }
+    internal Matkaaja(matkaajaDTO matkaajadto)
+    {
+        Idmatkaaja = matkaajadto.idmatkaaja;
+        Etunimi = matkaajadto.etunimi;
+        Sukunimi = matkaajadto.sukunimi;
+        Nimimerkki = matkaajadto.nimimerkki;
+        Paikkakunta = matkaajadto.paikkakunta;
+        Esittely = matkaajadto.esittely;
+        Kuva = matkaajadto.kuva;
+        Email = matkaajadto.email;
+        Password = matkaajadto.password;
+
+    }
+    internal matkaajaDTO toMatkaajaDTO()
+    {
+        return new matkaajaDTO
+        {
+            idmatkaaja = this.Idmatkaaja,
+            etunimi = this.Etunimi,
+            sukunimi = this.Sukunimi,
+            nimimerkki = this.Nimimerkki,
+            paikkakunta = this.Paikkakunta,
+            esittely = this.Esittely,
+            kuva = this.Kuva,
+            email = this.Email,
+            password = this.Password
+        };
+    }
+
+
+
+
+    public int Idmatkaaja { get; set; }
 
     public string? Etunimi { get; set; }
 
@@ -25,10 +57,6 @@ public partial class Matkaaja
     public string? Password { get; set; }
 
     public virtual ICollection<Matka> Matkas { get; } = new List<Matka>();
-    internal userDTO toUserDTO()
-    {
 
-
-    }
 
 }

@@ -1,13 +1,13 @@
 ﻿namespace SharedLib
 {
-    internal class tarinaDTO
+    public class tarinaDTO
     {
 
-        public int idtarina;
-        public DateTime pvm;
-        public string teksti;
-        public int idmatkakohde;
-        public int idmatka;
+        public int idtarina { get; set; }
+        public DateTime pvm { get; set; }
+        public string teksti { get; set; }
+        public int idmatkakohde { get; set; }
+        public int idmatka { get; set; }
 
     }
 }

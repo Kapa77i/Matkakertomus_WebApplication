@@ -1,17 +1,17 @@
 ﻿namespace SharedLib
 {
-    internal class matkaajaDTO
+    public class matkaajaDTO
     {
 
-        public int idmatkaaja;
-        public string etunimi;
-        public string sukunimi;
-        public string nimimerkki;
-        public string paikkakunta;
-        public string esittely;
-        public byte kuva;
-        public string email;
-        public string password;
+        public int idmatkaaja { get; set; }
+        public string etunimi { get; set; }
+        public string sukunimi { get; set; }
+        public string nimimerkki { get; set; }
+        public string paikkakunta { get; set; }
+        public string esittely { get; set; }
+        public string kuva { get; set; }
+        public string email { get; set; }
+        public string password { get; set; }
 
     }
 }

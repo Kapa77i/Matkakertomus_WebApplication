@@ -29,7 +29,7 @@ namespace MyApi.Controllers
             var users = await _context.Matkaajas.OrderByDescending(x => x.Idmatkaaja).ToListAsync();
             foreach (var user in users)
             {
-                list.Add(user.ToQuoteDTO());
+                list.Add(user.toMatkaajaDTO());
             }
             return Ok(list);
         }

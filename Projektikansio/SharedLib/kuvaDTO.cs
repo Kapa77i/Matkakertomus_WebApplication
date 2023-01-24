@@ -1,10 +1,10 @@
 ﻿namespace SharedLib
 {
-    internal class kuvaDTO
+    public class kuvaDTO
     {
-        public int idkuva;
-        public string kuva;
-        public int idtarina;
+        public int idkuva { get; set; }
+        public string kuva { get; set; }
+        public int idtarina { get; set; }
 
     }
 }

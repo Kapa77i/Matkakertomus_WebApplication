@@ -1,10 +1,38 @@
 ﻿@page "/users"
+@using System.Net.Http
+@using System.Net.Http.Json
+@using System.Threading.Tasks
+@using System.Globalization
+@inject HttpClient Http
+
 <h1>jäsenet</h1>
 
 @*Jäsenet-sivulla näkee kaikkien jäsenten muut tiedot paitsi salasanan ja sähköpostiosoitteem*@
-
+<table>
+    <tr>
+        <th>id</th>
+        <th>kuva</th>
+        <th>nimimerkki</th>
+        <th>etunimi</th>
+        <th>sukunimi</th>
+        <th>paikkakunta</th>
+        <th>esittely</th>
+    </tr>
+ @*   @foreach (var obj in objects)
+    {
+        <tr>
+            <td>@obj.id</td>
+            <td><img src="@obj.kuva" alt="@obj.nimimerkki"></td>
+            <td>@obj.nimimerkki</td>
+            <td>@obj.etunimi</td>
+            <td>@obj.sukunimi</td>
+            <td>@obj.paikkakunta</td>
+            <td>@obj.esittely</td>
+        </tr>
+    }*@
+</table>
 
 
 @code {
-
+   
 }

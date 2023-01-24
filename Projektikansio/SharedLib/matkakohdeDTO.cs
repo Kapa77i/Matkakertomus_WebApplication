@@ -1,7 +1,6 @@
 ﻿namespace SharedLib
 {
-    public class tripsDTO
+    internal class matkakohdeDTO
     {
-
     }
 }

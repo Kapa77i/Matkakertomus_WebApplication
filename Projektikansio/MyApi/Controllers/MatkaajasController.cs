@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MyApi.Data;
+using SharedLib;
 
 namespace MyApi.Controllers
 {
@@ -24,6 +20,13 @@ namespace MyApi.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Matkaaja>>> GetMatkaajas()
         {
+            List<tripsDTO> list = new List<tripsDTO>();
+
+            if (_context.Matkaajas == null)
+            {
+                return NotFound();
+            }
+            var users = await _context.Matkaajas.OrderByDescending(x => x.Idmatkaaja).ToListAsync();
             return await _context.Matkaajas.ToListAsync();
         }
 

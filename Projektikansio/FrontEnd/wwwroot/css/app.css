@@ -1,5 +1,6 @@
 ﻿@import url('open-iconic/font/css/open-iconic-bootstrap.min.css');
 @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@500&display=swap');
+
 html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
@@ -8,7 +9,6 @@ main {
     flex: 1;
     background-image: url("/images/tausta.png");
     background-size: cover;
-
 }
 
 .logo {
@@ -25,9 +25,12 @@ main {
     display: grid;
 }
 
+.keskitys {
+    margin-left: 33%;
+}
+
 .ikkuna {
     padding: 25px;
-  
     color: #d7d7d7;
 }
 
@@ -56,6 +59,7 @@ th, td {
     text-align: left;
     border: 1px solid #a8dadc;
 }
+
 th {
     background-color: #a8dadc;
     color: black;
@@ -64,6 +68,7 @@ th {
     text-align: center;
     padding: 25px;
 }
+
 tr:nth-child(odd) {
     background-color: #a8dadc;
     color: black;
@@ -95,7 +100,6 @@ h1, h2, h3, h4, h5, h6 {
 
 p, a, li, th, td, label {
     font-family: 'Oswald', sans-serif;
-    
 }
 
 
@@ -104,6 +108,7 @@ a {
     text-decoration: none;
     text-transform: uppercase;
 }
+
 a, .btn-link {
     color: #0071c1;
 }

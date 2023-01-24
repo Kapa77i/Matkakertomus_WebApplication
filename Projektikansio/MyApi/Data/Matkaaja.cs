@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace MyApi.Data;
-
+﻿namespace MyApi.Data;
 public partial class Matkaaja
 {
     public long Idmatkaaja { get; set; }
@@ -24,4 +20,8 @@ public partial class Matkaaja
     public string? Password { get; set; }
 
     public virtual ICollection<Matka> Matkas { get; } = new List<Matka>();
+}
+internal userDTO toUserDTO();
+{
+return null;
 }

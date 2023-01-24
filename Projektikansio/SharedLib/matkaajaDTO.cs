@@ -3,7 +3,7 @@
     public class matkaajaDTO
     {
 
-        public int idmatkaaja { get; set; }
+        public long idmatkaaja { get; set; }
         public string etunimi { get; set; }
         public string sukunimi { get; set; }
         public string nimimerkki { get; set; }

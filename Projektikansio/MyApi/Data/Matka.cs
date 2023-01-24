@@ -23,13 +23,13 @@ public partial class Matka
         };
     }
 
-    public int Idmatkaaja { get; set; }
+    public long Idmatkaaja { get; set; }
 
     public DateTime Alkupvm { get; set; }
 
     public DateTime Loppupvm { get; set; }
 
-    public int Yksityinen { get; set; }
+    public long Yksityinen { get; set; }
 
     public long Idmatka { get; set; }
 

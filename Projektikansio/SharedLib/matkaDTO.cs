@@ -2,11 +2,11 @@
 {
     public class matkaDTO
     {
-        public int idmatkaaja { get; set; }
+        public long idmatkaaja { get; set; }
         public DateTime alkupvm { get; set; }
         public DateTime loppupvm { get; set; }
-        public int yksityinen { get; set; }
-        public int idmatka { get; set; }
+        public long yksityinen { get; set; }
+        public long idmatka { get; set; }
 
     }
 }

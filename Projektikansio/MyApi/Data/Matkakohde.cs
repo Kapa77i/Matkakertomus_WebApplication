@@ -23,7 +23,7 @@ public partial class Matkakohde
             kuva = this.Kuva
         };
     }
-    public int Idmatkakohde { get; set; }
+    public long Idmatkakohde { get; set; }
 
     public string? Kohdenimi { get; set; }
 

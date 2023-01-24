@@ -38,7 +38,7 @@ public partial class Matkaaja
 
 
 
-    public int Idmatkaaja { get; set; }
+    public long Idmatkaaja { get; set; }
 
     public string? Etunimi { get; set; }
 

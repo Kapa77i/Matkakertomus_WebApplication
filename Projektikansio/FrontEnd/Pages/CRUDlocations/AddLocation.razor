@@ -1,5 +1,66 @@
-﻿<h3>AddLocation</h3>
+﻿@page "/locations/add"
+
+@using System.Net.Http
+@using System.Net.Http.Json
+@using System.Threading.Tasks
+
+@inject NavigationManager NavigationManager
+@inject ILogger<Index> Logger
+@inject HttpClient Http
+
+<h1>Lisää matkakohde</h1>
+@*sis. idmatkakohde, kohdenimi, maa, paikkakunta, kuvausteksti, kuva (id:tä ei tarvitse näyttää, ellei muokata tai poisteta)
+    Alustava!
+*@
+@if(User != null){
+    <div>
+        <EditForm Model="@newlocation" OnValidSubmit="@PostLocations">
+            <DataAnnotationsValidator/>
+            <ValidationSummary/>
+            <div>
+                <label>Kuva
+                    <InputText class="form-control" id="kuva" @bind-Value="newlocation.kuva"/>
+                </label>
+            </div>
+            <div>
+                <label>Kohdenimi
+                    <InputText class="form-control" id="kohdenimi" @bind-Value="newlocation.kohdenimi"/>
+                </label>
+            </div>
+            <div>
+                <label>Maa
+                    <InputText class="form-control" id="maa" @bind-Value="newlocation.maa"/>
+                </label>
+            </div>
+            <div>
+                <label>Paikkakunta
+                    <InputText class="form-control" id="paikkakunta" @bind-Value="newlocation.paikkakunta"/>
+                </label>
+            </div>
+            <div>
+                <label>Kuvausteksti
+                    <InputText class="form-control" id="kuvausteksti" @bind-Value="newlocation.kuvausteksti"/>
+                </label>
+            </div>
+            <button type="submit" class="btn btn-primary" disabled="@isSubmitting">Lisää</button>
+        </EditForm>
+    </div>
+}
 
 @code {
+    [Parameter]
+    public string? User { get; set; }
 
+    bool isSubmitting;
+    SharedLib.matkakohdeDTO newlocation = new SharedLib.matkakohdeDTO();
+
+
+    async Task PostLocations(){
+
+        if (User == null) NavigationManager.NavigateTo($"/login");
+        else{
+            isSubmitting = true;
+            var result = await Http.PostAsJsonAsync($"", newlocation); //lisää tähän url: matkas/{user} vai {user}/matkas
+        }
+    }
 }

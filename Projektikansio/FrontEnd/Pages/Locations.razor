@@ -1,10 +1,30 @@
 ﻿@page "/locations"
+
+@using System.Threading.Tasks
+@using System.Net.Http
+@using System.Net.Http.Json
+
+@inject NavigationManager NavigationManager
+@inject ILogger<Index> Logger
+@inject HttpClient Http
+
 <h1>Matkakoheet</h1>
 
 @*voi lisätä, poistaa, päivittää ja selata matkakohteita.
-Sellaista matkakohdetta, johon liittyy joku matkakertomus, ei saa poistaa tai päivittää*@
+Sellaista matkakohdetta, johon liittyy joku matkakertomus, ei saa poistaa tai päivittää
 
+Kuka tahansa ei voi tehdä CRUD toimintoja, vaan siihen pitää vaatia login.
+Kuka tahansa voi selata ja hakea matkakohteita*@
 
+@*Tästä sivusta tulee tavallaan matkakohteiden index sivu?
+    Tältä sivulta voidaan hakea ja selata matkakohteita. 
+    Tee: 
+        -ylös hakupalkki: voi hakea/suodattaa matkakohteen nimellä?
+        -sivu näyttää matkakohteet
+        -matkakohdetta klikkaamalla näkee mahdolliset tarinat?? -> takaisin -nappi 
+
+        sis. idmatkakohde, kohdenimi, maa, paikkakunta, kuvausteksti, kuva
+*@
 @code {
 
 }

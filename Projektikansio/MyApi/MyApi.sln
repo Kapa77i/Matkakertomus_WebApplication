@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.3.32929.385
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyApi", "MyApi.csproj", "{34B71233-DAC4-448A-8090-3F582C32F4DB}"
+	ProjectSection(ProjectDependencies) = postProject
+		{9DA9954B-91C8-4452-8052-8A06123C42C0} = {9DA9954B-91C8-4452-8052-8A06123C42C0}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FrontEnd", "..\FrontEnd\FrontEnd.csproj", "{88978DFB-22B9-4F3F-AC9F-668BD46207C6}"
 EndProject

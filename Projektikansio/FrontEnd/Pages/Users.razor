@@ -18,13 +18,13 @@
     @foreach (var user in users)
     {
         <tr>
-            <td>@user.idmatkaaja</td>
-            <td><img src="@user.kuva" alt="@user.nimimerkki"></td>
-            <td>@user.nimimerkki</td>
-            <td>@user.etunimi</td>
-            <td>@user.sukunimi</td>
-            <td>@user.paikkakunta</td>
-            <td>@user.esittely</td>
+            <td>@user.idmatkaaja.ToString()</td>
+            <td><img src="@user.kuva" width="150" alt="@user.nimimerkki.ToString()"></td>
+            <td>@user.nimimerkki.ToString()</td>
+            <td>@user.etunimi.ToString()</td>
+            <td>@user.sukunimi.ToString()</td>
+            <td>@user.paikkakunta.ToString()</td>
+            <td>@user.esittely.ToString()</td>
         </tr>
     }
 </table>
@@ -32,5 +32,5 @@
 
 @code {
     private List<SharedLib.matkaajaDTO>? users;
-
+    //Hieno muuntolauseke tähän, kunhan saadaan tietokantaan tavaraa.
 }

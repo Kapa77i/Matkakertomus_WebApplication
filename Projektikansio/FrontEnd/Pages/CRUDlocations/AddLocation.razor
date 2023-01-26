@@ -60,7 +60,7 @@
         if (User == null) NavigationManager.NavigateTo($"/login");
         else{
             isSubmitting = true;
-            var result = await Http.PostAsJsonAsync($"", newlocation); //lisää tähän url: matkas/{user} vai {user}/matkas
+            var result = await Http.PostAsJsonAsync($"", newlocation); //lisää tähän url: matkas/{user} 
         }
     }
 }

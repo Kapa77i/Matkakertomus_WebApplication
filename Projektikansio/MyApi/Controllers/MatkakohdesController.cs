@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MyApi.Data;
+using SharedLib;
 
 namespace MyApi.Controllers
 {
@@ -22,14 +23,23 @@ namespace MyApi.Controllers
 
         // GET: api/Matkakohdes
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Matkakohde>>> GetMatkakohdes()
+        public async Task<ActionResult<IEnumerable<matkakohdeDTO>>> GetLocations()
         {
-            return await _context.Matkakohdes.ToListAsync();
+            var l = await _context.Matkakohdes.ToListAsync();
+            List<matkakohdeDTO> locations = new List<matkakohdeDTO>();
+            foreach (var item in l)
+            {
+                matkakohdeDTO m = item.toMatkakohdeDTO();
+                locations.Add(m);
+            }
+
+            if (locations == null) return NotFound();
+            return locations;
         }
 
-        // GET: api/Matkakohdes/5
+        // GET: api/Matkakohdes/5 vai GET: api/user/Matkakohdes/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Matkakohde>> GetMatkakohde(long id)
+        public async Task<ActionResult<matkakohdeDTO>> GetLocation(long id)
         {
             var matkakohde = await _context.Matkakohdes.FindAsync(id);
 
@@ -38,7 +48,7 @@ namespace MyApi.Controllers
                 return NotFound();
             }
 
-            return matkakohde;
+            return matkakohde.toMatkakohdeDTO();
         }
 
         // PUT: api/Matkakohdes/5

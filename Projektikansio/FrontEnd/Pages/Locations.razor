@@ -22,9 +22,29 @@ Kuka tahansa voi selata ja hakea matkakohteita*@
         -ylös hakupalkki: voi hakea/suodattaa matkakohteen nimellä?
         -sivu näyttää matkakohteet
         -matkakohdetta klikkaamalla näkee mahdolliset tarinat?? -> takaisin -nappi 
+        -matkakohteiden muokkaus vain jos olet sisäänkirjautuneena?
 
-        sis. idmatkakohde, kohdenimi, maa, paikkakunta, kuvausteksti, kuva
+        sis. idmatkakohde, kohdenimi, maa, paikkakunta, kuvausteksti, kuva (id:tä ei tarvitse näyttää, ellei muokata tai poisteta)
 *@
-@code {
 
+@if(locations != null){
+
+    <ul>
+        @foreach(var l in locations){
+            <li><h3>@l.kohdenimi</h3></li>
+            <li><h4>@l.maa</h4></li>
+            <li><h5>@l.paikkakunta</h5></li>
+            <li>@l.kuvausteksti</li>
+            <li>@l.kuva</li>
+        }
+    </ul>
+}
+@code {
+    List<SharedLib.matkakohdeDTO>? locations = new List<SharedLib.matkakohdeDTO>();
+
+    protected override async Task OnInitializedAsync(){
+
+        var data = await Http.GetAsync("/matkakohdes");
+        locations = await data.Content.ReadFromJsonAsync<List<SharedLib.matkakohdeDTO>>();
+    }
 }

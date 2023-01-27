@@ -35,13 +35,13 @@
     </table>
 }else
 {
-<h2> Käyttäjiä ei löydy</h2>
-
+    <h2>  <img src="/images/loading.gif" width="150"/></h2>
+    
 }
 
 @code {
     private List<SharedLib.matkaajaDTO>? users;
     //Hieno muuntolauseke tähän, kunhan saadaan tietokantaan tavaraa.
     protected override async Task OnInitializedAsync() =>
-    users = await Http.GetFromJsonAsync<List<SharedLib.matkaajaDTO>>("https://localhost:7180/Matkaajas");
+    users = await Http.GetFromJsonAsync<List<SharedLib.matkaajaDTO>>("https://localhost:7086/api/Matkaajas");
 }

@@ -5,32 +5,36 @@
 @inject HttpClient Http
 
 <h1>Käyttäjä</h1>
-
+@if (user != null)
+{
 <div class="palsta"> 
+    @foreach (var user in user)
+    {
+            <div class="palsta"><img src="/images/profilePictures/@user.kuva.ToString()" width="150" alt="@user.nimimerkki.ToString()"> </div>
     <form>
         <div class="form-group">
             <label for="id">ID</label>
-            <input type="text" class="form-control" id="id" disabled>
+                <input type="text" class="form-control" id="id" disabled value="@user.nimimerkki.ToString()">
         </div>
         <div class="form-group">
             <label for="etunimi">Etunimi</label>
-            <input type="text" class="form-control" id="etunimi">
+                    <input type="text" class="form-control" id="etunimi" value="@user.etunimi.ToString()">
         </div>
         <div class="form-group">
             <label for="sukunimi">Sukunimi</label>
-            <input type="text" class="form-control" id="sukunimi">
+                    <input type="text" class="form-control" id="sukunimi" value="@user.sukunimi.ToString()">
         </div>
         <div class="form-group">
             <label for="nimimerkki">Nimimerkki</label>
-            <input type="text" class="form-control" id="nimimerkki">
+                    <input type="text" class="form-control" id="nimimerkki" value="@user.nimimerkki.ToString()">
         </div>
         <div class="form-group">
             <label for="paikkakunta">Paikkakunta</label>
-            <input type="text" class="form-control" id="paikkakunta">
+                    <input type="text" class="form-control" id="paikkakunta" value="@user.paikkakunta.ToString()">
         </div>
         <div class="form-group">
             <label for="esittely">Esittely</label>
-            <textarea class="form-control" id="esittely"></textarea>
+                    <textarea class="form-control" id="esittely" value="@user.esittely.ToString()"></textarea>
         </div>
         <div class="form-group">
             <label for="kuva">Kuva</label>
@@ -39,12 +43,23 @@
 
         <button type="submit" class="btn btn-primary">Päivitä</button>
     </form>
+
+        }
 </div>
-<div class="palsta"><img src="/images/profiilikuva.png" width="350px"/> </div>
+
+
+}else
+{
+<h2>  <img src="/images/loading.gif" width="150" /></h2>
+
+}
 @*voi päivittää omia tietojaan (matkaaja-taulu). 
 Sähköpostin ja salasanan muuttamista ei tarvitse sallia, 
 mutta jos sen sallii, niin se pitää huomioida kirjautumisessa.*@
 
 @code {
-
+    private List<SharedLib.matkaajaDTO>? user;
+    //Hieno muuntolauseke tähän, kunhan saadaan tietokantaan tavaraa.
+    protected override async Task OnInitializedAsync() =>
+    user = await Http.GetFromJsonAsync<List<SharedLib.matkaajaDTO>>("https://localhost:7086/api/Matkaajas");
 }

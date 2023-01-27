@@ -9,12 +9,13 @@
 {
 <div class="palsta"> 
 
-    {
-            <div class="palsta"><img src="/images/profilePictures/@user.kuva.ToString()" width="150" alt="@user.nimimerkki.ToString()"> </div>
-    <form>
+    
+            
+   
+            <form>
         <div class="form-group">
             <label for="id">ID</label>
-                <input type="text" class="form-control" id="id" disabled value="@user.nimimerkki.ToString()">
+                <input type="text" class="form-control" id="id" disabled value="@user.idmatkaaja.ToString()">
         </div>
         <div class="form-group">
             <label for="etunimi">Etunimi</label>
@@ -47,7 +48,7 @@
         
 </div>
 
-
+    <div class="palsta"><img src="/profilePictures/@user.kuva.ToString()" alt="@user.nimimerkki.ToString()"> </div>
 }else
 {
 <h2>  <img src="/images/loading.gif" width="150" /></h2>
@@ -64,5 +65,5 @@ mutta jos sen sallii, niin se pitää huomioida kirjautumisessa.*@
     private SharedLib.matkaajaDTO? user;
     //Hieno muuntolauseke tähän, kunhan saadaan tietokantaan tavaraa.
     protected override async Task OnInitializedAsync() =>
-    user = await Http.GetFromJsonAsync<SharedLib.matkaajaDTO>($"api/Matkaajas/{Id}");
+    user = await Http.GetFromJsonAsync<SharedLib.matkaajaDTO>($"api/Matkaajas/1");
 }

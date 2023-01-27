@@ -1,10 +1,15 @@
 ﻿@page "/users"
-@using System.Text.Json
+@using System.Net.Http
+@using System.Net.Http.Json
+@using System.Threading.Tasks
 @inject HttpClient Http
+
 
 <h1>jäsenet</h1>
 
 @*Jäsenet-sivulla näkee kaikkien jäsenten muut tiedot paitsi salasanan ja sähköpostiosoitteem*@
+@if (users != null){
+
 <table>
     <tr>
         <th>id</th>
@@ -19,7 +24,7 @@
     {
         <tr>
             <td>@user.idmatkaaja.ToString()</td>
-            <td><img src="@user.kuva" width="150" alt="@user.nimimerkki.ToString()"></td>
+            <td><img src="/images/profilePictures/@user.kuva.ToString()" width="150" alt="@user.nimimerkki.ToString()"></td>
             <td>@user.nimimerkki.ToString()</td>
             <td>@user.etunimi.ToString()</td>
             <td>@user.sukunimi.ToString()</td>
@@ -27,10 +32,16 @@
             <td>@user.esittely.ToString()</td>
         </tr>
     }
-</table>
+    </table>
+}else
+{
+<h2> Käyttäjiä ei löydy</h2>
 
+}
 
 @code {
     private List<SharedLib.matkaajaDTO>? users;
     //Hieno muuntolauseke tähän, kunhan saadaan tietokantaan tavaraa.
+    protected override async Task OnInitializedAsync() =>
+    users = await Http.GetFromJsonAsync<List<SharedLib.matkaajaDTO>>("https://localhost:7180/Matkaajas");
 }

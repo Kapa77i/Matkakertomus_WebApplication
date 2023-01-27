@@ -19,4 +19,8 @@
 		<ProjectReference Include="..\SharedLib\SharedLib.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="wwwroot\profilePictures\" />
+	</ItemGroup>
+
 </Project>

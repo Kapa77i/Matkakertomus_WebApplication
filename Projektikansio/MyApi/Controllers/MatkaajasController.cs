@@ -18,7 +18,7 @@ namespace MyApi.Controllers
 
         // GET: api/Matkaajas
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Matkaaja>>> GetMatkaajas()
+        public async Task<ActionResult<IEnumerable<matkaajaDTO>>> GetMatkaajas()
         {
             List<matkaajaDTO> list = new List<matkaajaDTO>();
 

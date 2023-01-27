@@ -43,5 +43,5 @@
     private List<SharedLib.matkaajaDTO>? users;
     //Hieno muuntolauseke tähän, kunhan saadaan tietokantaan tavaraa.
     protected override async Task OnInitializedAsync() =>
-    users = await Http.GetFromJsonAsync<List<SharedLib.matkaajaDTO>>("https://localhost:7086/api/Matkaajas");
+    users = await Http.GetFromJsonAsync<List<SharedLib.matkaajaDTO>>("/api/Matkaajas");
 }

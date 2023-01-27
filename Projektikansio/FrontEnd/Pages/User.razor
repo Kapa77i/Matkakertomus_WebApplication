@@ -8,7 +8,7 @@
 @if (user != null)
 {
 <div class="palsta"> 
-    @foreach (var user in user)
+
     {
             <div class="palsta"><img src="/images/profilePictures/@user.kuva.ToString()" width="150" alt="@user.nimimerkki.ToString()"> </div>
     <form>
@@ -44,7 +44,7 @@
         <button type="submit" class="btn btn-primary">Päivitä</button>
     </form>
 
-        }
+        
 </div>
 
 
@@ -58,8 +58,11 @@ Sähköpostin ja salasanan muuttamista ei tarvitse sallia,
 mutta jos sen sallii, niin se pitää huomioida kirjautumisessa.*@
 
 @code {
-    private List<SharedLib.matkaajaDTO>? user;
+    [Parameter]
+    public int Id { get; set; }
+
+    private SharedLib.matkaajaDTO? user;
     //Hieno muuntolauseke tähän, kunhan saadaan tietokantaan tavaraa.
     protected override async Task OnInitializedAsync() =>
-    user = await Http.GetFromJsonAsync<List<SharedLib.matkaajaDTO>>("https://localhost:7086/api/Matkaajas");
+    user = await Http.GetFromJsonAsync<SharedLib.matkaajaDTO>($"/Matkaajas/{Id}");
 }

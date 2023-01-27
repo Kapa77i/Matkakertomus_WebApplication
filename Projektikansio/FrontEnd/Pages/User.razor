@@ -64,5 +64,5 @@ mutta jos sen sallii, niin se pitää huomioida kirjautumisessa.*@
     private SharedLib.matkaajaDTO? user;
     //Hieno muuntolauseke tähän, kunhan saadaan tietokantaan tavaraa.
     protected override async Task OnInitializedAsync() =>
-    user = await Http.GetFromJsonAsync<SharedLib.matkaajaDTO>($"/Matkaajas/{Id}");
+    user = await Http.GetFromJsonAsync<SharedLib.matkaajaDTO>($"api/Matkaajas/{Id}");
 }

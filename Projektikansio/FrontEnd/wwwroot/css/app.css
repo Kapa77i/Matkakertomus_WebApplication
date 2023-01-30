@@ -42,11 +42,21 @@ main {
 
 .palsta {
     width: 40%;
+    min-height: 500px;
     float: left;
-    background-color: #457b9d;
-    margin-right: 25px
+    /* background-color: lawngreen;*/
+    margin-right: 25px;
 }
+.palsta2 {
+    width: 50%;
+    min-height: 500px;
+    float: left;
 
+    margin-right: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
 table {
     border-collapse: collapse;

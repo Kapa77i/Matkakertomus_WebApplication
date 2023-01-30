@@ -18,15 +18,18 @@
             <th>MatkanId</th>
             <th>MatkakohteenId</th>
             <th>Tarina</th>
+            <th>Kuvat</th>
 
         </tr>
         @foreach (var tarina in tarina)
         {
             <tr>
                <td>@tarina.idtarina.ToString()</td>
+                <td>@tarina.pvm.ToString()</td>
                 <td>@tarina.idmatka.ToString()</td>
                 <td>@tarina.idmatkakohde.ToString()</td>
                 <td>@tarina.teksti.ToString()</td>
+                <th>Kuvat</th>
             </tr>
         }
 

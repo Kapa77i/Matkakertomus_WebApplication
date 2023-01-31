@@ -1,12 +1,22 @@
 ﻿@page "/"
 
 
+@if (sebastian == "welho")
+{
+    <h1>Kuopion Kulkijat ry</h1>
+    <h2> eli tuttavammin KuoLijat, toivottaa sinut tervetulleeksi sivuilleen.</h2>
 
-<h1>Kuopion Kulkijat ry</h1>
-<h2> eli tuttavammin KuoLijat, toivottaa sinut tervetulleeksi sivuilleen.</h2>
+    <img src="/images/index.png"  />
 
-<img src="/images/index.png"  />
+    <NavLink class="nav-link" href="test">
+        <span class="oi oi-beaker" aria-hidden="true"></span> SALAINEN TESTISIVU
+    </NavLink>
+}
+else
+{
+    <h2>  <img src="/images/loading.gif" width="150" /></h2>
 
-<NavLink class="nav-link" href="test">
-    <span class="oi oi-beaker" aria-hidden="true"></span> SALAINEN TESTISIVU
-</NavLink>
+}
+@code{
+    private string sebastian = "welho";
+}

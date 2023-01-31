@@ -30,36 +30,41 @@ main {
 }
 
 .ikkuna {
-    padding: 25px;
+    padding: 10px;
     color: #d7d7d7;
+    justify-content: center;
+    align-items: center;
 }
 
+
+
+.palsta {
+    width: 55%;
+    min-height: 500px;
+    float: left;
+    /* background-color: lawngreen;*/
+  
+  
+}
+
+.palsta2 {
+    width: 40%;    
+    justify-content: center;
+    align-items: center;
+}
+.palsta, .palsta2 {
+    margin-right: 25px;
+    margin-top: 10px;
+ /*   border: 3px dashed #d7d7d7;*/
+    float: left;
+    min-height: 500px;
+    display: flex;
+}
 .alapalkki {
     text-align: right;
     padding: 15px;
     /*    border-top: 1px solid #a8dadc;*/
 }
-
-.palsta {
-    width: 40%;
-    min-height: 500px;
-    float: left;
-    /* background-color: lawngreen;*/
-    margin-right: 25px;
-    margin-top: 10px;
-}
-
-.palsta2 {
-    width: 50%;
-    min-height: 500px;
-    float: left;
-    margin-right: 25px;
-    margin-top: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
 table {
     border-collapse: collapse;
     width: 50%;

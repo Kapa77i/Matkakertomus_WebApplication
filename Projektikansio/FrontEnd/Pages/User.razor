@@ -8,9 +8,10 @@
 <h1>Käyttäjä</h1>
 @if (user != null)
 {
+   
 <div class="palsta"> 
           <EditForm Model="@user" OnValidSubmit="@UpdateUser">
-
+            <img src="profilePictures/@user.kuva" width="133" height="133" alt="1" />
     <div class="form-group">
         <label for="etunimi">Etunimi</label>
                 <InputText class="form-control" id="etunimi" @bind-Value="user.etunimi"></InputText>
@@ -31,20 +32,21 @@
         <label for="esittely">Esittely</label>
                 <InputText class="form-control" id="esittely" @bind-Value="user.esittely"></InputText>
     </div>
+     
             <div class="form-group">
                 <label for="kuva">Kuva</label>
                 <table id="kuva" style="background-color: transparent;"  border="0">
                     <tr>
-                        <td ><img src="profilePictures/1.png" width="133" height="133" alt="1" /></td>
+                        <td ><img src="profilePictures/1.png" width="133" height="133" alt="1" celected/></td>
                         <td ><img src="profilePictures/2.png" width="133" height="133" alt="2" /></td>
                         <td ><img src="profilePictures/3.png" width="133" height="133" alt="3" /></td>
                         <td ><img src="profilePictures/4.png" width="133" height="133" alt="4" /></td>
                     </tr>
                     <tr>
-                        <td ><input type="radio" name="user.kuva" Value="1.png" checked/></td>
-                        <td ><input type="radio" name="user.kuva" value="2.png" /></td>
-                        <td ><input type="radio" name="user.kuva" value="3.png" /></td>
-                        <td ><input type="radio" name="user.kuva" value="4.png" /></td>
+                        <td><input type="radio" name="kuva" value="1.png" @onchange="uusiKuva" /></td>
+                        <td><input type="radio" name="kuva" value="2.png" @onchange="uusiKuva" /></td>
+                        <td ><input type="radio" name="kuva" value="3.png" @onchange="uusiKuva"/></td>
+                        <td><input type="radio" name="kuva" value="4.png" @onchange="uusiKuva" /></td>
                     </tr>
                     <tr>
                         <td ><img src="profilePictures/5.png" width="133" height="133" alt="5.png" /></td>
@@ -53,10 +55,10 @@
                         <td ><img src="profilePictures/8.png" width="133" height="133" alt="8.png" /></td>
                     </tr>
                     <tr>
-                        <td ><input type="radio" name="user.kuva" value="5.png" /></td>
-                        <td ><input type="radio" name="user.kuva" value="6.png" /></td>
-                        <td ><input type="radio" name="user.kuva" value="7.png" /></td>
-                        <td ><input type="radio" name="user.kuva" value="8.png" /></td>
+                        <td><input type="radio" name="kuva" value="5.png" @onchange="uusiKuva" /></td>
+                        <td><input type="radio" name="kuva" value="6.png" @onchange="uusiKuva" /></td>
+                        <td><input type="radio" name="kuva" value="7.png" @onchange="uusiKuva" /></td>
+                        <td><input type="radio" name="kuva" value="8.png" @onchange="uusiKuva" /></td>
                     </tr>
                     <tr>
                         <td ><img src="profilePictures/9.png" width="133" height="133" alt="9" /></td>
@@ -65,10 +67,10 @@
                         <td ><img src="profilePictures/12.png" width="133" height="133" alt="12" /></td>
                     </tr>
                     <tr>
-                        <td ><input type="radio" name="user.kuva" value="9.png" /></td>
-                        <td ><input type="radio" name="user.kuva" value="10.png" /></td>
-                        <td ><input type="radio" name="user.kuva" value="11.png" /></td>
-                        <td ><input type="radio" name="user.kuva" value="12.png" /></td>
+                        <td><input type="radio" name="kuva" value="9.png" @onchange="uusiKuva" /></td>
+                        <td><input type="radio" name="kuva" value="10.png" @onchange="uusiKuva" /></td>
+                        <td><input type="radio" name="kuva" value="11.png" @onchange="uusiKuva" /></td>
+                        <td><input type="radio" name="kuva" value="12.png" @onchange="uusiKuva" /></td>
                     </tr>
                     <tr>
                         <td ><img src="profilePictures/13.png" width="133" height="133" alt="13" /></td>
@@ -77,22 +79,19 @@
                         <td ><img src="profilePictures/16.png" width="133" height="133" alt="16" /></td>
                     </tr>
                     <tr>
-                        <td ><input type="radio" name="user.kuva" value="13.png" /></td>
-                        <td ><input type="radio" name="user.kuva" value="14.png" /></td>
-                        <td ><input type="radio" name="user.kuva" value="15.png" /></td>
-                        <td ><input type="radio" name="user.kuva" value="16.png" /></td>
+                        <td><input type="radio" name="kuva" value="13.png" @onchange="uusiKuva" /></td>
+                        <td><input type="radio" name="kuva" value="14.png" @onchange="uusiKuva" /></td>
+                        <td ><input type="radio" name="kuva" value="15.png" @onchange="uusiKuva"/></td>
+                        <td ><input type="radio" name="kuva" value="16.png" @onchange="uusiKuva"/></td>
                     </tr>
                 </table>
+            
         </div>
            <button type="submit" class="btn btn-primary" style="margin-top:10px;" >Päivitä</button>
     </EditForm>
         
 </div>
 
-    
-
-
- 
 }else
 {
 <h2>  <img src="/images/loading.gif" width="133" /></h2>
@@ -107,18 +106,23 @@ mutta jos sen sallii, niin se pitää huomioida kirjautumisessa.*@
     public int Id { get; set; }
 
     private SharedLib.matkaajaDTO? user;
-
-
-
+    private string kuva { get; set; }
+    //Sivun lataus
     protected override async Task OnInitializedAsync()
     {
         user = await Http.GetFromJsonAsync<SharedLib.matkaajaDTO>($"api/Matkaajas/{Id}");
     }
+    //Päivitys
     private async Task UpdateUser()
     {
-        Console.WriteLine("KEKW");
+        user.kuva = kuva;
         await Http.PutAsJsonAsync($"api/Matkaajas/{Id}", user);
     }
-
+    //Avatarin vaihto
+    private void uusiKuva(ChangeEventArgs e)
+    {
+        kuva = e.Value as string;
+        
+    }
 
 }

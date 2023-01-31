@@ -97,12 +97,18 @@ namespace MyApi.Controllers
         // POST: api/Matkaajas
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Matkaaja>> PostMatkaaja(Matkaaja matkaaja)
+        public async Task<IActionResult> PostMatkaaja(matkaajaDTO user)
         {
-            _context.Matkaajas.Add(matkaaja);
+            Matkaaja uusi = new Matkaaja(user);
+            if (_context.Matkaajas == null)
+            {
+                return Problem("problem");
+            }
+
+            _context.Matkaajas.Add(uusi);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetMatkaaja", new { id = matkaaja.Idmatkaaja }, matkaaja);
+            return Ok();
         }
 
         // DELETE: api/Matkaajas/5

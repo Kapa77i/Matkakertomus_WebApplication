@@ -8,48 +8,96 @@
 @if (user != null)
 {
 <div class="palsta"> 
-            <form>
-        <div class="form-group">
-            <label for="id">ID</label>
-                <input type="text" class="form-control" id="id" disabled value="@user.idmatkaaja.ToString()">
-        </div>
-        <div class="form-group">
-            <label for="etunimi">Etunimi</label>
-                    <input type="text" class="form-control" id="etunimi" value="@user.etunimi.ToString()">
-        </div>
-        <div class="form-group">
-            <label for="sukunimi">Sukunimi</label>
-                    <input type="text" class="form-control" id="sukunimi" value="@user.sukunimi.ToString()">
-        </div>
-        <div class="form-group">
-            <label for="nimimerkki">Nimimerkki</label>
-                    <input type="text" class="form-control" id="nimimerkki" value="@user.nimimerkki.ToString()">
-        </div>
-        <div class="form-group">
-            <label for="paikkakunta">Paikkakunta</label>
-                    <input type="text" class="form-control" id="paikkakunta" value="@user.paikkakunta.ToString()">
-        </div>
-        <div class="form-group">
-            <label for="esittely">Esittely</label>
-                    <textarea class="form-control" id="esittely" value="@user.esittely.ToString()"></textarea>
-        </div>
-        <div class="form-group">
-            <label for="kuva">Kuva</label>
-            <input type="file" class="form-control-file" id="kuva">
-        </div>
-
-        <button type="submit" class="btn btn-primary">Päivitä</button>
+          <form>
+    <div class="form-group">
+        <label for="id">ID</label>
+            <input type="text" class="form-control" id="id" disabled value="@user.idmatkaaja.ToString()" >
+    </div>
+    <div class="form-group">
+        <label for="etunimi">Etunimi</label>
+            <input type="text" class="form-control" id="etunimi" @bind-value="user.etunimi">
+    </div>
+    <div class="form-group">
+        <label for="sukunimi">Sukunimi</label>
+            <input type="text" class="form-control" id="sukunimi" @bind-value="user.sukunimi">
+    </div>
+    <div class="form-group">
+        <label for="nimimerkki">Nimimerkki</label>
+            <input type="text" class="form-control" id="nimimerkki" @bind-value="user.nimimerkki">
+    </div>
+    <div class="form-group">
+        <label for="paikkakunta">Paikkakunta</label>
+            <input type="text" class="form-control" id="paikkakunta" @bind-value="user.paikkakunta" >
+    </div>
+    <div class="form-group">
+        <label for="esittely">Esittely</label>
+            <textarea class="form-control" id="esittely" @bind="user.esittely"></textarea>
+    </div>
+            <div class="form-group">
+                <label for="kuva">Kuva</label>
+                <table id="kuva" style="background-color: transparent;" align="center" valign="middle" border="0">
+                    <tr>
+                        <td align="center" valign="middle"><img src="profilePictures/1.png" width="133" height="133" alt="1" /></td>
+                        <td align="center" valign="middle"><img src="profilePictures/2.png" width="133" height="133" alt="2" /></td>
+                        <td align="center" valign="middle"><img src="profilePictures/3.png" width="133" height="133" alt="3" /></td>
+                        <td align="center" valign="middle"><img src="profilePictures/4.png" width="133" height="133" alt="4" /></td>
+                    </tr>
+                    <tr>
+                        <td align="center" valign="middle"><input type="radio" name="radio" id="1" value="1.png" /></td>
+                        <td align="center" valign="middle"><input type="radio" name="radio" id="2" value="2.png" /></td>
+                        <td align="center" valign="middle"><input type="radio" name="radio" id="3" value="3.png" /></td>
+                        <td align="center" valign="middle"><input type="radio" name="radio" id="4" value="4.png" /></td>
+                    </tr>
+                    <tr>
+                        <td align="center" valign="middle"><img src="profilePictures/5.png" width="133" height="133" alt="5.png" /></td>
+                        <td align="center" valign="middle"><img src="profilePictures/6.png" width="133" height="133" alt="6.png" /></td>
+                        <td align="center" valign="middle"><img src="profilePictures/7.png" width="133" height="133" alt="7.png" /></td>
+                        <td align="center" valign="middle"><img src="profilePictures/8.png" width="133" height="133" alt="8.png" /></td>
+                    </tr>
+                    <tr>
+                        <td align="center" valign="middle"><input type="radio" name="radio" id="5" value="5.png" /></td>
+                        <td align="center" valign="middle"><input type="radio" name="radio" id="6" value="6.png" /></td>
+                        <td align="center" valign="middle"><input type="radio" name="radio" id="7" value="7.png" /></td>
+                        <td align="center" valign="middle"><input type="radio" name="radio" id="8" value="8.png" /></td>
+                    </tr>
+                    <tr>
+                        <td align="center" valign="middle"><img src="profilePictures/9.png" width="133" height="133" alt="9" /></td>
+                        <td align="center" valign="middle"><img src="profilePictures/10.png" width="133" height="133" alt="10" /></td>
+                        <td align="center" valign="middle"><img src="profilePictures/11.png" width="133" height="133" alt="11" /></td>
+                        <td align="center" valign="middle"><img src="profilePictures/12.png" width="133" height="133" alt="12" /></td>
+                    </tr>
+                    <tr>
+                        <td align="center" valign="middle"><input type="radio" name="radio" id="9" value="9.png" /></td>
+                        <td align="center" valign="middle"><input type="radio" name="radio" id="10" value="10.png" /></td>
+                        <td align="center" valign="middle"><input type="radio" name="radio" id="11" value="11.png" /></td>
+                        <td align="center" valign="middle"><input type="radio" name="radio" id="12" value="12.png" /></td>
+                    </tr>
+                    <tr>
+                        <td align="center" valign="middle"><img src="profilePictures/13.png" width="133" height="133" alt="13" /></td>
+                        <td align="center" valign="middle"><img src="profilePictures/14.png" width="133" height="133" alt="14" /></td>
+                        <td align="center" valign="middle"><img src="profilePictures/15.png" width="133" height="133" alt="15" /></td>
+                        <td align="center" valign="middle"><img src="profilePictures/16.png" width="133" height="133" alt="16" /></td>
+                    </tr>
+                    <tr>
+                        <td align="center" valign="middle"><input type="radio" name="radio" id="13" value="13.png" /></td>
+                        <td align="center" valign="middle"><input type="radio" name="radio" id="14" value="14.png" /></td>
+                        <td align="center" valign="middle"><input type="radio" name="radio" id="15" value="15.png" /></td>
+                        <td align="center" valign="middle"><input type="radio" name="radio" id="16" value="16" /></td>
+                    </tr>
+                </table>
+    </div>
+           <button type="submit" class="btn btn-primary" style="margin-top: 10px;" @onclick="UpdateUser">Päivitä</button>
     </form>
         
 </div>
 
-    <div class="palsta2">
-        
-        <img src="/profilePictures/@user.kuva.ToString()" alt="@user.nimimerkki.ToString()" width="400"/> 
-    </div>
+    
+
+
+ 
 }else
 {
-<h2>  <img src="/images/loading.gif" width="150" /></h2>
+<h2>  <img src="/images/loading.gif" width="133" /></h2>
 
 }
 @*voi päivittää omia tietojaan (matkaaja-taulu). 
@@ -61,7 +109,15 @@ mutta jos sen sallii, niin se pitää huomioida kirjautumisessa.*@
     public int Id { get; set; }
 
     private SharedLib.matkaajaDTO? user;
+    private string valittuKuva { get; set; } = string.Empty;
     //Hieno muuntolauseke tähän, kunhan saadaan tietokantaan tavaraa.
     protected override async Task OnInitializedAsync() =>
     user = await Http.GetFromJsonAsync<SharedLib.matkaajaDTO>($"api/Matkaajas/1");
+
+    private async Task UpdateUser()
+    {
+        await Http.PutAsJsonAsync($"api/Matkaajas/1", user);
+    }
+
+
 }

@@ -53,10 +53,21 @@ namespace MyApi.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutMatkaaja(long id, Matkaaja matkaaja)
         {
-            if (id != matkaaja.Idmatkaaja)
+
+            var user = await _context.Matkaajas.FirstOrDefaultAsync(x => x.Idmatkaaja == id);
+            if (user != null)
             {
                 return BadRequest();
             }
+
+            user.Etunimi = matkaaja.Etunimi;
+            user.Sukunimi = matkaaja.Sukunimi;
+            user.Nimimerkki = matkaaja.Nimimerkki;
+            user.Paikkakunta = matkaaja.Paikkakunta;
+            user.Esittely = matkaaja.Esittely;
+            user.Kuva = matkaaja.Kuva;
+            user.Email = matkaaja.Email;
+            user.Password = matkaaja.Password;
 
             _context.Entry(matkaaja).State = EntityState.Modified;
 

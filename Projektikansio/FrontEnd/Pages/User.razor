@@ -110,7 +110,8 @@ mutta jos sen sallii, niin se pitää huomioida kirjautumisessa.*@
 
     private SharedLib.matkaajaDTO? user;
     private string valittuKuva { get; set; } = string.Empty;
-    //Hieno muuntolauseke tähän, kunhan saadaan tietokantaan tavaraa.
+
+   
     protected override async Task OnInitializedAsync() =>
     user = await Http.GetFromJsonAsync<SharedLib.matkaajaDTO>($"api/Matkaajas/1");
 

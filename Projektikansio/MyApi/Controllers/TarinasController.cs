@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MyApi.Data;
+using SharedLib;
 
 namespace MyApi.Controllers
 {
@@ -22,9 +23,23 @@ namespace MyApi.Controllers
 
         // GET: api/Tarinas
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Tarina>>> GetTarinas()
+        public async Task<ActionResult<IEnumerable<tarinaDTO>>> GetTarinas()
         {
-            return await _context.Tarinas.ToListAsync();
+            List<tarinaDTO> list = new List<tarinaDTO>();
+
+            if (_context.Tarinas == null)
+            {
+                return NotFound();
+            }
+
+            var tarinas = await _context.Tarinas.OrderByDescending(t => t.Pvm).ToListAsync();
+
+            foreach(var tarina in tarinas)
+            {
+                list.Add(tarina.toTarinaDTO());
+            }
+
+            return Ok(list);
         }
 
         // GET: api/Tarinas/5

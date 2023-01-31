@@ -1,6 +1,51 @@
 ﻿@page "/grouptrips"
-<h1>Porukan matkat</h1>
-@*voi selata (ei-yksityisiä) porukan matkoja ja niihin liitettyjä tarinoita ja kuvia*@
-@code {
+@using System.Net.Http
+@using System.Net.Http.Json
+@using System.Threading.Tasks
+@inject HttpClient Http
 
+
+<h1>Porukan Matkat</h1>
+@*voi selata (ei-yksityisiä) porukan matkoja ja niihin liitettyjä tarinoita ja kuvia*@
+
+@if (tarina != null)
+{
+
+    <table style="width:100%">
+        <tr>
+            <th>TarinanId</th>
+            <th>Matkan pvm</th>
+            <th>MatkanId</th>
+            <th>MatkakohteenId</th>
+            <th>Tarina</th>
+            <th>Kuvat</th>
+
+        </tr>
+        @foreach (var tarina in tarina)
+        {
+            <tr>
+               <td>@tarina.idtarina.ToString()</td>
+                <td>@tarina.pvm.ToString()</td>
+                <td>@tarina.idmatka.ToString()</td>
+                <td>@tarina.idmatkakohde.ToString()</td>
+                <td>@tarina.teksti.ToString()</td>
+                <th>Kuvat</th>
+            </tr>
+        }
+
+    </table>
+}
+else
+{
+    <h2>  <img src="/images/loading.gif" width="150" /></h2>
+
+}
+
+
+@code {
+    private List<SharedLib.matkaDTO>? matka;
+    private List<SharedLib.tarinaDTO>? tarina;
+
+    protected override async Task OnInitializedAsync() =>
+    tarina = await Http.GetFromJsonAsync<List<SharedLib.tarinaDTO>>("/api/Tarinas");
 }

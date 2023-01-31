@@ -51,11 +51,12 @@ namespace MyApi.Controllers
         // PUT: api/Matkaajas/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutMatkaaja(long id, Matkaaja matkaaja)
-        {
 
+        public async Task<ActionResult<Matkaaja>> PutMatkaaja(long id, Matkaaja matkaaja)
+        {
+            Console.WriteLine("CONTROLLERISSA");
             var user = await _context.Matkaajas.FirstOrDefaultAsync(x => x.Idmatkaaja == id);
-            if (user != null)
+            if (user == null)
             {
                 return BadRequest();
             }
@@ -69,11 +70,13 @@ namespace MyApi.Controllers
             user.Email = matkaaja.Email;
             user.Password = matkaaja.Password;
 
-            _context.Entry(matkaaja).State = EntityState.Modified;
+            _context.Entry(user).State = EntityState.Modified;
 
             try
             {
+
                 await _context.SaveChangesAsync();
+
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -87,7 +90,7 @@ namespace MyApi.Controllers
                 }
             }
 
-            return NoContent();
+            return Ok();
         }
 
         // POST: api/Matkaajas

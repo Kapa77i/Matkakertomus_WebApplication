@@ -48,6 +48,7 @@ main {
     margin-right: 25px;
     margin-top: 10px;
 }
+
 .palsta2 {
     width: 50%;
     min-height: 500px;
@@ -68,14 +69,15 @@ table {
 th {
     border: 1px solid #a8dadc;
 }
+
 td {
     border: 2px dashed #d7d7d7;
+
 }
+
 th, td {
     padding: 8px;
     text-align: left;
-   
- 
     text-align: center;
 }
 
@@ -91,7 +93,6 @@ th {
 tr:nth-child(odd) {
     background-color: #a8dadc;
     color: black;
-  
 }
 
 .nappi {

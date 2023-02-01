@@ -70,6 +70,8 @@ else {
         else{
             isSubmitting = true;
             var result = await Http.PostAsJsonAsync($"api/Matkakohdes", newlocation); //vai api/Matkakohdes/{User}? Tarvitseeko käyttäjää merkitä?
+
+            //saako tähän väliin pyöritettyä pyörää?
             NavigationManager.NavigateTo($"/locations");
         }
     }

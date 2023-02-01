@@ -1,4 +1,4 @@
-﻿@page "/locations/add"
+﻿@page "/locations/add/{User}"
 
 @using System.Net.Http
 @using System.Net.Http.Json
@@ -11,7 +11,10 @@
 <h1>Lisää matkakohde</h1>
 @*sis. idmatkakohde, kohdenimi, maa, paikkakunta, kuvausteksti, kuva (id:tä ei tarvitse näyttää, ellei muokata tai poisteta)
     Alustava!
+
+    KUINKA SAADA KUVA VÄLITETTYÄ
 *@
+<a href="/locations">Matkakohteet</a>
 @if(User != null){
     <div>
         <EditForm Model="@newlocation" OnValidSubmit="@PostLocations">
@@ -28,13 +31,14 @@
                 </label>
             </div>
             <div>
-                <label>Maa
-                    <InputText class="form-control" id="maa" @bind-Value="newlocation.maa"/>
+                <label>Paikkakunta
+                    <InputText class="form-control" id="paikkakunta" @bind-Value="newlocation.paikkakunta"/>
                 </label>
             </div>
             <div>
-                <label>Paikkakunta
-                    <InputText class="form-control" id="paikkakunta" @bind-Value="newlocation.paikkakunta"/>
+                <label>
+                    Maa
+                    <InputText class="form-control" id="maa" @bind-Value="newlocation.maa" />
                 </label>
             </div>
             <div>
@@ -45,6 +49,9 @@
             <button type="submit" class="btn btn-primary" disabled="@isSubmitting">Lisää</button>
         </EditForm>
     </div>
+}
+else {
+    <h2>  <img src="/images/loading.gif" width="150" /></h2>
 }
 
 @code {
@@ -57,10 +64,13 @@
 
     async Task PostLocations(){
 
-        if (User == null) NavigationManager.NavigateTo($"/login");
+        if (User == null){//Tämä ei toimi vielä kunnolla, mutta ihan ok testaamisen ja toiminnallisen koodaamisen vuoksi
+            NavigationManager.NavigateTo($"/login");//kuka tahansa ei voi lisätä matkakohteita, vaan pitää olla kirjautunut käyttäjä
+        }
         else{
             isSubmitting = true;
-            var result = await Http.PostAsJsonAsync($"", newlocation); //lisää tähän url: matkas/{user} 
+            var result = await Http.PostAsJsonAsync($"api/Matkakohdes", newlocation); //vai api/Matkakohdes/{User}? Tarvitseeko käyttäjää merkitä?
+            NavigationManager.NavigateTo($"/locations");
         }
     }
 }

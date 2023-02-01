@@ -25,24 +25,38 @@ Kuka tahansa voi selata ja hakea matkakohteita*@
         -matkakohteiden muokkaus vain jos olet sisäänkirjautuneena?
 
         sis. idmatkakohde, kohdenimi, maa, paikkakunta, kuvausteksti, kuva (id:tä ei tarvitse näyttää, ellei muokata tai poisteta)
+
+
+        MUISTA LAITTAA TYYLIT <td><img src="/profilePictures/@user.kuva.ToString()" width="150" alt="@user.nimimerkki.ToString()"></td>
 *@
+<div class="keskitys">
+    <a href="/locations/add/{User}">Lisää matkakohteita</a> <a href="/locations/edit/{User}">Muokkaa matkakohteita</a>  <a href="/locations/delete/{User}">Poista matkakohteita</a>
+</div>
+
 
 @if(locations != null){
 
     <ul>
         @foreach(var l in locations){
             <li>
-                <div>
-                    <div>@l.kuva</div>
+                <div class="keskitys" >
+                    <div><img src="/tripPictures/img.jpg" width="150" /></div>
                     <div><h3>@l.kohdenimi</h3></div>
-                    <div><h4>@l.maa</h4></div>
-                    <div><h5>@l.paikkakunta</h5></div>
+                    <div><h4>@l.paikkakunta</h4></div>
+                    <div><h5>@l.maa</h5></div>
                     <div>@l.kuvausteksti</div>
                 </div>
             </li>
         }
     </ul>
+    
 }
+else {
+
+    <h2>  <img src="/images/loading.gif" width="150" /></h2>
+}
+
+
 @code {
     List<SharedLib.matkakohdeDTO>? locations = new List<SharedLib.matkakohdeDTO>();
 

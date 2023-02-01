@@ -37,7 +37,7 @@ namespace MyApi.Controllers
             return locations;
         }
 
-        // GET: api/Matkakohdes/5 vai GET: api/user/Matkakohdes/5
+        // GET: api/Matkakohdes/5 
         [HttpGet("{id}")]
         public async Task<ActionResult<matkakohdeDTO>> GetLocation(long id)
         {
@@ -85,12 +85,21 @@ namespace MyApi.Controllers
         // POST: api/Matkakohdes
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Matkakohde>> PostMatkakohde(Matkakohde matkakohde)
+        public async Task<ActionResult<matkakohdeDTO>> PostLocation(Matkakohde matkakohde)
         {
-            _context.Matkakohdes.Add(matkakohde);
+            if (!ModelState.IsValid) return BadRequest();
+
+            Matkakohde m = new Matkakohde();
+            m.Kuva = matkakohde.Kuva;
+            m.Kohdenimi = matkakohde.Kohdenimi;
+            m.Paikkakunta = matkakohde.Paikkakunta;
+            m.Maa = matkakohde.Maa;
+            m.Kuvausteksti = matkakohde.Kuvausteksti;
+
+            _context.Matkakohdes.Add(m);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetMatkakohde", new { id = matkakohde.Idmatkakohde }, matkakohde);
+            return CreatedAtAction("GetLocation", new { id = m.Idmatkakohde }, m.toMatkakohdeDTO());
         }
 
         // DELETE: api/Matkakohdes/5

@@ -20,26 +20,23 @@
         }
 
         .lataus {
-            position: absolute;
-            width: 200px;
-            height: 200px;
-            z-index: 15;
-            top: 25%;
-            left: 50%;
-            margin: -100px 0 0 -150px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            margin-top:15%;
         }
     </style>
 </head>
  <!--Tässä ns. lataus ruutu, korvasin tekstin palkupyöränrenkaalla, joka pyörii, käytin suoraan gifiä, joten se pyörii tarvittaessa loputtomasti :DD-->
 <body>
     <div id="app">
-        <div class="lataus">
-            <img src="/images/loading.gif"/>
-        </div>
+   
+            <img src="/images/loading.gif"  width="300" class="lataus"/>
+      
     </div>
 
     <div id="blazor-error-ui">
-        An unhandled error has occurred.
+       Tahtomaton virhe on tapahtunut.
         <a href="" class="reload">Reload</a>
         <a class="dismiss">🗙</a>
     </div>

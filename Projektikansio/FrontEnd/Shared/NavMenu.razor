@@ -1,4 +1,6 @@
-﻿
+﻿@inject HttpClient Http
+@using SharedLib;
+
 
 <div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
     <nav class="flex-column">
@@ -18,6 +20,8 @@
                 <span class="oi oi-map-marker" aria-hidden="true"></span> Matkakohteet
             </NavLink>
         </div>
+        @if (AuthUser.CurrentUser != null)
+        {
       @*  NÄKYY KIRJAUTUNEILLE*@
            <div class="nav-item px-3">
             <NavLink class="nav-link" href="grouptrips">
@@ -39,7 +43,9 @@
                 <span class="oi oi-person" aria-hidden="true"></span> Omat tiedot
             </NavLink>
         </div>
+        }
         @*NÄKYY KAIKILLE paitsi kirjautuneille*@
+        
         <div class="nav-item px-3">
             <NavLink class="nav-link" href="signup">
                 <span class="oi oi-flag" aria-hidden="true"></span> Rekisteröidy
@@ -55,8 +61,20 @@
 
 @code {
     private bool collapseNavMenu = true;
-
+    private matkaajaDTO? loggedUser;
     private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+
+    protected override async Task OnInitializedAsync(){
+        //loggedUser = await Http.GetFromJsonAsync<matkaajaDTO>("/api/Matkaajas/auth?email=" + AuthUser.CurrentUser.email + "&pass=" + AuthUser.CurrentUser.password);
+        //AuthUser.CurrentUser = loggedUser;
+        if (AuthUser.CurrentUser != null && AuthUser.CurrentUser.email != null && AuthUser.CurrentUser.password != null)
+        {
+            loggedUser = await Http.GetFromJsonAsync<matkaajaDTO>("/api/Matkaajas/auth?email=" + AuthUser.CurrentUser.email + "&pass=" + AuthUser.CurrentUser.password);
+            AuthUser.CurrentUser = loggedUser;
+        }
+    }
+    
+
 
     private void ToggleNavMenu()
     {

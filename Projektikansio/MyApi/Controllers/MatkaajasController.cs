@@ -15,7 +15,28 @@ namespace MyApi.Controllers
         {
             _context = context;
         }
+        [HttpGet("/auth")]
+        public async Task<ActionResult<IEnumerable<matkaajaDTO>>> AuthMatkaaja(string email, string pass)
+        {
 
+            //var auth = await Auth.Test(email , pass);
+            var auth = await _context.Matkaajas.Where(p => p.Email.Equals(email) && p.Password.Equals(pass)).FirstOrDefaultAsync();
+
+            
+            if (auth == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                
+                AuthUser.CurrentUser = auth.toMatkaajaDTO();
+                Console.WriteLine("Found something: " + AuthUser.CurrentUser.etunimi.ToString());
+                return Ok(auth.toMatkaajaDTO());
+            }
+                   
+            
+        }
         // GET: api/Matkaajas
         [HttpGet]
         public async Task<ActionResult<IEnumerable<matkaajaDTO>>> GetMatkaajas()

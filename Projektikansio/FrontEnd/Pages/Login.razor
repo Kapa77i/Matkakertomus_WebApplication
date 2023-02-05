@@ -1,4 +1,9 @@
 ﻿@page "/login"
+@inject HttpClient Http;
+@using SharedLib;
+@inject NavigationManager NavigationManager
+@inject IJSRuntime JSRuntime
+
 
 <h1>Kirjaudu</h1>
 <div class="palsta">
@@ -21,27 +26,50 @@
 </div>
 
 @code {
- 
+
 
     //NÄMÄ USERNAME JA PASSWORD ON NYT VAAN MALLINA. MIETITÄÄN MITÄN NÄMÄ YMPPÄYTYY SIIHEN DBHEN Kirjautuminen tapahtuu sähköpostiosoitteen ja salasanan avulla.
-
-    private string Email { get; set; }
+    public string Email { get; set; }
     private string Password { get; set; }
+    private matkaajaDTO? response;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            if (AuthUser.CurrentUser != null)
+            {
+                NavigationManager.NavigateTo("/user/" + AuthUser.CurrentUser.idmatkaaja);
+            }
+        }
+    }
 
     private async Task login()
-    
+
     {
-        //var result = await _db.Login(Email, Password);
-        //if (!result)
+        //response = await Http.GetFromJsonAsync<matkaajaDTO>("/auth?email=" + Email + "&pass=" + Password);
+
+        //if (response != null)
         //{
-       
-        //    //lahjoitaSimolleRahaa();
+        //    AuthUser.CurrentUser = response;
+        //    NavigationManager.NavigateTo("/user/" + AuthUser.CurrentUser.idmatkaaja);
+        //}else{
+        //    await JSRuntime.InvokeAsync<string>("alert", "Invalid email or password");
         //}
-        //else
-        //{
-        //    //meeToihinJaLahjoitaSimolleRahaa();
-        //}
-       
+        response = await Http.GetFromJsonAsync<matkaajaDTO>("/auth?email=" + Email + "&pass=" + Password);
+        Console.WriteLine("Response: " + response);
+        AuthUser.CurrentUser = response;
+        if (AuthUser.CurrentUser != null)
+        {
+            Console.WriteLine("Response is not null, navigating to user page");
+            NavigationManager.NavigateTo("/user/" + AuthUser.CurrentUser.idmatkaaja);
+        }
+        else
+        {
+            Console.WriteLine("Response is null, displaying error message");
+            await JSRuntime.InvokeAsync<string>("alert", "Invalid email or password");
+        }
+
 
     }
 }

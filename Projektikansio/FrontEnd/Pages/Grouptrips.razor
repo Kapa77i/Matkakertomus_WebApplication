@@ -108,7 +108,8 @@ else
                     <p>Tarinan nro: @tarina.idtarina.ToString()</p>
                     <p>Tarinan kirjoitus pvm: @tarina.pvm.ToString()</p>
                     @*<p>Matkakohde: @tarina.Matkakohde.kohdenimi.ToString()</p> 
-                    Tässä viittaus virhe, selvitellään*@
+                        Ei toimi tiedetään, työstössä
+                    *@
                     <p>@tarina.teksti.ToString()</p>
                 </div>
  
@@ -128,7 +129,40 @@ else
 @code {
     private List<SharedLib.kuvaDTO>? kuva;
     private List<SharedLib.tarinaDTO>? tarina;
+    private List<SharedLib.matkakohdeDTO>? matkakohde;
+    private List<SharedLib.matkakohdeDTO>? matkakohdes;
 
-    protected override async Task OnInitializedAsync() =>
-    tarina = await Http.GetFromJsonAsync<List<SharedLib.tarinaDTO>>("/api/Tarinas");
-}
+    protected override async Task OnInitializedAsync()
+    {
+        tarina = await Http.GetFromJsonAsync<List<SharedLib.tarinaDTO>>("/api/Tarinas");
+
+        if (tarina != null)
+        {
+            matkakohde = await Http.GetFromJsonAsync<List<SharedLib.matkakohdeDTO>>("/api/Matkakohdes");
+
+            if(matkakohde != null)
+            {
+                //matkakohdes = matkakohdes.Where(x => x.idmatkakohde == idmatkakohde);
+            }
+        }
+    }
+    
+
+    }
+
+@*//      if(tarina !=null)
+//    {
+//        person = people.FirstOrDefault(x => x.Id == Id);
+//        infos = await Http.GetFromJsonAsync<ContactInfo[]>("/contactInfo");
+
+//        if(infos != null)
+//        {
+//            info = infos.Where(x => x.PersonId == Id).ToArray();
+
+//            if (infos != null)
+//            {
+//                addresses = await Http.GetFromJsonAsync<Address[]>("/address");
+//    }
+//}
+//    }
+}*@

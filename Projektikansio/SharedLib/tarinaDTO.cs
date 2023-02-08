@@ -7,7 +7,11 @@
         public DateTime? pvm { get; set; }
         public string? teksti { get; set; }
         public long idmatkakohde { get; set; }
+        public virtual matkakohdeDTO Matkakohde { get; set; }
         public long idmatka { get; set; }
+        public virtual matkaDTO Matkak { get; set; }
 
+        public virtual ICollection<kuvaDTO> Kuvat { get; set; }
+    
     }
 }

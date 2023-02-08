@@ -51,17 +51,26 @@ namespace MyApi.Controllers
             return matkakohde.toMatkakohdeDTO();
         }
 
-        // PUT: api/Matkakohdes/5
+        // PUT: api/Matkakohdes/5 vai ...user/id?
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutMatkakohde(long id, Matkakohde matkakohde)
+        public async Task<ActionResult<matkakohdeDTO>> PutLocation(long id, matkakohdeDTO m)
         {
-            if (id != matkakohde.Idmatkakohde)
-            {
-                return BadRequest();
-            }
+            Matkakohde? location = await _context.Matkakohdes.Where(a => a.Idmatkakohde == id).FirstOrDefaultAsync();
+            if (location == null) return NotFound();
 
-            _context.Entry(matkakohde).State = EntityState.Modified;
+            if (m == null) return BadRequest();
+            else
+            {
+                location.Kuva = m.kuva;
+                location.Kohdenimi = m.kohdenimi;
+                location.Paikkakunta = m.paikkakunta;
+                location.Maa = m.maa;
+                location.Kuvausteksti = m.kuvausteksti;
+            }
+            
+
+            _context.Entry(location).State = EntityState.Modified;
 
             try
             {
@@ -79,7 +88,7 @@ namespace MyApi.Controllers
                 }
             }
 
-            return NoContent();
+            return Ok();
         }
 
         // POST: api/Matkakohdes

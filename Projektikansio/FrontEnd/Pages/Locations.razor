@@ -30,7 +30,7 @@ Kuka tahansa voi selata ja hakea matkakohteita*@
         MUISTA LAITTAA TYYLIT <td><img src="/profilePictures/@user.kuva.ToString()" width="150" alt="@user.nimimerkki.ToString()"></td>
 *@
 <div class="keskitys">
-    <a href="/locations/add/{User}">Lisää matkakohteita</a> <a href="/locations/edit/{User}">Muokkaa matkakohteita</a>  <a href="/locations/delete/{User}">Poista matkakohteita</a>
+    <a href="/locations/add/{User}">Lisää matkakohteita</a>   <a href="/locations/delete/{User}">Poista matkakohteita</a>
 </div>
 
 
@@ -40,11 +40,12 @@ Kuka tahansa voi selata ja hakea matkakohteita*@
         @foreach(var l in locations){
             <li>
                 <div class="keskitys" >
-                    <div><img src="/tripPictures/img.jpg" width="150" /></div>
+                    <div><img src="/tripPictures/@l.kuva" width="150" /></div>
                     <div><h3>@l.kohdenimi</h3></div>
                     <div><h4>@l.paikkakunta</h4></div>
                     <div><h5>@l.maa</h5></div>
                     <div>@l.kuvausteksti</div>
+                    <a href="/locations/edit/@l.idmatkakohde">Muokkaa</a>
                 </div>
             </li>
         }

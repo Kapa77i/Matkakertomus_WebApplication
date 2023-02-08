@@ -4,11 +4,63 @@
 @using System.Threading.Tasks
 @inject HttpClient Http
 
+<style>
+    * {
+        box-sizing: border-box;
+    }
 
+    body {
+        margin: 0;
+    }
+
+    /* Style the header */
+    .header {
+        background-color: #f1f1f1;
+        padding: 20px;
+        text-align: center;
+    }
+
+    /* Style the top navigation bar */
+    .topnav {
+        overflow: hidden;
+        background-color: #333;
+    }
+
+        /* Style the topnav links */
+        .topnav a {
+            float: left;
+            display: block;
+            color: #f2f2f2;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+
+            /* Change color on hover */
+            .topnav a:hover {
+                background-color: #ddd;
+                color: black;
+            }
+
+    /* Create three equal columns that floats next to each other */
+    .column {
+        float: left;
+        width: 33.33%;
+        padding: 15px;
+    }
+
+    /* Clear floats after the columns */
+    .row:after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+
+</style>
 <h1>Porukan Matkat</h1>
 @*voi selata (ei-yksityisiä) porukan matkoja ja niihin liitettyjä tarinoita ja kuvia*@
 
-@if (tarina != null)
+@*@if (tarina != null)
 {
 
     <table style="width:100%">
@@ -29,7 +81,7 @@
                 <td>@tarina.idmatka.ToString()</td>
                 <td>@tarina.idmatkakohde.ToString()</td>
                 <td>@tarina.teksti.ToString()</td>
-                <th>Kuvat</th>
+                <th>@tarina.idtarina.ToString()</th>
             </tr>
         }
 
@@ -39,11 +91,42 @@ else
 {
     <h2>  <img src="/images/loading.gif" width="150" /></h2>
 
-}
+}*@
+
+
+
+
+
+   
+            @if (tarina != null)
+            {
+                @foreach (var tarina in tarina)
+            {
+  
+                <div class="column">
+                    <h2>Matka nro @tarina.idmatka.ToString()</h2>
+                    <p>Tarinan nro: @tarina.idtarina.ToString()</p>
+                    <p>Tarinan kirjoitus pvm: @tarina.pvm.ToString()</p>
+                    @*<p>Matkakohde: @tarina.Matkakohde.kohdenimi.ToString()</p> 
+                    Tässä viittaus virhe, selvitellään*@
+                    <p>@tarina.teksti.ToString()</p>
+                </div>
+ 
+                }
+            }
+            else
+            {
+            <div class="column">
+                <h2>Column</h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sit amet pretium urna. Vivamus venenatis velit nec neque ultricies, eget elementum magna tristique. Quisque vehicula, risus eget aliquam placerat, purus leo tincidunt eros, eget luctus quam orci in velit. Praesent scelerisque tortor sed accumsan convallis.</p>
+            </div>
+            }
+    
+
 
 
 @code {
-    private List<SharedLib.matkaDTO>? matka;
+    private List<SharedLib.kuvaDTO>? kuva;
     private List<SharedLib.tarinaDTO>? tarina;
 
     protected override async Task OnInitializedAsync() =>

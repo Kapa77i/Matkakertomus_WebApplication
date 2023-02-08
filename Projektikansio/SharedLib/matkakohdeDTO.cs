@@ -8,6 +8,6 @@
         public string paikkakunta { get; set; }
         public string kuvausteksti { get; set; }
         public string kuva { get; set; }
-        public virtual ICollection<tarinaDTO> Tarina { get; set; }
+
     }
 }

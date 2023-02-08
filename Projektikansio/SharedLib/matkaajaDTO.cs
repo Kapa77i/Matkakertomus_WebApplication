@@ -13,7 +13,5 @@
         public string email { get; set; }
         public string password { get; set; }
 
-        public virtual ICollection<matkaDTO> Matka { get; set; }
-
     }
 }

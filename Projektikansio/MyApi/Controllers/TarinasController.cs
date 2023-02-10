@@ -23,7 +23,7 @@ namespace MyApi.Controllers
 
         // GET: api/Tarinas
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<tarinaDTO>>> GetTarinas()
+        public async Task<ActionResult<List<tarinaDTO>>> GetTarinas()
         {
             List<tarinaDTO> list = new List<tarinaDTO>();
 

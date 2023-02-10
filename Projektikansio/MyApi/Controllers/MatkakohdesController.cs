@@ -23,7 +23,7 @@ namespace MyApi.Controllers
 
         // GET: api/Matkakohdes
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<matkakohdeDTO>>> GetLocations()
+        public async Task<ActionResult<List<matkakohdeDTO>>> GetLocations()
         {
             var l = await _context.Matkakohdes.ToListAsync();
             List<matkakohdeDTO> locations = new List<matkakohdeDTO>();

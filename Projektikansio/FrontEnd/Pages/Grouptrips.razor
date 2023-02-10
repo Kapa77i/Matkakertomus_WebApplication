@@ -107,10 +107,10 @@ else
                     <h2>Matka nro @tarina.idmatka.ToString()</h2>
                     <p>Tarinan nro: @tarina.idtarina.ToString()</p>
                     <p>Tarinan kirjoitus pvm: @tarina.pvm.ToString()</p>
-                    @*<p>Matkakohde: @tarina.Matkakohde.kohdenimi.ToString()</p> 
-                        Ei toimi tiedetään, työstössä
-                    *@
-                    <p>@tarina.teksti.ToString()</p>
+            @*<p>Matkakohde: @matkakohde.kohdenimi</p>
+                    Ei toimi tiedetään, työstössä*@
+
+            <p>@tarina.teksti</p>
                 </div>
  
                 }
@@ -129,7 +129,8 @@ else
 @code {
     private List<SharedLib.kuvaDTO>? kuva;
     private List<SharedLib.tarinaDTO>? tarina;
-    private List<SharedLib.matkakohdeDTO>? matkakohde;
+    private List<SharedLib.tarinaDTO>? tarinas;
+    private IEnumerable<SharedLib.matkakohdeDTO>? matkakohde;
     private List<SharedLib.matkakohdeDTO>? matkakohdes;
 
     protected override async Task OnInitializedAsync()
@@ -138,11 +139,15 @@ else
 
         if (tarina != null)
         {
-            matkakohde = await Http.GetFromJsonAsync<List<SharedLib.matkakohdeDTO>>("/api/Matkakohdes");
+            matkakohdes = await Http.GetFromJsonAsync<List<SharedLib.matkakohdeDTO>>("/api/Matkakohdes");
 
-            if(matkakohde != null)
+            if(matkakohdes != null)
             {
-                //matkakohdes = matkakohdes.Where(x => x.idmatkakohde == idmatkakohde);
+              /*  foreach(var t in tarina){
+
+                      matkakohde = matkakohdes.Where(x => x.idmatkakohde == t.idmatkakohde);
+                  }*/
+                
             }
         }
     }

@@ -1,6 +1,7 @@
 ﻿@inject HttpClient Http
 @*@using SharedLib;*@
 @inject SharedLib.LoginState loginState
+@inject NavigationManager NavigationManager
 
 
 <div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
@@ -40,7 +41,7 @@
             </NavLink>
         </div>
         <div class="nav-item px-3">
-            <NavLink class="nav-link" href="user">
+                <NavLink class="nav-link" href="@UserLink">
                 <span class="oi oi-person" aria-hidden="true"></span> Omat tiedot
             </NavLink>
         </div>
@@ -64,17 +65,18 @@
 
 @code {
     private bool collapseNavMenu = true;
+    private string UserLink => $"user/{loginState.loggedUser.idmatkaaja}";
     //private matkaajaDTO? loggedUser;
     private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
 
     //private async void OnStatusChanged(object sender, EventArgs e)
     //{
-        
-        
+
+
     //    await InvokeAsync(() => StateHasChanged());
     //}
     //protected override async Task OnInitializedAsync(){
-        
+
     //}
     protected override void OnInitialized()
     {
@@ -84,7 +86,6 @@
     {
         loginState.OnChange -= StateHasChanged;
     }
-    
 
 
     private void ToggleNavMenu()

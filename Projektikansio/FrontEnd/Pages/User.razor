@@ -114,14 +114,19 @@ mutta jos sen sallii, niin se pitää huomioida kirjautumisessa.*@
     {
 
         user = await Http.GetFromJsonAsync<SharedLib.matkaajaDTO>($"api/Matkaajas/{Id}");
-        if (loginState.loggedUser.idmatkaaja.Equals(user.idmatkaaja))
+        try
         {
-            await JSRuntime.InvokeAsync<string>("alert", "You are authorized");
+            if (loginState.loggedUser.idmatkaaja.Equals(user.idmatkaaja))
+            {
+                await JSRuntime.InvokeAsync<string>("alert", "You are authorized");
+            }
         }
-        else
+        catch
         {
             await JSRuntime.InvokeAsync<string>("alert", "You are not authorized");
         }
+
+  
 
 
     }

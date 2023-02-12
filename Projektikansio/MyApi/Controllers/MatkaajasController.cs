@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using MyApi.Data;
 using SharedLib;
 
+
 namespace MyApi.Controllers
 {
     [Route("api/[controller]")]
@@ -30,8 +31,8 @@ namespace MyApi.Controllers
             else
             {
                 
-                AuthUser.CurrentUser = auth.toMatkaajaDTO();
-                Console.WriteLine("Found something: " + AuthUser.CurrentUser.etunimi.ToString());
+                //AuthUser.CurrentUser = auth.toMatkaajaDTO();
+                //Console.WriteLine("Found something: " + AuthUser.CurrentUser.etunimi.ToString());
                 return Ok(auth.toMatkaajaDTO());
             }
                    

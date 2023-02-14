@@ -32,7 +32,7 @@ namespace MyApi.Controllers
                 return NotFound();
             }
 
-            var tarinas = await _context.Tarinas.OrderByDescending(t => t.Pvm).ToListAsync();
+            var tarinas = await _context.Tarinas.OrderByDescending(t => t.Pvm).Include(p => p.IdmatkakohdeNavigation).ToListAsync();
 
             foreach(var tarina in tarinas)
             {

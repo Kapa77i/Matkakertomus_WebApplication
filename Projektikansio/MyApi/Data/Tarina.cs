@@ -1,4 +1,5 @@
 ﻿using SharedLib;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MyApi.Data;
 
@@ -34,12 +35,11 @@ public partial class Tarina
     public string? Teksti { get; set; }
 
     public long Idmatkakohde { get; set; }
+    public Matkakohde IdmatkakohdeNavigation { get; set; }
 
     public long Idmatka { get; set; }
 
-    public virtual Matka IdmatkaNavigation { get; set; } = null!;
-
-    public virtual Matkakohde IdmatkakohdeNavigation { get; set; } = null!;
+    public Matka IdmatkaNavigation { get; set; } 
 
     public virtual ICollection<Kuva> Kuvas { get; } = new List<Kuva>();
 }

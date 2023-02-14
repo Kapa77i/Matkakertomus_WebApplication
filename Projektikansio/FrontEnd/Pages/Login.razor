@@ -7,12 +7,9 @@
 
 
 <h1>Kirjaudu</h1>
-
 <div class="palsta">
-
-    <div>
-        <EditForm Model="@response" OnSubmit="@login">
-        <div class="form-group">
+<EditForm Model="@response" OnSubmit="@login">
+    <div class="form-group">
         <label for="email">Sähköpostiosoite</label>
         <InputText @bind-Value="Email" type="email" class="form-control" id="email" placeholder="Sähköpostiosoite"/>
     </div>
@@ -21,24 +18,16 @@
         <label for="password">Salasana</label>
         <InputText @bind-Value="Password" type="password" class="form-control" id="password" placeholder="Salasana"/>
     </div>
-    <div>
-                <h6 style="color:white;">@errorMessage</h6>
-    </div>
-        <div>    
-            <button type="submit" class="btn btn-primary">Kirjaudu sisään</button>
-        </div>
-         
-    </EditForm>
 
+    <button type="submit" class="btn btn-primary" >Kirjaudu sisään</button>
         <NavLink class="nav-link" href="signup">
             <span class="oi oi-flag" aria-hidden="true"></span> Rekisteröidy
         </NavLink>
-
-    </div>
+</EditForm>
 </div>
 
 @code {
-    private string errorMessage = "";
+
 
     //NÄMÄ USERNAME JA PASSWORD ON NYT VAAN MALLINA. MIETITÄÄN MITÄN NÄMÄ YMPPÄYTYY SIIHEN DBHEN Kirjautuminen tapahtuu sähköpostiosoitteen ja salasanan avulla.
     public string Email { get; set; }
@@ -47,29 +36,18 @@
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        try
+        if (firstRender)
         {
-            if (firstRender)
+            if (loginState.isLoggedIn.Equals(true))
             {
-                if (loginState.isLoggedIn.Equals(true))
-                {
-                    NavigationManager.NavigateTo("/user/" + loginState.loggedUser.idmatkaaja, true);
-                }
+                NavigationManager.NavigateTo("/user/" + loginState.loggedUser.idmatkaaja, true);
             }
-        }
-        catch (Exception e)
-        {
-
-            Console.WriteLine("LE ERROR");
-            errorMessage = "Error1: " + e.Message;
         }
     }
 
     private async Task login()
-    { 
-        try
-        {
 
+    {
         //response = await Http.GetFromJsonAsync<matkaajaDTO>("/auth?email=" + Email + "&pass=" + Password);
 
         //if (response != null)
@@ -79,9 +57,8 @@
         //}else{
         //    await JSRuntime.InvokeAsync<string>("alert", "Invalid email or password");
         //}
-
         loginState.loggedUser = await Http.GetFromJsonAsync<matkaajaDTO>("/auth?email=" + Email + "&pass=" + Password);
-        if (loginState.loggedUser != null)
+        if(loginState.loggedUser != null)
         {
             loginState.SetLogin(true, loginState.loggedUser);
         }
@@ -98,13 +75,6 @@
             await JSRuntime.InvokeAsync<string>("alert", "Invalid email or password");
         }
 
-          }
-        catch (Exception e)
-        {
 
-            Console.WriteLine("LE ERROR"); 
-            errorMessage = "kirjautuminen estetty";
-        }
     }
-    
 }

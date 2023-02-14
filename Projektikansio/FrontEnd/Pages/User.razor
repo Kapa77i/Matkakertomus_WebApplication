@@ -118,7 +118,7 @@ mutta jos sen sallii, niin se pitää huomioida kirjautumisessa.*@
         {
             if (loginState.loggedUser.idmatkaaja.Equals(user.idmatkaaja))
             {
-               //await JSRuntime.InvokeAsync<string>("alert", "You are authorized");
+                await JSRuntime.InvokeAsync<string>("alert", "You are authorized");
             }
         }
         catch

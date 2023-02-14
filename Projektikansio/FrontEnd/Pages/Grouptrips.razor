@@ -97,77 +97,49 @@ else
 
 
 
-   
-            @if (tarina != null)
-            {
-                @foreach (var tarina in tarina)
-            {
-  
-                <div class="column">
-                    <h2>Matka nro @tarina.idmatka.ToString()</h2>
-                    <p>Tarinan nro: @tarina.idtarina.ToString()</p>
-                    <p>Tarinan kirjoitus pvm: @tarina.pvm.ToString()</p>
-                    <p>Matkakohde: @tarina.</p>
-                
+
+@if (tarina == null)
+{
+    <div class="column">
+        <h2>Column</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sit amet pretium urna. Vivamus venenatis velit nec neque ultricies, eget elementum magna tristique. Quisque vehicula, risus eget aliquam placerat, purus leo tincidunt eros, eget luctus quam orci in velit. Praesent scelerisque tortor sed accumsan convallis.</p>
+    </div>
+
+}
+else
+{
+
+    @foreach (var tarina in tarina)
+    {
+
+        <div class="column">
+            <h2>Matka nro @tarina.idmatka.ToString()</h2>
+            <p>Tarinan nro: @tarina.idtarina.ToString()</p>
+            <p>Tarinan kirjoitus pvm: @tarina.pvm.ToString()</p>
+         @*   <p>Matkakohde: @tarina.Matkakohde.kohdenimi.ToString()</p>*@
+
 
             <p>@tarina.teksti</p>
-                </div>
- 
-                }
-            }
-            else
-            {
-            <div class="column">
-                <h2>Column</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sit amet pretium urna. Vivamus venenatis velit nec neque ultricies, eget elementum magna tristique. Quisque vehicula, risus eget aliquam placerat, purus leo tincidunt eros, eget luctus quam orci in velit. Praesent scelerisque tortor sed accumsan convallis.</p>
-            </div>
-            }
-    
+        </div>
+
+    }
+}
+
 
 
 
 @code {
     private List<SharedLib.kuvaDTO>? kuva;
     private List<SharedLib.tarinaDTO>? tarina;
-    private List<SharedLib.tarinaDTO>? tarinas;
     private IEnumerable<SharedLib.matkakohdeDTO>? matkakohde;
     private List<SharedLib.matkakohdeDTO>? matkakohdes;
 
     protected override async Task OnInitializedAsync()
     {
         tarina = await Http.GetFromJsonAsync<List<SharedLib.tarinaDTO>>("/api/Tarinas");
-
-        if (tarina != null)
-        {
-            matkakohdes = await Http.GetFromJsonAsync<List<SharedLib.matkakohdeDTO>>("/api/Matkakohdes");
-
-            if(matkakohdes != null)
-            {
-              /*  foreach(var t in tarina){
-
-                      matkakohde = matkakohdes.Where(x => x.idmatkakohde == t.idmatkakohde);
-                  }*/
-                
-            }
-        }
-    }
-    
+        matkakohdes = await Http.GetFromJsonAsync<List<SharedLib.matkakohdeDTO>>("/api/Matkakohdes");
 
     }
 
-@*//      if(tarina !=null)
-//    {
-//        person = people.FirstOrDefault(x => x.Id == Id);
-//        infos = await Http.GetFromJsonAsync<ContactInfo[]>("/contactInfo");
-
-//        if(infos != null)
-//        {
-//            info = infos.Where(x => x.PersonId == Id).ToArray();
-
-//            if (infos != null)
-//            {
-//                addresses = await Http.GetFromJsonAsync<Address[]>("/address");
-//    }
-//}
-//    }
-}*@
+ 
+}

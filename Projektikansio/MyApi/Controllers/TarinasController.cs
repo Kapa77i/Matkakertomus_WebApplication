@@ -32,7 +32,7 @@ namespace MyApi.Controllers
                 return NotFound();
             }
 
-            var tarinas = await _context.Tarinas.OrderByDescending(t => t.Pvm).Include(p => p.IdmatkakohdeNavigation).ToListAsync();
+            var tarinas = await _context.Tarinas.Include(e => e.IdmatkakohdeNavigation).ToListAsync();
 
             foreach(var tarina in tarinas)
             {
@@ -46,7 +46,7 @@ namespace MyApi.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Tarina>> GetTarina(long id)
         {
-            var tarina = await _context.Tarinas.FindAsync(id);
+            var tarina = await _context.Tarinas.Include(e => e.IdmatkaNavigation).FirstOrDefaultAsync(e => e.Idtarina == id);
 
             if (tarina == null)
             {

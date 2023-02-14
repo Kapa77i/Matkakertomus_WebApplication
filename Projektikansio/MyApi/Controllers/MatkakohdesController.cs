@@ -113,13 +113,15 @@ namespace MyApi.Controllers
 
         // DELETE: api/Matkakohdes/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<matkaajaDTO>> DeleteLocation(long id)
+        public async Task<IActionResult> DeleteMatkakohde(long id)
         {
-            Matkakohde? m = await _context.Matkakohdes.Where(a => a.Idmatkakohde == id).FirstOrDefaultAsync();
-            if (m == null) return NotFound();
-            
+            var matkakohde = await _context.Matkakohdes.FindAsync(id);
+            if (matkakohde == null)
+            {
+                return NotFound();
+            }
 
-            _context.Matkakohdes.Remove(m);
+            _context.Matkakohdes.Remove(matkakohde);
             await _context.SaveChangesAsync();
 
             return NoContent();

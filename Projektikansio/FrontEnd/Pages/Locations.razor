@@ -30,7 +30,7 @@ Kuka tahansa voi selata ja hakea matkakohteita*@
         MUISTA LAITTAA TYYLIT <td><img src="/profilePictures/@user.kuva.ToString()" width="150" alt="@user.nimimerkki.ToString()"></td>
 *@
 <div style="text-align:center">
-    <a href="/locations/add/{User}">Lisää matkakohteita</a>   <a href="/locations/delete/{User}">Poista matkakohteita</a>
+    <a href="/locations/add/{User}">Lisää matkakohteita</a>
 </div>
 
 
@@ -46,40 +46,13 @@ Kuka tahansa voi selata ja hakea matkakohteita*@
                     <div><h4>@l.maa</h4></div>
                     <div style="text-align:center">@l.kuvausteksti</div>
                     <div style="text-align:center"><a href="/locations/edit/@l.idmatkakohde">Muokkaa</a></div>
+                    <div style="text-align:center"><a href="locations/delete/@l.idmatkakohde">Poista</a></div>
                     <br/>
                 </div>
             </li>
         }
     </ul>
 
-    @if(locations != null){
-        <table>
-            <thead>
-                <tr>
-                    <td>Kuva</td>
-                    <td>Kohde</td>
-                    <td>Paikkakunta</td>
-                    <td>Maa</td>
-                    <td>Kuvaus</td>
-                    <td></td>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach(var l in locations){
-                    <tr>
-                        <td><div style="text-align:center"><img src="/tripPictures/@l.kuva" width="150" /></div></td>
-                        <td><div><h3>@l.kohdenimi</h3></div></td>
-                        <td><div><h4>@l.paikkakunta</h4></div></td>
-                        <td><div><h5>@l.maa</h5></div></td>
-                        <td><div style="text-align:center">@l.kuvausteksti</div></td>
-                        <td><div style="text-align:center"><a href="/locations/edit/@l.idmatkakohde">Muokkaa</a></div></td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-    }
-  
-    
 }
 else {
 

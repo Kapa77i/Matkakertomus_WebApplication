@@ -13,6 +13,7 @@
     Alustava!
 
     KUINKA SAADA KUVA LISÄTTYÄ JA VÄLITETTYÄ??????
+    Tee joku oletuskuva kaikille?
 *@
 <a href="/locations">Matkakohteet</a>
 @if(User != null){
@@ -23,6 +24,7 @@
             <div>
                 <label>Kuva
                     <InputText class="form-control" id="kuva" @bind-Value="newlocation.kuva"/>
+                    <img src="tripPictures/@newlocation.kuva" width="133" height="133" alt="1" /> @*jos kuvaa ei valittu niin tässä ikoni*@
                 </label>
             </div>
             <div>

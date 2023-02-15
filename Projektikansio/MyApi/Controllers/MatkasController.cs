@@ -31,6 +31,7 @@ namespace MyApi.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Matka>> GetMatka(long id)
         {
+            //var tarina = await _context.Matkas.Include(e => e.Idmatka).FirstOrDefaultAsync(e => e.Idtarina == id);
             var matka = await _context.Matkas.FindAsync(id);
 
             if (matka == null)

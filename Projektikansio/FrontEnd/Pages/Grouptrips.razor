@@ -3,6 +3,7 @@
 @using System.Net.Http.Json
 @using System.Threading.Tasks
 @inject HttpClient Http
+@inject SharedLib.LoginState loginState
 
 <style>
     * {
@@ -60,38 +61,7 @@
 <h1>Porukan Matkat</h1>
 @*voi selata (ei-yksityisiä) porukan matkoja ja niihin liitettyjä tarinoita ja kuvia*@
 
-@*@if (tarina != null)
-{
 
-    <table style="width:100%">
-        <tr>
-            <th>TarinanId</th>
-            <th>Matkan pvm</th>
-            <th>MatkanId</th>
-            <th>MatkakohteenId</th>
-            <th>Tarina</th>
-            <th>Kuvat</th>
-
-        </tr>
-        @foreach (var tarina in tarina)
-        {
-            <tr>
-               <td>@tarina.idtarina.ToString()</td>
-                <td>@tarina.pvm.ToString()</td>
-                <td>@tarina.idmatka.ToString()</td>
-                <td>@tarina.idmatkakohde.ToString()</td>
-                <td>@tarina.teksti.ToString()</td>
-                <th>@tarina.idtarina.ToString()</th>
-            </tr>
-        }
-
-    </table>
-}
-else
-{
-    <h2>  <img src="/images/loading.gif" width="150" /></h2>
-
-}*@
 @if (tarinas == null && matkakohde == null)
 {
     <div class="column">
@@ -104,35 +74,46 @@ else
 
     @foreach (var tarina in tarinas)
     {
-        matkakohde = matkakohdes.FirstOrDefault(m => m.idmatkakohde == tarina.idmatkakohde);
+        matka = matkas.FirstOrDefault(m => m.idmatka == tarina.idmatka);
 
-        <div class="column">
-            <h2>Matka nro @tarina.idmatka.ToString()</h2>
-            <p>Tarinan nro: @tarina.idtarina.ToString()</p>
-            <p>Tarinan kirjoitus pvm: @tarina.pvm.ToString().Replace("0.00.00", "")</p>
-            <p>Matkakohde: @matkakohde.kohdenimi</p>
+        //Tsekataan onko matka yksityinen vai ei, 1 == not private?
+        if (matka.yksityinen == 1)
+        {
+            matkakohde = matkakohdes.FirstOrDefault(m => m.idmatkakohde == tarina.idmatkakohde);
 
-            <p>@tarina.teksti</p>
-        </div>
+            <div class="column">
+                <h2>Matka nro @tarina.idmatka.ToString()</h2>
+                <p>Tarinan nro: @tarina.idtarina.ToString()</p>
+                <p>Tarinan kirjoitus pvm: @tarina.pvm.ToString().Replace("0.00.00", "")</p>
+                <p>Matkakohde: @matkakohde.kohdenimi</p>
+
+                <p>@tarina.teksti</p>
+            </div>
+        }
+        else 
+        {
+
+        }
     }
 }
 
 @code {
     private List<SharedLib.kuvaDTO>? kuva;
-    private List<SharedLib.tarinaDTO>? tarinas;  
+    private List<SharedLib.tarinaDTO>? tarinas;
     private List<SharedLib.matkakohdeDTO>? matkakohdes;
+    private List<SharedLib.matkaDTO>? matkas;
     private SharedLib.matkakohdeDTO matkakohde;
+    private SharedLib.matkaDTO matka;
 
-protected override async Task OnInitializedAsync()
-{
-    tarinas = await Http.GetFromJsonAsync<List<SharedLib.tarinaDTO>>("/api/Tarinas");
-    matkakohdes = await Http.GetFromJsonAsync<List<SharedLib.matkakohdeDTO>>("/api/Matkakohdes");
-
-
-}
-
-
+    protected override async Task OnInitializedAsync()
+    {
+        tarinas = await Http.GetFromJsonAsync<List<SharedLib.tarinaDTO>>("/api/Tarinas");
+        matkakohdes = await Http.GetFromJsonAsync<List<SharedLib.matkakohdeDTO>>("/api/Matkakohdes");
+        matkas = await Http.GetFromJsonAsync<List<SharedLib.matkaDTO>>("/api/Matkas");
+    }
 
 
- 
+
+
+
 }

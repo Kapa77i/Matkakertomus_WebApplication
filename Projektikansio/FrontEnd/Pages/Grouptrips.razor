@@ -92,54 +92,45 @@ else
     <h2>  <img src="/images/loading.gif" width="150" /></h2>
 
 }*@
-
-
-
-
-
-
-@if (tarina == null)
+@if (tarinas == null && matkakohde == null)
 {
     <div class="column">
         <h2>Column</h2>
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sit amet pretium urna. Vivamus venenatis velit nec neque ultricies, eget elementum magna tristique. Quisque vehicula, risus eget aliquam placerat, purus leo tincidunt eros, eget luctus quam orci in velit. Praesent scelerisque tortor sed accumsan convallis.</p>
     </div>
-
 }
 else
 {
 
-    @foreach (var tarina in tarina)
+    @foreach (var tarina in tarinas)
     {
+     matkakohde = matkakohdes.FirstOrDefault(m => m.idmatkakohde == tarina.idmatkakohde); 
 
         <div class="column">
             <h2>Matka nro @tarina.idmatka.ToString()</h2>
             <p>Tarinan nro: @tarina.idtarina.ToString()</p>
             <p>Tarinan kirjoitus pvm: @tarina.pvm.ToString()</p>
-         @*   <p>Matkakohde: @tarina.Matkakohde.kohdenimi.ToString()</p>*@
-
+            <p>Matkakohde: @matkakohde.kohdenimi</p>
 
             <p>@tarina.teksti</p>
         </div>
-
     }
+}
+
+@code {
+    private List<SharedLib.kuvaDTO>? kuva;
+    private List<SharedLib.tarinaDTO>? tarinas;  
+    private List<SharedLib.matkakohdeDTO>? matkakohdes;
+    private SharedLib.matkakohdeDTO matkakohde;
+
+protected override async Task OnInitializedAsync()
+{
+    tarinas = await Http.GetFromJsonAsync<List<SharedLib.tarinaDTO>>("/api/Tarinas");
+    matkakohdes = await Http.GetFromJsonAsync<List<SharedLib.matkakohdeDTO>>("/api/Matkakohdes");
 }
 
 
 
-
-@code {
-    private List<SharedLib.kuvaDTO>? kuva;
-    private List<SharedLib.tarinaDTO>? tarina;
-    private IEnumerable<SharedLib.matkakohdeDTO>? matkakohde;
-    private List<SharedLib.matkakohdeDTO>? matkakohdes;
-
-    protected override async Task OnInitializedAsync()
-    {
-        tarina = await Http.GetFromJsonAsync<List<SharedLib.tarinaDTO>>("/api/Tarinas");
-        matkakohdes = await Http.GetFromJsonAsync<List<SharedLib.matkakohdeDTO>>("/api/Matkakohdes");
-
-    }
 
  
 }

@@ -1,7 +1,72 @@
-﻿@page "/locations/delete/{User}"
+﻿@page "/locations/delete/{Id:long}"
+@*tarvitseeko myös user?*@
 
-<h3>DeleteLocation</h3>
+@using System.Net.Http
+@using System.Net.Http.Json
+@using System.Threading.Tasks
+
+@inject NavigationManager NavigationManager
+@inject ILogger<Index> Logger
+@inject HttpClient Http
+
+
+@if (location != null)
+{
+    <h2>@location</h2>
+
+
+    <div style="text-align:center">
+        <div>@location.idmatkakohde</div>
+        <div>@location.kuva</div>
+        <div>@location.kohdenimi</div>
+        <div>@location.paikkakunta</div>
+        <div>@location.maa</div>
+        <div>@location.kuvausteksti</div>
+
+        <button type="submit" class="btn btn-danger" disabled="@isSubmitting" onclick="@DeleteLocations">Delete</button>
+    </div>
+
+
+}
+else
+{
+    <div style="text-align:center">Hupsista! <br />Jokin meni nyt vikaan. <br /> :( </div>
+}
 
 @code {
+    bool isSubmitting;
+    SharedLib.matkakohdeDTO? location = new SharedLib.matkakohdeDTO();
 
+    [Parameter]
+    public string? User { get; set; }
+
+    [Parameter]
+    public long? Id { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var data = await Http.GetAsync($"api/Matkakohdes/{Id}");
+        location = await data.Content.ReadFromJsonAsync<SharedLib.matkakohdeDTO>();
+
+        await base.OnInitializedAsync();
+    }
+
+
+    private async Task DeleteLocations()
+    {
+        /* if (User == null)
+         {
+             NavigationManager.NavigateTo($"/login");
+         }
+         else
+         { }*/
+
+        isSubmitting = true;
+        var result = await Http.DeleteAsync($"api/Matkakohdes/{Id}");
+
+        //saako tähän väliin pyöritettyä pyörää?
+        NavigationManager.NavigateTo($"/locations");
+
+
+    }
 }

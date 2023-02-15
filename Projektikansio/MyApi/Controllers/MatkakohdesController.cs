@@ -68,7 +68,7 @@ namespace MyApi.Controllers
                 location.Maa = m.maa;
                 location.Kuvausteksti = m.kuvausteksti;
             }
-            
+
 
             _context.Entry(location).State = EntityState.Modified;
 
@@ -113,15 +113,13 @@ namespace MyApi.Controllers
 
         // DELETE: api/Matkakohdes/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteMatkakohde(long id)
+        public async Task<ActionResult<matkaajaDTO>> DeleteLocation(long id)
         {
-            var matkakohde = await _context.Matkakohdes.FindAsync(id);
-            if (matkakohde == null)
-            {
-                return NotFound();
-            }
+            Matkakohde? m = await _context.Matkakohdes.Where(a => a.Idmatkakohde == id).FirstOrDefaultAsync();
+            if (m == null) return NotFound();
 
-            _context.Matkakohdes.Remove(matkakohde);
+
+            _context.Matkakohdes.Remove(m);
             await _context.SaveChangesAsync();
 
             return NoContent();
@@ -132,4 +130,6 @@ namespace MyApi.Controllers
             return _context.Matkakohdes.Any(e => e.Idmatkakohde == id);
         }
     }
+
+
 }

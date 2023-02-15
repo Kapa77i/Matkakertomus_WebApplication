@@ -104,12 +104,12 @@ else
 
     @foreach (var tarina in tarinas)
     {
-     matkakohde = matkakohdes.FirstOrDefault(m => m.idmatkakohde == tarina.idmatkakohde); 
+        matkakohde = matkakohdes.FirstOrDefault(m => m.idmatkakohde == tarina.idmatkakohde);
 
         <div class="column">
             <h2>Matka nro @tarina.idmatka.ToString()</h2>
             <p>Tarinan nro: @tarina.idtarina.ToString()</p>
-            <p>Tarinan kirjoitus pvm: @tarina.pvm.ToString()</p>
+            <p>Tarinan kirjoitus pvm: @tarina.pvm.ToString().Replace("0.00.00", "")</p>
             <p>Matkakohde: @matkakohde.kohdenimi</p>
 
             <p>@tarina.teksti</p>
@@ -127,6 +127,8 @@ protected override async Task OnInitializedAsync()
 {
     tarinas = await Http.GetFromJsonAsync<List<SharedLib.tarinaDTO>>("/api/Tarinas");
     matkakohdes = await Http.GetFromJsonAsync<List<SharedLib.matkakohdeDTO>>("/api/Matkakohdes");
+
+
 }
 
 

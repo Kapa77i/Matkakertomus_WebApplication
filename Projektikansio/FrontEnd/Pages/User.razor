@@ -11,30 +11,38 @@
 @if (user != null)
 {
    
-<div class="palsta"> 
-          <EditForm Model="@user" OnValidSubmit="@UpdateUser">
-            <img src="profilePictures/@user.kuva" width="133" height="133" alt="1" />
-    <div class="form-group">
-        <label for="etunimi">Etunimi</label>
+            <div class="palsta"> 
+                      <EditForm Model="@user" OnValidSubmit="@UpdateUser">
+                        <img src="profilePictures/@user.kuva" width="133" height="133" alt="1" />
+            <div class="form-group">
+                <label for="etunimi">Etunimi</label>
                 <InputText class="form-control" id="etunimi" @bind-Value="loginState.loggedUser.etunimi"></InputText>
-    </div>
-    <div class="form-group">
-        <label for="sukunimi">Sukunimi</label>
+            </div>
+            <div class="form-group">
+                <label for="sukunimi">Sukunimi</label>
                 <InputText class="form-control" id="sukunimi" @bind-Value="loginState.loggedUser.sukunimi"></InputText>
-    </div>
-    <div class="form-group">
-        <label for="nimimerkki">Nimimerkki</label>
+            </div>
+            <div class="form-group">
+                <label for="nimimerkki">Nimimerkki</label>
                 <InputText class="form-control" id="nimimerkki" @bind-Value="loginState.loggedUser.nimimerkki"></InputText>
-    </div>
-    <div class="form-group">
-        <label for="paikkakunta">Paikkakunta</label>
+            </div>
+            <div class="form-group">
+                <label for="paikkakunta">Paikkakunta</label>
                 <InputText class="form-control" id="paikkakunta" @bind-Value="loginState.loggedUser.paikkakunta"></InputText>
-    </div>
-    <div class="form-group">
-        <label for="esittely">Esittely</label>
+            </div>
+            <div class="form-group">
+                <label for="esittely">Esittely</label>
                 <InputText class="form-control" id="esittely" @bind-Value="loginState.loggedUser.esittely"></InputText>
-    </div>
-     
+            </div>
+            <div class="form-group">
+                <label for="email">Sähköposti</label>
+                <InputText class="form-control" id="email" @bind-Value="loginState.loggedUser.email"></InputText>
+            </div>
+            <div class="form-group">
+                <label for="password">Salasana</label>
+                <InputText class="form-control" id="password" @bind-Value="loginState.loggedUser.password"></InputText>
+            </div>
+            
             <div class="form-group">
                 <label for="kuva">Kuva</label>
                 <table id="kuva" style="background-color: transparent;"  border="0">
@@ -89,7 +97,11 @@
                 </table>
             
         </div>
-           <button type="submit" class="btn btn-primary" style="margin-top:10px;" >Päivitä</button>
+     <div>
+                <button type="submit" class="btn btn-primary" style="margin-top:10px;">Päivitä</button>
+                <a class="btn btn-danger" style="margin-top:10px" href=" /">Peruuta</a>
+     </div>
+
     </EditForm>
         
 </div>
@@ -110,6 +122,8 @@ mutta jos sen sallii, niin se pitää huomioida kirjautumisessa.*@
     private SharedLib.matkaajaDTO? user;
     private string kuva { get; set; }
     //Sivun lataus
+
+ 
     protected override async Task OnInitializedAsync()
     {
 

@@ -76,7 +76,7 @@ else
     {
         matka = matkas.FirstOrDefault(m => m.idmatka == tarina.idmatka);
 
-        //Tsekataan onko matka yksityinen vai ei, 1 == not private?
+        //Tsekataan onko matka yksityinen vai ei, 1 == public?
         if (matka.yksityinen == 1)
         {
             matkakohde = matkakohdes.FirstOrDefault(m => m.idmatkakohde == tarina.idmatkakohde);
@@ -90,6 +90,7 @@ else
                 <p>@tarina.teksti</p>
             </div>
         }
+
         else 
         {
 
@@ -111,9 +112,5 @@ else
         matkakohdes = await Http.GetFromJsonAsync<List<SharedLib.matkakohdeDTO>>("/api/Matkakohdes");
         matkas = await Http.GetFromJsonAsync<List<SharedLib.matkaDTO>>("/api/Matkas");
     }
-
-
-
-
 
 }

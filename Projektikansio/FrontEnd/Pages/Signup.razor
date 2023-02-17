@@ -125,7 +125,7 @@ Muut tiedot voi antaa omissa tiedoissa*@.
         user.idmatkaaja = 0;
         Console.WriteLine(user);
         await Http.PostAsJsonAsync("/api/Matkaajas", user);
-        NavManager.NavigateTo("/users");
+        NavManager.NavigateTo("/login");
 
     }
      

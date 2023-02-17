@@ -41,7 +41,7 @@
                         <td><img src="profilePictures/4.png" width="133" height="133" alt="4" /></td>
                     </tr>
                     <tr>
-                        <td><input type="radio" name="kuva" value="1.png" @onchange="uusiKuva" checked="checked" /></td>
+                        <td><input type="radio" name="kuva" value="1.png" @onchange="uusiKuva" checked="checked"/></td>
                         <td><input type="radio" name="kuva" value="2.png" @onchange="uusiKuva" /></td>
                         <td><input type="radio" name="kuva" value="3.png" @onchange="uusiKuva" /></td>
                         <td><input type="radio" name="kuva" value="4.png" @onchange="uusiKuva" /></td>
@@ -121,7 +121,14 @@ Muut tiedot voi antaa omissa tiedoissa*@.
     private async Task SignUp()
 
     {
-        user.kuva = kuva;
+        if (kuva == null)
+        {
+
+            kuva = "1.png";
+
+        }
+        user.kuva = kuva; 
+        //user.kuva = "16.png"
         user.idmatkaaja = 0;
         Console.WriteLine(user);
         await Http.PostAsJsonAsync("/api/Matkaajas", user);
@@ -131,6 +138,7 @@ Muut tiedot voi antaa omissa tiedoissa*@.
      
     private void uusiKuva(ChangeEventArgs e)
     {
+        //Kuva tulee radiobuttonin valinnan mukaan.
         kuva = e.Value as string;
         
     }

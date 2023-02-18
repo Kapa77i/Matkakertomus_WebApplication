@@ -5,23 +5,39 @@
 @inject HttpClient httpClient
 
 <h1>@tervehdysViesti</h1>
+
 @if (rssItems != null)
 {
-
-
-            @foreach (var item in rssItems.Take(10))
-        {
-            <a href="@item.Link" target="_blank">
-                <div class="uutinen">
-                    <p>@item.Title</p>
-                    <img src="@item.ImageUrl" alt="@item.ImageUrl" />
-                    <p>@item.Description ...</p>
-                    <small>@item.PublishDate.ToShortDateString()</small>              
-                </div>
-</a>
-        }
+    <div>
+    <label for="take">Näytettävien uutisten määrä:</label>
+    <select id="take" @onchange="NaytettavatUutiset">
     
+        <option value="10" >10</option>
+        <option value="20">20</option>
+        <option value="30">30</option>
+        <option value="40">40</option>
+        <option value="50">50</option>
+        <option value="40">40</option>
+        <option value="50">50</option>
+        <option value="60">60</option>
+        <option value="70">70</option>
+        <option value="80">80</option>
+        <option value="90">90</option>
+        <option value="@rssItems.Count"selected>Kaikki</option>
+    </select>
+</div>
 
+    @foreach (var item in rssItems.Take(that))
+    {
+        <a href="@item.Link" target="_blank">
+            <div class="uutinen">
+                <p>@item.Title</p>
+                <img src="@item.ImageUrl" alt="@item.ImageUrl" />
+                <p>@item.Description ...</p>
+                <small>@item.PublishDate.ToShortDateString()</small>
+            </div>
+        </a>
+    }
 }
 else
 {
@@ -31,6 +47,7 @@ else
 @code {
     private string tervehdysViesti { get; set; }
     private List<RssItem> rssItems;
+    private int that = 10;
 
     protected override async Task OnInitializedAsync()
     {
@@ -83,6 +100,13 @@ else
         }
     }
 
+    private void NaytettavatUutiset(ChangeEventArgs e)
+    {
+        int.TryParse(e.Value.ToString(), out int result);
+        that = result;
+    }
+
+    //en näille alkanut luomaan suotta omaa luokkaansa.
     private class RssItem
     {
         public string Title { get; set; }

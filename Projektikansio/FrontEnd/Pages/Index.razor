@@ -24,12 +24,14 @@
     {
     @*    Ladataan uutiset sivulle*@
         <a href="@item.Link" target="_blank">
+            
             <div class="uutinen">
-                <h3 class="rotate-270">@item.PublishDate.ToShortDateString()</h3>
+                <h3 class="pvm" >@item.PublishDate.ToShortDateString()</h3>
+                <div class="uutinenSisa">
                 <h2>@item.Title</h2>
                 <img src="@item.ImageUrl" alt="@item.ImageUrl" class="uutiskuva"/>
            @*     <h6>@item.Description</h6>*@
-       
+                </div>
             </div>
         </a>
     }

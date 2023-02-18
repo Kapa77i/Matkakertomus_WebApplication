@@ -1,38 +1,92 @@
 ﻿@page "/"
+@using System.Xml.Linq
 
+@inject SharedLib.LoginState loginState;
+@inject HttpClient httpClient
 
-
-
-
-@if (sebastian == "welho")
+<h1>@tervehdysViesti</h1>
+@if (rssItems != null)
 {
-    <h1>Kuopion Kulkijat ry</h1>
-    <h2> eli tuttavammin KuoLijat, toivottaa sinut tervetulleeksi sivuilleen.</h2>
-    <div class="palsta">
-        <div>
-            <img src="/images/index.png" width="450" height="300" />
-            <p>Sebastian vähän lepää</p>
- 
-        <NavLink class="nav-link" href="test">
-            <span class="oi oi-beaker" aria-hidden="true"></span> SALAINEN TESTISIVU
-        </NavLink>
-                   </div>
-    </div>
-    <div  class="palsta2">
-      
-    </div>
-
-
- 
+    <h2>Yhteistyökumppanimme uutiset</h2>
+        @foreach (var item in rssItems.Take(10))
+        {
+           <a href="@item.Link" target="_blank">
+        <div class="uutinen">
+                <p>@item.Title</p>
+            <img src="@item.ImageUrl" alt="@item.ImageUrl" />
+                      <p>@item.Description ...</p>
+            <small>@item.PublishDate.ToShortDateString()</small>              
+        </div>
+</a>
+        }
+    
 }
 else
 {
-    <h2>  <img src="/images/loading.gif" width="150" /></h2>
-
+    <h2><img src="/images/loading.gif" width="150" /></h2>
 }
-@code{
-    private string sebastian = "welho";
-    
-    
-   
+
+@code {
+    private string tervehdysViesti { get; set; }
+    private List<RssItem> rssItems;
+
+    protected override async Task OnInitializedAsync()
+    {
+        // Haetaan suunnon pyöräilyuutiset RSS feedin avulla
+        var response = await httpClient.GetAsync("https://www.suunto.com/fi-fi/sports/rss-feeds/suuntoride/?category=SuuntoRide");
+        var content = await response.Content.ReadAsStringAsync();
+
+        // Parsitaan haettu RSS
+        var doc = XDocument.Parse(content);
+        var items = doc.Descendants("item").Select(item => new RssItem
+            {
+                Title = item.Element("title")?.Value,
+                Link = item.Element("link")?.Value,
+                Description = item.Element("description")?.Value,
+                PublishDate = DateTime.Parse(item.Element("pubDate")?.Value),
+                ImageUrl = item.Descendants("image").FirstOrDefault()?.Element("url")?.Value
+
+            });
+
+        rssItems = items.ToList();
+
+        // Tässä tervehditään käyttäjää kellonajan mukaan, tulee kohdattu olo :DD
+        DateTime now = DateTime.Now;
+        int hour = now.Hour;
+
+        if (hour >= 6 && hour < 10)
+        {
+            tervehdysViesti = "Hyvää huomenta";
+        }
+        else if (hour >= 10 && hour < 16)
+        {
+            tervehdysViesti = "Hyvää päivää";
+        }
+        else if (hour >= 16 && hour < 21)
+        {
+            tervehdysViesti = "Hyvää iltaa";
+        }
+        else
+        {
+            tervehdysViesti = "Hyvää yötä";
+            if (tervehdysViesti == null)
+            {
+                tervehdysViesti = "Tervehdys";
+            }
+        }
+        // JOS käyttäjä on KIRJAUTUNUT, tulee hänen nimensä tervehdysken perään
+        if (loginState.isLoggedIn)
+        {
+            tervehdysViesti += ", " + loginState.loggedUser.etunimi;
+        }
+    }
+
+    private class RssItem
+    {
+        public string Title { get; set; }
+        public string Link { get; set; }
+        public string Description { get; set; }
+        public DateTime PublishDate { get; set; }
+        public string ImageUrl { get; set; }
+    }
 }

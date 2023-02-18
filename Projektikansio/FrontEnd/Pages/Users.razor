@@ -9,7 +9,9 @@
 
 <h1>jäsenet</h1>
 
-@*Jäsenet-sivulla näkee kaikkien jäsenten muut tiedot paitsi salasanan ja sähköpostiosoitteem*@
+@*Jäsenet-sivulla näkee kaikkien jäsenten muut tiedot paitsi salasanan ja sähköpostiosoitteem
+    Tässä ladataan jokainen jäsen taulukkoon. Jätetään sähköposti ja salasana kenttä käyttämättä :D
+*@
 @if (users != null){
 
     <table style="width:100%">
@@ -45,7 +47,7 @@
 @code {
     
     private List<SharedLib.matkaajaDTO>? users;
-    //Hieno muuntolauseke tähän, kunhan saadaan tietokantaan tavaraa.
+    //Ladataan kaikki jäsenet tietokannasta.
     protected override async Task OnInitializedAsync() =>
     users = await Http.GetFromJsonAsync<List<SharedLib.matkaajaDTO>>("/api/Matkaajas");
 }

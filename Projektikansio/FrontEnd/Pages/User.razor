@@ -10,7 +10,7 @@
 <h1>Käyttäjä</h1>
 @if (user != null)
 {
-   
+   //Ladataan käyttäjän tiedot oliosta.
             <div class="palsta"> 
                       <EditForm Model="@user" OnValidSubmit="@UpdateUser">
                         <img src="profilePictures/@user.kuva" width="133" height="133" alt="1" />
@@ -126,7 +126,7 @@ mutta jos sen sallii, niin se pitää huomioida kirjautumisessa.*@
  
     protected override async Task OnInitializedAsync()
     {
-
+        //ladataan käyttäjän tiedot tietokannasta, käyttämällä id:eetä.
         user = await Http.GetFromJsonAsync<SharedLib.matkaajaDTO>($"api/Matkaajas/{Id}");
         try
         {

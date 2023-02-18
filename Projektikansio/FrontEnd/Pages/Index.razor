@@ -9,10 +9,10 @@
 @if (rssItems != null)
 {
     <div>
+   @* valikko, kuinka monta uutista ladataan sivulle.*@
     <label for="take">Näytettävien uutisten määrä:</label>
     <select id="take" @onchange="NaytettavatUutiset">
-    
-            <option value="10" selected>10</option>
+        <option value="10" selected>10</option>
         <option value="20">20</option>
         <option value="30">30</option>
         <option value="40">40</option>
@@ -29,6 +29,7 @@
 
     @foreach (var item in rssItems.Take(that))
     {
+    @*    Ladataan uutiset sivulle*@
         <a href="@item.Link" target="_blank">
             <div class="uutinen">
                 <p>@item.Title</p>
@@ -66,7 +67,6 @@ else
                 ImageUrl = item.Descendants("image").FirstOrDefault()?.Element("url")?.Value
 
             });
-
         rssItems = items.ToList();
 
         // Tässä tervehditään käyttäjää kellonajan mukaan, tulee kohdattu olo :DD
@@ -90,16 +90,19 @@ else
             tervehdysViesti = "Hyvää yötä";
             if (tervehdysViesti == null)
             {
+                //jos jostain syystä ei kellonaika toiminto toimi, saa (toivottavasti) tervehdysviesti custom viestin.
                 tervehdysViesti = "Tervehdys";
             }
         }
+
         // JOS käyttäjä on KIRJAUTUNUT, tulee hänen nimensä tervehdysken perään
         if (loginState.isLoggedIn)
         {
-            tervehdysViesti += ", " + loginState.loggedUser.etunimi;
+            tervehdysViesti += ", " + loginState.loggedUser.etunimi +"!";
         }
     }
 
+    //Tällä funktiolla, saadaan aikaiseksi se, kuinkamonta uutista rss feedistä generoidaan sivulle.
     private void NaytettavatUutiset(ChangeEventArgs e)
     {
         int.TryParse(e.Value.ToString(), out int result);

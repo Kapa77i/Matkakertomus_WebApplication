@@ -7,19 +7,21 @@
 <h1>@tervehdysViesti</h1>
 @if (rssItems != null)
 {
-    <h2>Yhteistyökumppanimme uutiset</h2>
-        @foreach (var item in rssItems.Take(10))
+
+
+            @foreach (var item in rssItems.Take(10))
         {
-           <a href="@item.Link" target="_blank">
-        <div class="uutinen">
-                <p>@item.Title</p>
-            <img src="@item.ImageUrl" alt="@item.ImageUrl" />
-                      <p>@item.Description ...</p>
-            <small>@item.PublishDate.ToShortDateString()</small>              
-        </div>
+            <a href="@item.Link" target="_blank">
+                <div class="uutinen">
+                    <p>@item.Title</p>
+                    <img src="@item.ImageUrl" alt="@item.ImageUrl" />
+                    <p>@item.Description ...</p>
+                    <small>@item.PublishDate.ToShortDateString()</small>              
+                </div>
 </a>
         }
     
+
 }
 else
 {

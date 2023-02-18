@@ -15,6 +15,33 @@ main {
     padding-bottom: 100px;
 }
 
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #004882;
+}
+
+.box {
+    display: flex;
+    justify-content: flex-end;
+}
+
+    .box select {
+        background-color: #a8dadc;
+        color: black;
+        padding: 12px;
+        border: none;
+        border-radius: 15px;
+        font-size: 15px;
+        -webkit-appearance: button;
+        appearance: button;
+        outline: none;
+    }
+
+    .box option {
+        border-radius: 15px;
+    }
+
 .logo {
     padding: 25px;
 }
@@ -28,8 +55,23 @@ main {
     margin-top: 25px;
     border-radius: 25px;
     border: 3px solid #a8dadc;
-    padding: 10px;
+    padding: 25px;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    margin-right: 5px;
+   
 }
+
+.uutiskuva {
+    margin-left: 25px;
+    border-radius: 25px;
+    transition: transform 0.5s ease-in-out;
+}
+    .uutiskuva:hover {
+        transform: translate(-2px, -2px);
+        transform: rotate(-12deg);
+    }
 
 .kontti {
     border-top-left-radius: 25px;
@@ -222,3 +264,7 @@ h1:focus {
         padding: 20px 0;
         font-size: 30px;
     }
+
+.rotate-270 {
+    transform: rotate(270deg);
+}

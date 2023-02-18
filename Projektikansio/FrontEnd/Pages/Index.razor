@@ -8,9 +8,10 @@
 
 @if (rssItems != null)
 {
-    <div>
+    <div class="box">
+
    @* valikko, kuinka monta uutista ladataan sivulle.*@
-    <label for="take">Näytettävien uutisten määrä:</label>
+   
     <select id="take" @onchange="NaytettavatUutiset">
         <option value="25" selected>25</option>
         <option value="50">50</option>
@@ -24,10 +25,11 @@
     @*    Ladataan uutiset sivulle*@
         <a href="@item.Link" target="_blank">
             <div class="uutinen">
-                <p>@item.Title</p>
-                <img src="@item.ImageUrl" alt="@item.ImageUrl" />
-                <p>@item.Description ...</p>
-                <small>@item.PublishDate.ToShortDateString()</small>
+                <h3 class="rotate-270">@item.PublishDate.ToShortDateString()</h3>
+                <h2>@item.Title</h2>
+                <img src="@item.ImageUrl" alt="@item.ImageUrl" class="uutiskuva"/>
+           @*     <h6>@item.Description</h6>*@
+       
             </div>
         </a>
     }

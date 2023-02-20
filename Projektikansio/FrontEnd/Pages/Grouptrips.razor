@@ -92,6 +92,7 @@ else
 
             <div class="column">
                 <h2>Matka nro @tarina.idmatka.ToString()</h2>
+                <div style="text-align:center"><img src="/tripPictures/@matkakohde.kuva" width="150" /></div>
                 <p>Tarinan nro: @tarina.idtarina.ToString()</p>
                 <p>Tarinan kirjoitus pvm: @tarina.pvm.ToString().Replace("0.00.00", "")</p>
                 <p>Matkakohde: @matkakohde.kohdenimi</p>
@@ -122,12 +123,13 @@ else
         matkas = await Http.GetFromJsonAsync<List<SharedLib.matkaDTO>>("/api/Matkas");
     }
 
+    /*Katjan omaa testihömppää, ei toinna välittää, ei tunnista tuota base-64 muutosta, muuten toimii*/
 	string message = "InputFile";
 	bool isDisabled = false;
 
 	async Task OnChange(InputFileChangeEventArgs e)
 	{
-		var files = e.GetMultipleFiles(); // get the files selected by the users
+		var files = e.GetMultipleFiles(); // Saa userit valitsemat filut
 		foreach(var file in files)
 		{
 			var resizedFile = await file.RequestImageFileAsync(file.ContentType, 640, 480); // resize the image file

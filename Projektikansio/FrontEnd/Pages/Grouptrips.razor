@@ -61,6 +61,15 @@
 <h1>Porukan Matkat</h1>
 @*voi selata (ei-yksityisiä) porukan matkoja ja niihin liitettyjä tarinoita ja kuvia*@
 
+<div class="input-group">
+    <div class="custom-file">
+        <InputFile class="custom-file-input" multiple OnChange="OnChange" accept="image/png, image/jpeg, image/gif" id="inputFile" />
+        <label class="custom-file-label" for="inputFile">Choose file</label>
+    </div>
+    <div class="input-group-append">
+        <button class="btn btn-success" @onclick="Upload" disabled="@isDisabled">Upload</button>
+    </div>
+</div>
 
 @if (tarinas == null && matkakohde == null)
 {
@@ -99,7 +108,7 @@ else
 }
 
 @code {
-    private List<SharedLib.kuvaDTO>? kuva;
+    private List<SharedLib.kuvaDTO>? kuvatus;
     private List<SharedLib.tarinaDTO>? tarinas;
     private List<SharedLib.matkakohdeDTO>? matkakohdes;
     private List<SharedLib.matkaDTO>? matkas;
@@ -112,5 +121,39 @@ else
         matkakohdes = await Http.GetFromJsonAsync<List<SharedLib.matkakohdeDTO>>("/api/Matkakohdes");
         matkas = await Http.GetFromJsonAsync<List<SharedLib.matkaDTO>>("/api/Matkas");
     }
+
+	string message = "InputFile";
+	bool isDisabled = false;
+
+	async Task OnChange(InputFileChangeEventArgs e)
+	{
+		var files = e.GetMultipleFiles(); // get the files selected by the users
+		foreach(var file in files)
+		{
+			var resizedFile = await file.RequestImageFileAsync(file.ContentType, 640, 480); // resize the image file
+			var buf = new byte[resizedFile.Size]; // allocate a buffer to fill with the file's data
+			using (var stream = resizedFile.OpenReadStream())
+			{
+				await stream.ReadAsync(buf); // copy the stream to the buffer
+			}
+			kuvatus.Add(new SharedLib.kuvaDTO { kuva = Convert.ToBase64String(buf), idtarina = 1}); // convert to a base64 string!!
+		}
+		message = "Click UPLOAD to continue";
+	}
+
+	async Task Upload()
+	{
+		isDisabled = true;
+        using (var msg = await Http.PostAsJsonAsync<List<SharedLib.kuvaDTO>>("/api/Kuvas", kuvatus, System.Threading.CancellationToken.None))
+		{
+			isDisabled = false;
+			if (msg.IsSuccessStatusCode)
+			{
+				message = $"{kuvatus.Count} files uploaded";
+				kuvatus.Clear();
+			}
+		}
+	}
+
 
 }

@@ -14,10 +14,13 @@ namespace MyApi.Controllers
     public class KuvasController : ControllerBase
     {
         private readonly MydbContext _context;
+        private readonly IWebHostEnvironment env;
+
 
         public KuvasController(MydbContext context)
         {
             _context = context;
+            this.env = env;
         }
 
         // GET: api/Kuvas
@@ -74,13 +77,23 @@ namespace MyApi.Controllers
 
         // POST: api/Kuvas
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<Kuva>> PostKuva(Kuva kuva)
-        {
-            _context.Kuvas.Add(kuva);
-            await _context.SaveChangesAsync();
+        //[HttpPost]
+        //public async Task<ActionResult<Kuva>> PostKuva(Kuva kuva)
+        //{
+        //    _context.Kuvas.Add(kuva);
+        //    await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetKuva", new { id = kuva.Idkuva }, kuva);
+        //    return CreatedAtAction("GetKuva", new { id = kuva.Idkuva }, kuva);
+        //}
+
+        [HttpPost]
+        public async Task Post([FromBody] Kuva[] files)
+        {
+            foreach (var file in files)
+            {
+                var buf = Convert.FromBase64String(file.Kuva1);
+                await System.IO.File.WriteAllBytesAsync(env.ContentRootPath + System.IO.Path.DirectorySeparatorChar + Guid.NewGuid().ToString("N") + "-" + file.Kuva1, buf);
+            }
         }
 
         // DELETE: api/Kuvas/5

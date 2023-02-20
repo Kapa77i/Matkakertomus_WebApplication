@@ -96,7 +96,6 @@ else
                 <p>Tarinan nro: @tarina.idtarina.ToString()</p>
                 <p>Tarinan kirjoitus pvm: @tarina.pvm.ToString().Replace("0.00.00", "")</p>
                 <p>Matkakohde: @matkakohde.kohdenimi</p>
-
                 <p>@tarina.teksti</p>
             </div>
         }
@@ -138,7 +137,7 @@ else
 			{
 				await stream.ReadAsync(buf); // copy the stream to the buffer
 			}
-			kuvatus.Add(new SharedLib.kuvaDTO { kuva = Convert.ToBase64String(buf), idtarina = 1}); // convert to a base64 string!!
+			kuvatus.Add(new SharedLib.kuvaDTO {idkuva = 1, kuva = Convert.ToBase64String(buf), idtarina = 1}); // convert to a base64 string!!
 		}
 		message = "Click UPLOAD to continue";
 	}
@@ -157,5 +156,30 @@ else
 		}
 	}
 
+    /* private List<IBrowserFile> loadedFiles = new();
+    private long maxFileSize = 1024 * 15;
+    private int maxAllowedFiles = 3;
+    private bool isLoading;
+
+    private void LoadFiles(InputFileChangeEventArgs e)
+        {
+        isLoading = true;
+        loadedFiles.Clear();
+
+        foreach (var file in e.GetMultipleFiles(maxAllowedFiles))
+            {
+            try
+                {
+                loadedFiles.Add(file);
+            }
+            catch (Exception ex)
+                {
+                Logger.LogError("File: {Filename} Error: {Error}",
+                    file.Name, ex.Message);
+                }
+        }
+
+        isLoading = false;
+    }*/
 
 }

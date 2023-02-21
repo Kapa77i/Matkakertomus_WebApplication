@@ -21,7 +21,7 @@ namespace MyApi.Controllers
         {
             _context = context;
         }
-/*
+
         // GET: api/Matkakohdes/tekstihaku
         [HttpGet("{SearchText}")]
         public async Task<ActionResult<List<matkakohdeDTO>>> GetLocationsLike(string SearchText)
@@ -41,7 +41,7 @@ namespace MyApi.Controllers
 
             if (locationsLike == null) return NotFound();
             return locationsLike;
-        }       */
+        }       
 
         // GET: api/Matkakohdes
         [HttpGet]

@@ -35,7 +35,7 @@ Kuka tahansa voi selata ja hakea matkakohteita*@
     {
         <a style="padding-right: 15px;" href="/locations/add">Lisää matkakohteita</a>
     }
-    <input type="text" placeholder="Hae..." style="padding: 8px; border: 2px solid #457b9d; border-radius: 4px;" value="@SearchText"/>
+    <input type="text" placeholder="Hae..." style="padding: 8px; border: 2px solid #457b9d; border-radius: 4px;" value="@SearchText" oninput="@Search" />
 </div>
 
 @*HUOM! Zoomatessa kuvat ei pysy paikoillaan vaan menevät toistensa päälle ja objektit sijoittuu miten sattuu*@
@@ -92,8 +92,8 @@ else {
 
 
 @code {
-    
-    public string? SearchText;
+    [Parameter]
+    public string? SearchText { get; set; }
 
     List<SharedLib.matkakohdeDTO>? locations = new List<SharedLib.matkakohdeDTO>();
     List<SharedLib.matkakohdeDTO>? locationsLike = new List<SharedLib.matkakohdeDTO>();
@@ -103,22 +103,21 @@ else {
         var data = await Http.GetAsync("api/Matkakohdes");
         locations = await data.Content.ReadFromJsonAsync<List<SharedLib.matkakohdeDTO>>();
 
-       // var dataLike = await Http.GetAsync("api/Matkakohdes/{SearchText}");
-       // locationsLike = await data.Content.ReadFromJsonAsync<List<SharedLib.matkakohdeDTO>>();
 
-      /*
-         if(locations != null){
-              foreach (var item in locations)
-              {
-                  var m = item;
-                  if (m.kohdenimi.ToLower().CompareTo(SearchText.ToLower()) == 0) //jos vastaavuutta löytyy
-                  {
-                      locationsLike.Add(m);
-                  }
-
-              }
-         }
-         */
     }
+
+    private async Task Search(){
+
+        // var dataLike = await Http.GetAsync("api/Matkakohdes/{SearchText}");
+        // locationsLike = await dataLike.Content.ReadFromJsonAsync<List<SharedLib.matkakohdeDTO>>();
+
+        foreach(var l in locations){
+            if (l.kohdenimi.ToLower().CompareTo(SearchText.ToLower()) == 0)
+            { //Object reference not set to an instance of an object.
+                locationsLike.Add(l);
+            }
+       }
+   }
+
 
 }

@@ -67,8 +67,8 @@ else {
 
     async Task PostLocations(){
 
-        if (!loginState.isLoggedIn) //loginState.isLoggedIn.Equals(true)  loginState.loggedUser != null
-        {//Tämä ei toimi vielä kunnolla, mutta ihan ok testaamisen ja toiminnallisen koodaamisen vuoksi
+        if (!loginState.isLoggedIn) 
+        {
             NavigationManager.NavigateTo($"/login");//kuka tahansa ei voi lisätä matkakohteita, vaan pitää olla kirjautunut käyttäjä
         }
         else{

@@ -21,6 +21,27 @@ namespace MyApi.Controllers
         {
             _context = context;
         }
+/*
+        // GET: api/Matkakohdes/tekstihaku
+        [HttpGet("{SearchText}")]
+        public async Task<ActionResult<List<matkakohdeDTO>>> GetLocationsLike(string SearchText)
+        {
+            var l = await _context.Matkakohdes.ToListAsync();
+            List<matkakohdeDTO> locationsLike = new List<matkakohdeDTO>();
+
+            foreach (var item in l)
+            {
+                matkakohdeDTO m = item.toMatkakohdeDTO();
+                if(m.kohdenimi.ToLower().CompareTo(SearchText.ToLower()) == 0) //jos vastaavuutta löytyy
+                {
+                    locationsLike.Add(m);
+                }
+ 
+            }
+
+            if (locationsLike == null) return NotFound();
+            return locationsLike;
+        }       */
 
         // GET: api/Matkakohdes
         [HttpGet]

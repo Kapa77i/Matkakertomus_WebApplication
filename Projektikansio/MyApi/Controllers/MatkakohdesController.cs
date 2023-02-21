@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -27,6 +28,7 @@ namespace MyApi.Controllers
         {
             var l = await _context.Matkakohdes.ToListAsync();
             List<matkakohdeDTO> locations = new List<matkakohdeDTO>();
+
             foreach (var item in l)
             {
                 matkakohdeDTO m = item.toMatkakohdeDTO();

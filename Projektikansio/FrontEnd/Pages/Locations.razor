@@ -8,6 +8,7 @@
 @inject ILogger<Index> Logger
 @inject HttpClient Http
 
+
 <h1>Matkakohteet</h1>
 
 @*voi lisätä, poistaa, päivittää ja selata matkakohteita.
@@ -19,55 +20,85 @@ Kuka tahansa voi selata ja hakea matkakohteita*@
 @*Tästä sivusta tulee tavallaan matkakohteiden index sivu?
     Tältä sivulta voidaan hakea ja selata matkakohteita. 
     Tee: 
-        -ylös hakupalkki: voi hakea/suodattaa matkakohteen nimellä?
+        -ylös hakupalkki: voi hakea/suodattaa matkakohteen nimellä > "search-as-you-type"
         -sivu näyttää matkakohteet (2-3 sarakkeisessa taulukossa?)
         -matkakohdetta klikkaamalla näkee mahdolliset tarinat?? -> takaisin -nappi 
-        -matkakohteiden muokkaus vain jos olet sisäänkirjautuneena?
+        -matkakohteiden muokkaus vain jos olet sisäänkirjautuneena
 
         sis. idmatkakohde, kohdenimi, maa, paikkakunta, kuvausteksti, kuva (id:tä ei tarvitse näyttää, ellei muokata tai poisteta)
 
 
-        MUISTA LAITTAA TYYLIT <td><img src="/profilePictures/@user.kuva.ToString()" width="150" alt="@user.nimimerkki.ToString()"></td>
+        MUISTA LAITTAA TYYLIT <img src="/profilePictures/@user.kuva.ToString()" width="150" alt="@user.nimimerkki.ToString()">
 *@
-<div style="text-align:center">
+<div class="topnav" style="text-align:center">
     <a href="/locations/add/{User}">Lisää matkakohteita</a>
+    <input type="text" placeholder="Hae..." style="padding: 8px; border: 2px solid #457b9d; border-radius: 4px;" value="@SearchText"/>
 </div>
 
+@*HUOM! Zoomatessa kuvat ei pysy paikoillaan vaan menevät toistensa päälle*@
+@if(locationsLike == null && locations == null){
+     <h2>  <img src="/images/loading.gif" width="150" /></h2> //tämä ei pyöri jostain syystä
+}
+else if(locationsLike != null){
+    
+        @foreach(var l in locationsLike){
 
-@if(locations != null){
+        <div style="float: left; width: 25.00%; padding: 15px;">
+            @*aiemmin class = keskitys*@
+            <div style="text-align:center"><img src="/tripPictures/@l.kuva" width="150" /></div>
+            <div><h3>@l.kohdenimi</h3></div>
+            <div><h4>@l.paikkakunta</h4></div>
+            <div><h4>@l.maa</h4></div>
+            <div style="text-align:center">@l.kuvausteksti</div>
+            <div style="text-align:center"><a href="/locations/edit/@l.idmatkakohde">Muokkaa</a></div>
+            <div style="text-align:center"><a href="locations/delete/@l.idmatkakohde">Poista</a></div>
+        </div>
+            
+        }
+}
+else {
+    @if(locations != null){
 
   
         @foreach(var l in locations){
 
         <div style="float: left; width: 25.00%; padding: 15px;">
             @*aiemmin class = keskitys*@
-                    <div style="text-align:center"><img src="/tripPictures/@l.kuva" width="150" /></div>
-                    <div><h3>@l.kohdenimi</h3></div>
-                    <div><h4>@l.paikkakunta</h4></div>
-                    <div><h4>@l.maa</h4></div>
-                    <div style="text-align:center">@l.kuvausteksti</div>
-                    <div style="text-align:center"><a href="/locations/edit/@l.idmatkakohde">Muokkaa</a></div>
-                    <div style="text-align:center"><a href="locations/delete/@l.idmatkakohde">Poista</a></div>
-                </div>
+            <div style="text-align:center"><img src="/tripPictures/@l.kuva" width="150" /></div>
+            <div><h3>@l.kohdenimi</h3></div>
+            <div><h4>@l.paikkakunta</h4></div>
+            <div><h4>@l.maa</h4></div>
+            <div style="text-align:center">@l.kuvausteksti</div>
+            <div style="text-align:center"><a href="/locations/edit/@l.idmatkakohde">Muokkaa</a></div>
+            <div style="text-align:center"><a href="locations/delete/@l.idmatkakohde">Poista</a></div>
+        </div>
             
         }
     
         @*hassua, vika kuva tulee tavallaan "väärään nurkkaan"*@
   
     
+    }
 }
-else {
 
-    <h2>  <img src="/images/loading.gif" width="150" /></h2> //tämä ei pyöri jostain syystä
-}
+
+
 
 
 @code {
+    public string? SearchText;
+
     List<SharedLib.matkakohdeDTO>? locations = new List<SharedLib.matkakohdeDTO>();
+    List<SharedLib.matkakohdeDTO>? locationsLike = new List<SharedLib.matkakohdeDTO>();
 
     protected override async Task OnInitializedAsync(){
 
         var data = await Http.GetAsync("api/Matkakohdes");
         locations = await data.Content.ReadFromJsonAsync<List<SharedLib.matkakohdeDTO>>();
+
+        foreach (var m in locations){
+            //jos osa matkakohteen nimestä täsmää haetun sanan kanssa...
+        }
     }
+
 }

@@ -1,4 +1,4 @@
-﻿@page "/locations/add/{User}"
+﻿@page "/locations/add"
 
 @using System.Net.Http
 @using System.Net.Http.Json
@@ -7,6 +7,7 @@
 @inject NavigationManager NavigationManager
 @inject ILogger<Index> Logger
 @inject HttpClient Http
+@inject SharedLib.LoginState loginState;
 
 <h1>Lisää matkakohde</h1>
 @*sis. idmatkakohde, kohdenimi, maa, paikkakunta, kuvausteksti, kuva (id:tä ei tarvitse näyttää, ellei muokata tai poisteta)
@@ -16,7 +17,7 @@
     Tee joku oletuskuva kaikille? ja/tai vetovalikko, mistä valita kuva?
 *@
 <a href="/locations">Matkakohteet</a>
-@if(User != null){
+@if(loginState.isLoggedIn){
     <div>
         <EditForm Model="@newlocation" OnValidSubmit="@PostLocations">
             <DataAnnotationsValidator/>
@@ -54,11 +55,11 @@
 }
 else {
     <h2>  <img src="/images/loading.gif" width="150" /></h2>
+    <h2>Kirjaudu sisään lisätäksesi matkakohteita</h2>
 }
 
 @code {
-    [Parameter]
-    public string? User { get; set; }
+    
 
     bool isSubmitting;
     SharedLib.matkakohdeDTO newlocation = new SharedLib.matkakohdeDTO();
@@ -66,7 +67,8 @@ else {
 
     async Task PostLocations(){
 
-        if (User == null){//Tämä ei toimi vielä kunnolla, mutta ihan ok testaamisen ja toiminnallisen koodaamisen vuoksi
+        if (!loginState.isLoggedIn) //loginState.isLoggedIn.Equals(true)  loginState.loggedUser != null
+        {//Tämä ei toimi vielä kunnolla, mutta ihan ok testaamisen ja toiminnallisen koodaamisen vuoksi
             NavigationManager.NavigateTo($"/login");//kuka tahansa ei voi lisätä matkakohteita, vaan pitää olla kirjautunut käyttäjä
         }
         else{

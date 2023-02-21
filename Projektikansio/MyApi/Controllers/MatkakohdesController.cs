@@ -59,7 +59,11 @@ namespace MyApi.Controllers
             Matkakohde? location = await _context.Matkakohdes.Where(a => a.Idmatkakohde == id).FirstOrDefaultAsync();
             if (location == null) return NotFound();
 
-            if (m == null) return BadRequest();
+            //Sellaista matkakohdetta, johon liittyy joku matkakertomus, ei saa poistaa tai päivittää
+            Tarina? t = await _context.Tarinas.Where(a => a.Idmatkakohde == id).FirstOrDefaultAsync();
+            if(t != null) { return BadRequest(); }
+
+            if (m == null) return BadRequest(); 
             else
             {
                 location.Kuva = m.kuva;
@@ -118,6 +122,9 @@ namespace MyApi.Controllers
             Matkakohde? m = await _context.Matkakohdes.Where(a => a.Idmatkakohde == id).FirstOrDefaultAsync();
             if (m == null) return NotFound();
 
+            //Sellaista matkakohdetta, johon liittyy joku matkakertomus, ei saa poistaa tai päivittää
+            Tarina? t = await _context.Tarinas.Where(a => a.Idmatkakohde == id).FirstOrDefaultAsync();
+            if (t != null) { return BadRequest(); }
 
             _context.Matkakohdes.Remove(m);
             await _context.SaveChangesAsync();

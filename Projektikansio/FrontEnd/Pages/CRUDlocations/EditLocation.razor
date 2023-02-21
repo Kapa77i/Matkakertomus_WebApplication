@@ -88,22 +88,26 @@ else{
     async Task EditLocations()
     {
 
-        if (!loginState.isLoggedIn)
-        {
-            NavigationManager.NavigateTo($"/login");//kuka tahansa ei voi lisätä matkakohteita, vaan pitää olla kirjautunut käyttäjä
-        }
-        else
-        {
-            isSubmitting = true;
+      /*  if (!loginState.isLoggedIn) <----------------------------------- EI välttämättä tarvita jos ylhäällä tarkistus
+          {
+              NavigationManager.NavigateTo($"/login");//kuka tahansa ei voi lisätä matkakohteita, vaan pitää olla kirjautunut käyttäjä
+          }
+          else
+          { }*/
+        isSubmitting = true;
             var result = await Http.PutAsJsonAsync($"api/Matkakohdes/{Id}", location); 
 
             //saako tähän väliin pyöritettyä pyörää?
             NavigationManager.NavigateTo($"/locations");
 
+
+
+
+
+
             /*HUOM! Muokkaus ei onnistu, mikäli matkakohteella on tarina. --> tästä jonkinlainen ilmoitus!
              * KUVIEN MUOKKAUS EI TOIMI JOSTAIN SYYSTÄ!! 
              */
-        }
 
     }
 }

@@ -17,7 +17,7 @@
     @if (location != null)
     {
         <h3>@location.kohdenimi</h3>
-        <div>
+        <div style="text-align:center">
             <EditForm Model="@location" OnValidSubmit="@EditLocations">
                 <DataAnnotationsValidator />
                 <ValidationSummary />
@@ -78,8 +78,8 @@ else{
 
     protected override async Task OnInitializedAsync()
     {
-        var data = await Http.GetAsync($"api/Matkakohdes/{Id}"); //...{User}/{Id}?
-        location = await data.Content.ReadFromJsonAsync<SharedLib.matkakohdeDTO>();//Miksi tämä ei toimi?
+        var data = await Http.GetAsync($"api/Matkakohdes/{Id}"); 
+        location = await data.Content.ReadFromJsonAsync<SharedLib.matkakohdeDTO>();
 
         await base.OnInitializedAsync(); 
     }
@@ -99,6 +99,10 @@ else{
 
             //saako tähän väliin pyöritettyä pyörää?
             NavigationManager.NavigateTo($"/locations");
+
+            /*HUOM! Muokkaus ei onnistu, mikäli matkakohteella on tarina. --> tästä jonkinlainen ilmoitus!
+             * KUVIEN MUOKKAUS EI TOIMI JOSTAIN SYYSTÄ!! 
+             */
         }
 
     }

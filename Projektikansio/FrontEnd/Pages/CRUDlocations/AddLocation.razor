@@ -18,7 +18,7 @@
 *@
 <a href="/locations">Matkakohteet</a>
 @if(loginState.isLoggedIn){
-    <div>
+    <div style="text-align:center">
         <EditForm Model="@newlocation" OnValidSubmit="@PostLocations">
             <DataAnnotationsValidator/>
             <ValidationSummary/>

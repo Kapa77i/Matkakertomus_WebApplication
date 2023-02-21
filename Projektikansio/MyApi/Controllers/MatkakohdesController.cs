@@ -83,8 +83,8 @@ namespace MyApi.Controllers
             if (location == null) return NotFound();
 
             //Sellaista matkakohdetta, johon liittyy joku matkakertomus, ei saa poistaa tai päivittää
-            Tarina? t = await _context.Tarinas.Where(a => a.Idmatkakohde == id).FirstOrDefaultAsync();
-            if(t != null) { return BadRequest(); }
+           // Tarina? t = await _context.Tarinas.Where(a => a.Idmatkakohde == id).FirstOrDefaultAsync();
+           // if(t != null) { return Ok(); } 
 
             if (m == null) return BadRequest(); 
             else
@@ -146,8 +146,8 @@ namespace MyApi.Controllers
             if (m == null) return NotFound();
 
             //Sellaista matkakohdetta, johon liittyy joku matkakertomus, ei saa poistaa tai päivittää
-            Tarina? t = await _context.Tarinas.Where(a => a.Idmatkakohde == id).FirstOrDefaultAsync();
-            if (t != null) { return BadRequest(); }
+          //  Tarina? t = await _context.Tarinas.Where(a => a.Idmatkakohde == id).FirstOrDefaultAsync();
+           // if (t != null) { return BadRequest(); }
 
             _context.Matkakohdes.Remove(m);
             await _context.SaveChangesAsync();

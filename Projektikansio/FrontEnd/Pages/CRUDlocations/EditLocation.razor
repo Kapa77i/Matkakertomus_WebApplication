@@ -7,58 +7,69 @@
 @inject NavigationManager NavigationManager
 @inject ILogger<Index> Logger
 @inject HttpClient Http
-
+@inject SharedLib.LoginState loginState;
 
 @*Mahdollisuus lisätä kuva? Miten!?!? 
     tee myös vetovalikko vaihtoehdoille
 *@
+@if (loginState.isLoggedIn) { 
 
-@if(location != null){
-    <h3>@location.kohdenimi</h3>
-    <div>
-        <EditForm Model="@location" OnValidSubmit="@EditLocations">
-            <DataAnnotationsValidator />
-            <ValidationSummary />
-            <div>
-                <label>
-                    Kuva
-                    <InputText class="form-control" id="kuva" @bind-Value="location.kuva" />
-                    <img src="tripPictures/@location.kuva" width="133" height="133" alt="1" />
-                </label>
-            </div>
-            <div>
-                <label>
-                    Kohdenimi
-                    <InputText class="form-control" id="kohdenimi" @bind-Value="location.kohdenimi" />
-                </label>
-            </div>
-            <div>
-                <label>
-                    Paikkakunta
-                    <InputText class="form-control" id="paikkakunta" @bind-Value="location.paikkakunta" />
-                </label>
-            </div>
-            <div>
-                <label>
-                    Maa
-                    <InputText class="form-control" id="maa" @bind-Value="location.maa" />
-                </label>
-            </div>
-            <div>
-                <label>
-                    Kuvausteksti
-                    <InputText class="form-control" id="kuvausteksti" @bind-Value="location.kuvausteksti" />
-                </label>
-            </div>
-            <button type="submit" class="btn btn-primary" disabled="@isSubmitting">Lisää</button>
-        </EditForm>
-    </div>
+    @if (location != null)
+    {
+        <h3>@location.kohdenimi</h3>
+        <div>
+            <EditForm Model="@location" OnValidSubmit="@EditLocations">
+                <DataAnnotationsValidator />
+                <ValidationSummary />
+                <div>
+                    <label>
+                        Kuva
+                        <InputText class="form-control" id="kuva" @bind-Value="location.kuva" />
+                        <img src="tripPictures/@location.kuva" width="133" height="133" alt="1" />
+                    </label>
+                </div>
+                <div>
+                    <label>
+                        Kohdenimi
+                        <InputText class="form-control" id="kohdenimi" @bind-Value="location.kohdenimi" />
+                    </label>
+                </div>
+                <div>
+                    <label>
+                        Paikkakunta
+                        <InputText class="form-control" id="paikkakunta" @bind-Value="location.paikkakunta" />
+                    </label>
+                </div>
+                <div>
+                    <label>
+                        Maa
+                        <InputText class="form-control" id="maa" @bind-Value="location.maa" />
+                    </label>
+                </div>
+                <div>
+                    <label>
+                        Kuvausteksti
+                        <InputText class="form-control" id="kuvausteksti" @bind-Value="location.kuvausteksti" />
+                    </label>
+                </div>
+                <button type="submit" class="btn btn-primary" disabled="@isSubmitting">Lisää</button>
+            </EditForm>
+        </div>
+    }
+    else
+    {
+        <h2>  <img src="/images/loading.gif" width="150" /></h2>
+    }
+}
+else{
+
+    <h2>  <img src="/images/loading.gif" width="150" /></h2>
+    <h2>Kirjaudu sisään muokataksesi matkakohdetta</h2>
 }
 
-@code {
-    [Parameter]
-    public string? User { get; set; }
 
+
+@code {
     [Parameter]
     public long? Id { get; set; }
 
@@ -77,19 +88,18 @@
     async Task EditLocations()
     {
 
-      /*  if (User == null)
+        if (!loginState.isLoggedIn)
         {//Tämä ei toimi vielä kunnolla, mutta ihan ok testaamisen ja toiminnallisen koodaamisen vuoksi
             NavigationManager.NavigateTo($"/login");//kuka tahansa ei voi lisätä matkakohteita, vaan pitää olla kirjautunut käyttäjä
         }
         else
-        { }*/
-
-
+        {
             isSubmitting = true;
             var result = await Http.PutAsJsonAsync($"api/Matkakohdes/{Id}", location); //vai api/Matkakohdes/{User}? Tarvitseeko käyttäjää merkitä?
 
             //saako tähän väliin pyöritettyä pyörää?
             NavigationManager.NavigateTo($"/locations");
-        
+        }
+
     }
 }

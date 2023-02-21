@@ -37,7 +37,7 @@ Kuka tahansa voi selata ja hakea matkakohteita*@
 
 @*HUOM! Zoomatessa kuvat ei pysy paikoillaan vaan menevät toistensa päälle*@
 @if(locations == null){
-     <h2>  <img src="/images/loading.gif" width="150" /></h2> //tämä ei pyöri jostain syystä
+     <h2><img src="/images/loading.gif" width="150" /></h2> //tämä ei pyöri jostain syystä
 }
 else if(locations != null){
     
@@ -50,7 +50,7 @@ else if(locations != null){
                 <div><h4>@l.paikkakunta</h4></div>
                 <div><h4>@l.maa</h4></div>
                 <div style="text-align:center">@l.kuvausteksti</div>
-                <div style="text-align:center"><a href="/locations/edit/@l.idmatkakohde">Muokkaa</a></div>
+                <div style="text-align:center"><a href="locations/edit/@l.idmatkakohde">Muokkaa</a></div>
                 <div style="text-align:center"><a href="locations/delete/@l.idmatkakohde">Poista</a></div>
             </div>
             

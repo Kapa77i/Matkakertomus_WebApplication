@@ -13,15 +13,6 @@
 <h1>Porukan Matkat</h1>
 @*voi selata (ei-yksityisiä) porukan matkoja ja niihin liitettyjä tarinoita ja kuvia*@
 
-<div class="input-group">
-    <div class="custom-file">
-        <InputFile class="custom-file-input" multiple OnChange="OnChange" accept="image/png, image/jpeg, image/gif" id="inputFile" />
-        <label class="custom-file-label" for="inputFile">Choose file</label>
-    </div>
-    <div class="input-group-append">
-        <button class="btn btn-success" @onclick="Upload" disabled="@isDisabled">Upload</button>
-    </div>
-</div>
 
 @if (tarinas == null && matkakohde == null)
 {
@@ -44,7 +35,7 @@ else
 
             <div style="float: left; width: 33.33%; padding: 15px;">
                 <h2>Matka nro @tarina.idmatka.ToString()</h2>
-                <div style="text-align:center"><img src="/tripPictures/@matkakohde.kuva" width="150" /></div>
+                <div style="text-align:left"><img src="/tripPictures/@matkakohde.kuva" width="150" /></div>
                 <p>Tarinan nro: @tarina.idtarina.ToString()</p>
                 <p>Tarinan kirjoitus pvm: @tarina.pvm.ToString().Replace("0.00.00", "")</p>
                 <p>Matkakohde: @matkakohde.kohdenimi</p>
@@ -74,64 +65,6 @@ else
         matkas = await Http.GetFromJsonAsync<List<SharedLib.matkaDTO>>("/api/Matkas");
     }
 
-    /*Katjan omaa testihömppää, ei toinna välittää, ei tunnista tuota base-64 muutosta, muuten toimii*/
-	string message = "InputFile";
-	bool isDisabled = false;
 
-	async Task OnChange(InputFileChangeEventArgs e)
-	{
-		var files = e.GetMultipleFiles(); // Saa userit valitsemat filut
-		foreach(var file in files)
-		{
-			var resizedFile = await file.RequestImageFileAsync(file.ContentType, 640, 480); // resize the image file
-			var buf = new byte[resizedFile.Size]; // allocate a buffer to fill with the file's data
-			using (var stream = resizedFile.OpenReadStream())
-			{
-				await stream.ReadAsync(buf); // copy the stream to the buffer
-			}
-			kuvatus.Add(new SharedLib.kuvaDTO {idkuva = 1, kuva = Convert.ToBase64String(buf), idtarina = 1}); // convert to a base64 string!!
-		}
-		message = "Click UPLOAD to continue";
-	}
-
-	async Task Upload()
-	{
-		isDisabled = true;
-        using (var msg = await Http.PostAsJsonAsync<List<SharedLib.kuvaDTO>>("/api/Kuvas", kuvatus, System.Threading.CancellationToken.None))
-		{
-			isDisabled = false;
-			if (msg.IsSuccessStatusCode)
-			{
-				message = $"{kuvatus.Count} files uploaded";
-				kuvatus.Clear();
-			}
-		}
-	}
-
-    /* private List<IBrowserFile> loadedFiles = new();
-    private long maxFileSize = 1024 * 15;
-    private int maxAllowedFiles = 3;
-    private bool isLoading;
-
-    private void LoadFiles(InputFileChangeEventArgs e)
-        {
-        isLoading = true;
-        loadedFiles.Clear();
-
-        foreach (var file in e.GetMultipleFiles(maxAllowedFiles))
-            {
-            try
-                {
-                loadedFiles.Add(file);
-            }
-            catch (Exception ex)
-                {
-                Logger.LogError("File: {Filename} Error: {Error}",
-                    file.Name, ex.Message);
-                }
-        }
-
-        isLoading = false;
-    }*/
 
 }

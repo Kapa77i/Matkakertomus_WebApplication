@@ -6,13 +6,22 @@
 <h1>Test Page</h1>
 <h2>@_errorMessage</h2>
 <div>
-    <InputFile OnChange="@HandleFileSelected" />
-
-    @if (!string.IsNullOrEmpty(_imageUrl))
-    {
-        <img src="@_imageUrl" />
-    }
-    <button @onclick="UploadFile" disabled="@(_file == null)">Upload</button>
+    <table width="350">
+        <tr width="350">
+            <td width="175"> <InputFile OnChange="@HandleFileSelected" /></td>
+            <td width="175"> <button @onclick="UploadFile" disabled="@(_file == null)">Upload</button></td>
+            </tr>
+            </table>
+    <tr width="350">
+        <td colspan="2" width="350">
+            @if (!string.IsNullOrEmpty(_imageUrl))
+            {
+                <img src="@_imageUrl" width="350" />
+            }
+        </td>
+    </tr>
+ 
+   
 </div>
 
 @code {

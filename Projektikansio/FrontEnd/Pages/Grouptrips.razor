@@ -13,13 +13,9 @@
 <h1>Porukan Matkat</h1>
 @*voi selata (ei-yksityisiä) porukan matkoja ja niihin liitettyjä tarinoita ja kuvia*@
 
-
 @if (tarinas == null && matkakohde == null)
 {
-    <div class="column">
-        <h2>Column</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sit amet pretium urna. Vivamus venenatis velit nec neque ultricies, eget elementum magna tristique. Quisque vehicula, risus eget aliquam placerat, purus leo tincidunt eros, eget luctus quam orci in velit. Praesent scelerisque tortor sed accumsan convallis.</p>
-    </div>
+    <h2>  <img src="/images/loading.gif" width="150" /></h2>
 }
 else
 {
@@ -34,12 +30,12 @@ else
             matkakohde = matkakohdes.FirstOrDefault(m => m.idmatkakohde == tarina.idmatkakohde);
 
             <div style="float: left; width: 33.33%; padding: 15px;">
-                <h2>Matka nro @tarina.idmatka.ToString()</h2>
-                <div style="text-align:left"><img src="/tripPictures/@matkakohde.kuva" width="150" /></div>
-                <p>Tarinan nro: @tarina.idtarina.ToString()</p>
+                <h2 style="text-align:left">Matka nro @tarina.idmatka.ToString()</h2>
+                <div @onclick="OnClick" style="text-align:left"><img src="/tripPictures/@matkakohde.kuva" width="150" /></div>
+                <p style="text-align:left">Tarinan nro: @tarina.idtarina.ToString()</p>
                 <p>Tarinan kirjoitus pvm: @tarina.pvm.ToString().Replace("0.00.00", "")</p>
                 <p>Matkakohde: @matkakohde.kohdenimi</p>
-                <p>@tarina.teksti</p>
+                <p @bind="Hidden" @bind:event="onchange"  id=@tarina.idtarina>@tarina.teksti</p>
             </div>
         }
 
@@ -58,6 +54,9 @@ else
     private SharedLib.matkakohdeDTO matkakohde;
     private SharedLib.matkaDTO matka;
 
+
+    public string Hidden { get; set; }
+
     protected override async Task OnInitializedAsync()
     {
         tarinas = await Http.GetFromJsonAsync<List<SharedLib.tarinaDTO>>("/api/Tarinas");
@@ -65,6 +64,11 @@ else
         matkas = await Http.GetFromJsonAsync<List<SharedLib.matkaDTO>>("/api/Matkas");
     }
 
+
+    protected void OnClick(MouseEventArgs mouseEventArgs)
+    {
+        
+    }
 
 
 }

@@ -35,7 +35,7 @@ else
                 <p style="text-align:left">Tarinan nro: @tarina.idtarina.ToString()</p>
                 <p>Tarinan kirjoitus pvm: @tarina.pvm.ToString().Replace("0.00.00", "")</p>
                 <p>Matkakohde: @matkakohde.kohdenimi</p>
-                <p @bind="Hidden" @bind:event="onchange"  id=@tarina.idtarina>@tarina.teksti</p>
+                <p>@tarina.teksti</p>
             </div>
         }
 

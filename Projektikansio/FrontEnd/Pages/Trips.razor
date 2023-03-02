@@ -1,4 +1,14 @@
 ﻿@page "/trips"
+
+@using System.Threading.Tasks
+@using System.Net.Http
+@using System.Net.Http.Json
+
+@inject NavigationManager NavigationManager
+@inject ILogger<Index> Logger
+@inject HttpClient Http
+@inject SharedLib.LoginState loginState;
+
 <h1>Omat matkat</h1>
 
 @*
@@ -8,8 +18,19 @@ navigointi tarinat- ja kuvat-sivuille voi tapahtuma päävalikon tai sivukohtais
 HUOM! Porukan matkat- ja Omat matkat-sivut saisivat olla mahdollisimman yhdenmukaisia
 *@
 
+@if (loginState.isLoggedIn) { //Jos käyttäjä kirjautunut, niin näkee sisällön
+
+}
 
 
 @code {
+    List<SharedLib.matkaDTO>? trips = new List<SharedLib.matkaDTO>();
 
+    protected override async Task OnInitializedAsync()
+    {
+        //Haetaan kaikki matkat         >>> MUOKKAA: Haetaan vain kirjautuneen henkilön matkat > CRUD + loginstate.loggedUser tms.
+        var data = await Http.GetAsync("api/Matkas");
+        trips = await data.Content.ReadFromJsonAsync<List<SharedLib.matkaDTO>>();
+
+    }
 }

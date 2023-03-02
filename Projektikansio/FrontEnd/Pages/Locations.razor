@@ -35,7 +35,7 @@ Kuka tahansa voi selata ja hakea matkakohteita*@
     {
         <a style="padding-right: 15px;" href="/locations/add">Lisää matkakohteita</a>
     }
-    <input type="text" placeholder="Hae..." style="padding: 8px; border: 2px solid #457b9d; border-radius: 4px;" value="@SearchText" oninput="@Search" />
+    <input type="text" placeholder="Hae..." style="padding: 8px; border: 2px solid #457b9d; border-radius: 4px;" value="@SearchText" /> @*Täällä oli myös oninput="@Search"  *@
 </div>
 
 @*HUOM! Zoomatessa kuvat ei pysy paikoillaan vaan menevät toistensa päälle ja objektit sijoittuu miten sattuu*@
@@ -62,30 +62,32 @@ else if(locations != null){
             
         }
 }
-else {
-    @if(locationsLike != null){
+@*else {
+  /*  @if(locationsLike != null){
 
   
-        @foreach(var l in locationsLike){
+              @foreach(var l in locationsLike){
 
-            <div style="float: left; width: 25.00%; padding: 15px;">
-                @*aiemmin class = keskitys*@
-                <div style="text-align:center"><img src="/tripPictures/@l.kuva" width="150" /></div>
-                <div><h3>@l.kohdenimi</h3></div>
-                <div><h4>@l.paikkakunta</h4></div>
-                <div><h4>@l.maa</h4></div>
-                <div style="text-align:center">@l.kuvausteksti</div>
-                @if (loginState.isLoggedIn)
-                {
-                    <div style="text-align:center"><a href="/locations/edit/@l.idmatkakohde">Muokkaa</a></div>
-                    <div style="text-align:center"><a href="locations/delete/@l.idmatkakohde">Poista</a></div>
-                }
-            </div>
-            
-        }
-    
+                  <div style="float: left; width: 25.00%; padding: 15px;">
+                  @*aiemmin class = keskitys*@
+                 @* <div style="text-align:center"><img src="/tripPictures/@l.kuva" width="150" /></div>
+                  <div><h3>@l.kohdenimi</h3></div>
+                  <div><h4>@l.paikkakunta</h4></div>
+                  <div><h4>@l.maa</h4></div>
+                  <div style="text-align:center">@l.kuvausteksti</div>
+                      @if (loginState.isLoggedIn)
+                      {
+                      <div style="text-align:center"><a href="/locations/edit/@l.idmatkakohde">Muokkaa</a></div>
+                      <div style="text-align:center"><a href="locations/delete/@l.idmatkakohde">Poista</a></div>
+      }
+  </div>
+
     }
-}
+
+                  }
+
+
+    }*@
 
 
 
@@ -96,7 +98,7 @@ else {
     public string? SearchText { get; set; }
 
     List<SharedLib.matkakohdeDTO>? locations = new List<SharedLib.matkakohdeDTO>();
-    List<SharedLib.matkakohdeDTO>? locationsLike = new List<SharedLib.matkakohdeDTO>();
+  //  List<SharedLib.matkakohdeDTO>? locationsLike = new List<SharedLib.matkakohdeDTO>();
 
     protected override async Task OnInitializedAsync(){
 
@@ -106,18 +108,18 @@ else {
 
     }
 
-    private async Task Search(){
+ /*  private async Task Search(){
 
-        // var dataLike = await Http.GetAsync("api/Matkakohdes/{SearchText}");
-        // locationsLike = await dataLike.Content.ReadFromJsonAsync<List<SharedLib.matkakohdeDTO>>();
+           // var dataLike = await Http.GetAsync("api/Matkakohdes/{SearchText}");
+           // locationsLike = await dataLike.Content.ReadFromJsonAsync<List<SharedLib.matkakohdeDTO>>();
 
-        foreach(var l in locations){
-            if (l.kohdenimi.ToLower().CompareTo(SearchText.ToLower()) == 0)
-            { //Object reference not set to an instance of an object.
-                locationsLike.Add(l);
-            }
-       }
-   }
+           foreach(var l in locations){
+               if (l.kohdenimi.ToLower().CompareTo(SearchText.ToLower()) == 0)
+               { //Object reference not set to an instance of an object.
+                   locationsLike.Add(l);
+          }
+              }
+    }*/
 
 
 }

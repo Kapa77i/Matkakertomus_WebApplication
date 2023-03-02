@@ -22,7 +22,7 @@ namespace MyApi.Controllers
             _context = context;
         }
 
-        // GET: api/Matkakohdes/tekstihaku
+      /*  // GET: api/Matkakohdes/tekstihaku
         [HttpGet("{SearchText}")]
         public async Task<ActionResult<List<matkakohdeDTO>>> GetLocationsLike(string SearchText)
         {
@@ -42,7 +42,7 @@ namespace MyApi.Controllers
             if (locationsLike == null) return NotFound();
             return locationsLike;
         }       
-
+      */
         // GET: api/Matkakohdes
         [HttpGet]
         public async Task<ActionResult<List<matkakohdeDTO>>> GetLocations()
@@ -77,14 +77,14 @@ namespace MyApi.Controllers
         // PUT: api/Matkakohdes/5 
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<ActionResult<matkakohdeDTO>> PutLocation(long id, matkakohdeDTO m)
+        public async Task<ActionResult<matkakohdeDTO>> PutLocation(matkakohdeDTO m, long id)
         {
-            Matkakohde? location = await _context.Matkakohdes.Where(a => a.Idmatkakohde == id).FirstOrDefaultAsync();
+            var location = await _context.Matkakohdes.Where(a => a.Idmatkakohde == id).FirstOrDefaultAsync();
             if (location == null) return NotFound();
 
             //Sellaista matkakohdetta, johon liittyy joku matkakertomus, ei saa poistaa tai päivittää
-            Tarina? t = await _context.Tarinas.Where(a => a.Idmatkakohde == id).FirstOrDefaultAsync();
-            if(t != null) { return Ok(); } 
+           // Tarina? t = await _context.Tarinas.Where(a => a.Idmatkakohde == id).FirstOrDefaultAsync();
+           // if(t != null) { return Ok(); } 
 
             if (m == null) return BadRequest(); 
             else

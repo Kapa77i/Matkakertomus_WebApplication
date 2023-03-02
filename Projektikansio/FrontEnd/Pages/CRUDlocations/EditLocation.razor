@@ -60,13 +60,8 @@
     {
         <h2>  <img src="/images/loading.gif" width="150" /></h2>
     }
+    
 }
-else{
-
-    <h2>  <img src="/images/loading.gif" width="150" /></h2>
-    <h2>Kirjaudu sisään muokataksesi matkakohdetta</h2>
-}
-
 
 
 @code {
@@ -78,8 +73,10 @@ else{
 
     protected override async Task OnInitializedAsync()
     {
-        var data = await Http.GetAsync($"api/Matkakohdes/{Id}"); 
-        location = await data.Content.ReadFromJsonAsync<SharedLib.matkakohdeDTO>();
+        // var data = await Http.GetAsync($"api/Matkakohdes/{Id}"); 
+        // location = await data.Content.ReadFromJsonAsync<SharedLib.matkakohdeDTO>();
+
+        location = await Http.GetFromJsonAsync<SharedLib.matkakohdeDTO>($"api/Matkakohdes/{Id}");
 
         await base.OnInitializedAsync(); 
     }
@@ -88,26 +85,19 @@ else{
     async Task EditLocations()
     {
 
-      /*  if (!loginState.isLoggedIn) <----------------------------------- EI välttämättä tarvita jos ylhäällä tarkistus
-          {
-              NavigationManager.NavigateTo($"/login");//kuka tahansa ei voi lisätä matkakohteita, vaan pitää olla kirjautunut käyttäjä
-          }
-          else
-          { }*/
+        /*  if (!loginState.isLoggedIn) <----------------------------------- EI välttämättä tarvita jos ylhäällä tarkistus
+                {
+                NavigationManager.NavigateTo($"/login");//kuka tahansa ei voi lisätä matkakohteita, vaan pitää olla kirjautunut käyttäjä
+            }
+            else
+            { }*/
+
         isSubmitting = true;
-            var result = await Http.PutAsJsonAsync($"api/Matkakohdes/{Id}", location); 
+        //Console.WriteLine(location.idmatkakohde);
+        var result = await Http.PutAsJsonAsync($"api/Matkakohdes/{Id}", location); //ERROR 400:   "The m field is required."
 
             //saako tähän väliin pyöritettyä pyörää?
             NavigationManager.NavigateTo($"/locations");
-
-
-
-
-
-
-            /*HUOM! Muokkaus ei onnistu, mikäli matkakohteella on tarina. --> tästä jonkinlainen ilmoitus!
-             * KUVIEN MUOKKAUS EI TOIMI JOSTAIN SYYSTÄ!! 
-             */
 
     }
 }

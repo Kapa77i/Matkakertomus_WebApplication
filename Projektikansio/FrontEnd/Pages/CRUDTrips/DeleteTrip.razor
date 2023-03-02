@@ -1,5 +1,47 @@
-﻿<h3>DeleteTrip</h3>
+﻿@page "/trips/delete"
+
+@using System.Net.Http
+@using System.Net.Http.Json
+@using System.Threading.Tasks
+
+@inject NavigationManager NavigationManager
+@inject ILogger<Index> Logger
+@inject HttpClient Http
+@inject SharedLib.LoginState loginState;
+
+<h3>Poista matka</h3>
+
+<a href="/trips">Omat matkat</a>
+@if (loginState.isLoggedIn)
+{
+
+
+
+
+}
 
 @code {
+    bool isSubmitting;
+    SharedLib.matkaDTO? deletetrip = new SharedLib.matkaDTO();
+
+    [Parameter]
+    public long? IdMatka { get; set; }
+
+
+    protected override async Task OnInitializedAsync()
+    {
+
+        deletetrip = await Http.GetFromJsonAsync<SharedLib.matkaDTO>($"api/Matkas/{IdMatka}");
+
+        await base.OnInitializedAsync();
+    }
+
+    private async Task DeleteTrips(){
+        isSubmitting = true;
+        var result = await Http.DeleteAsync($"api/;atkas/{IdMatka}");
+
+        NavigationManager.NavigateTo($"/trips");
+    }
+
 
 }

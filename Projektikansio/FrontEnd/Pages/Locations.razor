@@ -31,7 +31,6 @@
     }
 </div>
 
-@*HUOM! Zoomatessa kuvat ei pysy paikoillaan vaan menevät toistensa päälle ja objektit sijoittuu miten sattuu*@
 @if(locations == null){
      <h2><img src="/images/loading.gif" width="150" /></h2> //tämä ei pyöri jostain syystä
 }
@@ -45,7 +44,7 @@ else if(locations != null){
                 @*style="float: left; width: 25%; padding: 15px"*@
                     @*aiemmin class = keskitys*@
                     @if(@l.kuva == null){
-                        <div>Ei kuvaa saatavilla</div>
+                    <div style="text-align:center">Ei kuvaa saatavilla</div>
                     }
                     else
                     {

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -22,27 +23,6 @@ namespace MyApi.Controllers
             _context = context;
         }
 
-      /*  // GET: api/Matkakohdes/tekstihaku
-        [HttpGet("{SearchText}")]
-        public async Task<ActionResult<List<matkakohdeDTO>>> GetLocationsLike(string SearchText)
-        {
-            var l = await _context.Matkakohdes.ToListAsync();
-            List<matkakohdeDTO> locationsLike = new List<matkakohdeDTO>();
-
-            foreach (var item in l)
-            {
-                matkakohdeDTO m = item.toMatkakohdeDTO();
-                if(m.kohdenimi.ToLower().CompareTo(SearchText.ToLower()) == 0) //jos vastaavuutta löytyy
-                {
-                    locationsLike.Add(m);
-                }
- 
-            }
-
-            if (locationsLike == null) return NotFound();
-            return locationsLike;
-        }       
-      */
         // GET: api/Matkakohdes
         [HttpGet]
         public async Task<ActionResult<List<matkakohdeDTO>>> GetLocations()
@@ -76,10 +56,11 @@ namespace MyApi.Controllers
 
         // PUT: api/Matkakohdes/5 
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+
         [HttpPut("{id}")]
-        public async Task<ActionResult<matkakohdeDTO>> PutLocation(matkakohdeDTO m, long id)
+        public async Task<ActionResult<matkakohdeDTO>> PutLocation(long id, matkakohdeDTO m)
         {
-            var location = await _context.Matkakohdes.Where(a => a.Idmatkakohde == id).FirstOrDefaultAsync();
+            Matkakohde? location = await _context.Matkakohdes.Where(a => a.Idmatkakohde == id).FirstOrDefaultAsync();
             if (location == null) return NotFound();
 
             //Sellaista matkakohdetta, johon liittyy joku matkakertomus, ei saa poistaa tai päivittää

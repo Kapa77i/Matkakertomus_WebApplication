@@ -9,9 +9,9 @@
 @inject HttpClient Http
 @inject SharedLib.LoginState loginState;
 
-@*Mahdollisuus lisätä kuva? Miten!?!? 
-    tee myös vetovalikko vaihtoehdoille
-*@
+@*@Mahdollisuus lisätä kuva? Miten!?!?
+    tee myös vetovalikko vaihtoehdoille*@
+
 @if (loginState.isLoggedIn) { 
 
     @if (location != null)
@@ -65,16 +65,18 @@
 
 
 @code {
+
+    bool isSubmitting;
+
+    public SharedLib.matkakohdeDTO? location;
+
     [Parameter]
     public long? Id { get; set; }
 
-    bool isSubmitting;
-    SharedLib.matkakohdeDTO? location;
+
 
     protected override async Task OnInitializedAsync()
     {
-        // var data = await Http.GetAsync($"api/Matkakohdes/{Id}"); 
-        // location = await data.Content.ReadFromJsonAsync<SharedLib.matkakohdeDTO>();
 
         location = await Http.GetFromJsonAsync<SharedLib.matkakohdeDTO>($"api/Matkakohdes/{Id}");
 
@@ -85,19 +87,19 @@
     async Task EditLocations()
     {
 
-        /*  if (!loginState.isLoggedIn) <----------------------------------- EI välttämättä tarvita jos ylhäällä tarkistus
-                {
-                NavigationManager.NavigateTo($"/login");//kuka tahansa ei voi lisätä matkakohteita, vaan pitää olla kirjautunut käyttäjä
-            }
-            else
-            { }*/
+      /* if (!loginState.isLoggedIn)// <----------------------------------- EI välttämättä tarvita jos ylhäällä tarkistus
+          {
+              NavigationManager.NavigateTo($"/login");//kuka tahansa ei voi lisätä matkakohteita, vaan pitää olla kirjautunut käyttäjä
+          }
+          else
+          { } */
 
-        isSubmitting = true;
-        //Console.WriteLine(location.idmatkakohde);
-        var result = await Http.PutAsJsonAsync($"api/Matkakohdes/{Id}", location); //ERROR 400:   "The m field is required."
-
-            //saako tähän väliin pyöritettyä pyörää?
-            NavigationManager.NavigateTo($"/locations");
+                isSubmitting = true;
+                //Console.WriteLine(location.idmatkakohde);
+                var result = await Http.PutAsJsonAsync($"api/Matkakohdes/{Id}", location); //ERROR 400:   "The m field is required."
+  
+                //saako tähän väliin pyöritettyä pyörää?
+                NavigationManager.NavigateTo($"/locations");
 
     }
 }

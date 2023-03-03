@@ -277,3 +277,15 @@ h1:focus {
         padding: 20px 0;
         font-size: 30px;
     }
+
+.flex-container{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-content: space-around;
+}
+
+    .flex-item{
+        padding: 15px;
+    }

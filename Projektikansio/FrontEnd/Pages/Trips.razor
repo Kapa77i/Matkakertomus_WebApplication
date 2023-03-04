@@ -18,29 +18,6 @@ voi merkitä matkan yksityiseksi, jolloin kukaan muu ei saa nähdä kyseistä ma
 navigointi tarinat- ja kuvat-sivuille voi tapahtuma päävalikon tai sivukohtaisen valikon kautta oman harkinnan mukaan
 HUOM! Porukan matkat- ja Omat matkat-sivut saisivat olla mahdollisimman yhdenmukaisia
 *@
-@*
-if (matkaaja = loginState.isLoggedIn.idmatkaaja) { //Jos käyttäjä kirjautunut, niin näkee sisällön
-
-    @foreach (var tarina in tarinas)
-    {
-        matka = matkas.FirstOrDefault(m => m.idmatka == tarina.idmatka);
-
-        //
-       
-            matkakohde = matkakohdes.FirstOrDefault(m => m.idmatkakohde == tarina.idmatkakohde);
-       
-
-            <div style="float: left; width: 33.33%; padding: 15px;">
-                <h2 style="text-align:left">Matka nro @tarina.idmatka.ToString()</h2>
-                <div style="text-align:left"><img src="/tripPictures/@matkakohde.kuva" width="150" /></div>
-                <p style="text-align:left">Tarinan nro: @tarina.idtarina.ToString()</p>
-                <p>Tarinan kirjoitus pvm: @tarina.pvm.ToString().Replace("0.00.00", "")</p>
-                <p>Matkakohde: @matkakohde.kohdenimi</p>
-                <p>@tarina.teksti</p>
-            </div>
-        
-    }
-}*@
 
 @if (tarinas == null && matkakohde == null)
 {
@@ -48,6 +25,29 @@ if (matkaaja = loginState.isLoggedIn.idmatkaaja) { //Jos käyttäjä kirjautunut
 }
 else
 {
+   @* @foreach (var matka in matkas)
+    {
+        //tarina = tarinas.FirstOrDefault(m => m.idmatka == matka.idmatka);
+        var matkaajaid = loginState.loggedUser.idmatkaaja;
+
+        
+
+        if (matka.idmatkaaja == matkaajaid)
+        {
+            tarina = tarinas.FirstOrDefault(m => m.idmatka == matka.idmatka);
+            matkakohde = matkakohdes.FirstOrDefault(m => m.idmatkakohde == tarina.idmatkakohde);
+           // matkakohde = matkakohdes.FirstOrDefault(m => m.idmatkakohde == matka.idmatkakohde);
+
+            <div style="float: left; width: 33.33%; padding: 15px;">            
+                <p style="text-align:left">Matka nro: @matka.idmatka.ToString()</p>
+                <p>Matkan alkupvm @matka.alkupvm.ToString()Replace("0.00.00", "")</p>
+                <p>Matkan loppupvm @matka.loppupvm.ToString()Replace("0.00.00", "")</p>
+                <p>Matkakohde: @matkakohde.kohdenimi</p>
+            </div>
+        }
+
+    }*@
+
 
     @foreach (var tarina in tarinas)
     {
@@ -67,12 +67,7 @@ else
                                         <p>Matkakohde: @matkakohde.kohdenimi</p>
                                         <p>@tarina.teksti</p>
                                     </div>
-        
-
         }
-
-           
-      
 
     }
 }

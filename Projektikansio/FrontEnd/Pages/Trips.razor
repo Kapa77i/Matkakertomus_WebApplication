@@ -3,10 +3,12 @@
 @using System.Threading.Tasks
 @using System.Net.Http
 @using System.Net.Http.Json
+@using SharedLib;
 @inject NavigationManager NavigationManager
 @inject ILogger<Index> Logger
 @inject HttpClient Http
 @inject SharedLib.LoginState loginState;
+
 
 <h1>Omat matkat</h1>
 
@@ -16,16 +18,15 @@ voi merkitä matkan yksityiseksi, jolloin kukaan muu ei saa nähdä kyseistä ma
 navigointi tarinat- ja kuvat-sivuille voi tapahtuma päävalikon tai sivukohtaisen valikon kautta oman harkinnan mukaan
 HUOM! Porukan matkat- ja Omat matkat-sivut saisivat olla mahdollisimman yhdenmukaisia
 *@
-
-if (loginState.isLoggedIn) { //Jos käyttäjä kirjautunut, niin näkee sisällön
+@*
+if (matkaaja = loginState.isLoggedIn.idmatkaaja) { //Jos käyttäjä kirjautunut, niin näkee sisällön
 
     @foreach (var tarina in tarinas)
     {
         matka = matkas.FirstOrDefault(m => m.idmatka == tarina.idmatka);
 
         //
-        if (matka.yksityinen == 1)
-        {
+       
             matkakohde = matkakohdes.FirstOrDefault(m => m.idmatkakohde == tarina.idmatkakohde);
        
 
@@ -37,15 +38,10 @@ if (loginState.isLoggedIn) { //Jos käyttäjä kirjautunut, niin näkee sisäll�
                 <p>Matkakohde: @matkakohde.kohdenimi</p>
                 <p>@tarina.teksti</p>
             </div>
-        }
-
-        else
-        {
-
-        }
+        
     }
-}
-@*
+}*@
+
 @if (tarinas == null && matkakohde == null)
 {
         <h2>  <img src="/images/loading.gif" width="150" /></h2>
@@ -56,28 +52,30 @@ else
     @foreach (var tarina in tarinas)
     {
         matka = matkas.FirstOrDefault(m => m.idmatka == tarina.idmatka);
+        var matkaajaid = loginState.loggedUser.idmatkaaja;
+        
 
-        //Tsekataan onko matka yksityinen vai ei, 1 == public?
-        if (matka.yksityinen == 1)
+        if(matka.idmatkaaja == matkaajaid)
         {
-            matkakohde = matkakohdes.FirstOrDefault(m => m.idmatkakohde == tarina.idmatkakohde);
+             matkakohde = matkakohdes.FirstOrDefault(m => m.idmatkakohde == tarina.idmatkakohde);
 
-                        <div style="float: left; width: 33.33%; padding: 15px;">
-                            <h2 style="text-align:left">Matka nro @tarina.idmatka.ToString()</h2>
-                            <div style="text-align:left"><img src="/tripPictures/@matkakohde.kuva" width="150" /></div>
-                            <p style="text-align:left">Tarinan nro: @tarina.idtarina.ToString()</p>
-                            <p>Tarinan kirjoitus pvm: @tarina.pvm.ToString().Replace("0.00.00", "")</p>
-                            <p>Matkakohde: @matkakohde.kohdenimi</p>
-                            <p>@tarina.teksti</p>
-                        </div>
+                              <div style="float: left; width: 33.33%; padding: 15px;">
+                                        <h2 style="text-align:left">Matka nro @tarina.idmatka.ToString()</h2>
+                                        <div style="text-align:left"><img src="/tripPictures/@matkakohde.kuva" width="150" /></div>
+                                        <p style="text-align:left">Tarinan nro: @tarina.idtarina.ToString()</p>
+                                        <p>Tarinan kirjoitus pvm: @tarina.pvm.ToString().Replace("0.00.00", "")</p>
+                                        <p>Matkakohde: @matkakohde.kohdenimi</p>
+                                        <p>@tarina.teksti</p>
+                                    </div>
+        
+
         }
 
-        else
-        {
+           
+      
 
-        }
     }
-}*@
+}
 
 @code {
     List<SharedLib.matkaDTO>? trips = new List<SharedLib.matkaDTO>();
@@ -89,8 +87,11 @@ else
     //private List<SharedLib.matkaajaDTO>? auth;
     private SharedLib.matkakohdeDTO matkakohde;
     private SharedLib.matkaDTO matka;
+    private SharedLib.matkaajaDTO matkaaja;
 
-
+    public string Email { get; set; }
+    private string Password { get; set; }
+    private matkaajaDTO? response = new matkaajaDTO();
 
     protected override async Task OnInitializedAsync()
     {
@@ -99,10 +100,15 @@ else
         tarinas = await Http.GetFromJsonAsync<List<SharedLib.tarinaDTO>>("/api/Tarinas");
         matkakohdes = await Http.GetFromJsonAsync<List<SharedLib.matkakohdeDTO>>("/api/Matkakohdes");
         matkas = await Http.GetFromJsonAsync<List<SharedLib.matkaDTO>>("/api/Matkas");
+
+
+
+        var matkaajaid = loginState.loggedUser.idmatkaaja;
+        Console.WriteLine("Matkaajaid on = " + matkaajaid);
+        //Console.WriteLine("Matkaaja id= " + matkaaja.idmatkaaja);
         //matkaajas = await Http.GetFromJsonAsync<List<SharedLib.matkaajaDTO>>("/api/Matkaajas");
 
         //auth = await Http.GetFromJsonAsync<List<SharedLib.matkaajaDTO>>("/api/Auth");
-
 
         @*loginState.loggedUser = matkaajas.FirstOrDefault(m => m.idmatkaaja == matka.idmatkaaja)*@
     }

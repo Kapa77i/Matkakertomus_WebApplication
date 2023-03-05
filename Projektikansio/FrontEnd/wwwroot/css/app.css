@@ -205,6 +205,7 @@ a, .btn-link {
     color: #0071c1;
 }
 
+
 h1:focus {
     outline: none;
 }
@@ -278,14 +279,21 @@ h1:focus {
         font-size: 30px;
     }
 
-.flex-container{
+.flex-container {
     display: flex;
     flex-direction: row;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     justify-content: space-around;
     align-content: space-around;
+    float: left; 
+    width: 33.33%; 
+    padding: 15px;
 }
-
+.item:nth-child(3n) {
+    page-break-after: always; /* CSS 2.1 syntax */
+    break-after: always; /* CSS 3 syntax */
+}
     .flex-item{
         padding: 15px;
     }
+

@@ -21,18 +21,22 @@ navigointi tarinat- ja kuvat-sivuille voi tapahtuma päävalikon tai sivukohtais
 HUOM! Porukan matkat- ja Omat matkat-sivut saisivat olla mahdollisimman yhdenmukaisia
 *@
 
-@if (tarinas == null && matkakohde == null)
+@if (tarinas == null && matkakohde == null || !loginState.isLoggedIn)
 {
     <h2>  <img src="/images/loading.gif" width="150" /></h2>
 }
 else
 {
+
     <br />
     <h2 style="text-align:left">Matkat</h2>
     <a style="padding-right: 15px;" href="/trips/addTrip">Lisää uusi matka</a>
     <br />
     //tarina = tarinas.FirstOrDefault(m => m.idmatka == matka.idmatka);
+
     var matkaajaid = loginState.loggedUser.idmatkaaja;
+    Console.WriteLine("Matkaajaid on = " + matkaajaid);
+
     <table style="width:100%">
         <tr>
             <th>Matka nro</th>
@@ -43,22 +47,15 @@ else
         </tr>
         @foreach (var matka in matkas)
         {
-
-
-
-
             if (matka.idmatkaaja == matkaajaid)
             {
-
                 <tr>
                     <td>@matka.idmatka.ToString()</td>
                     <td>@matka.alkupvm.ToString().Replace("0.00.00", "")</td>
                     <td>@matka.loppupvm.ToString().Replace("0.00.00", "")</td>
-                    <td> <div style="text-align:center"><a href="trips/edit/">Muokkaa</a></div></td>
-                    <td><div style="text-align:center"><a href="trips/delete/">Poista</a></div></td>
-
+                    <td> <div style="text-align:center;/* color:black*/"><a href="trips/edit/" style="color:black;">Muokkaa</a></div></td>
+                    <td><div style="text-align:center; /*color:black*/"><a href="trips/delete/" style="color:black">Poista</a></div></td>
                 </tr>
-
             }
         }
     </table>
@@ -73,20 +70,18 @@ else
     @foreach (var tarina in tarinas)
     {
         matka = matkas.FirstOrDefault(m => m.idmatka == tarina.idmatka);
-       // var matkaajaid2 = loginState.loggedUser.idmatkaaja;
-
 
         if (matka.idmatkaaja == matkaajaid)
         {
             matkakohde = matkakohdes.FirstOrDefault(m => m.idmatkakohde == tarina.idmatkakohde);
 
-            <div style="float: left; width: 33.33%; padding: 15px;">
-                <h3 style="text-align:left">Matka nro @tarina.idmatka.ToString()</h3>
-                <div style="text-align:left"><img src="/tripPictures/@matkakohde.kuva" width="150" /></div>
-                <p style="text-align:left">Tarinan nro: @tarina.idtarina.ToString()</p>
+            <div class="flex-container" style="float: left; width: 33.33%; padding: 15px;">
+                <h4 style="text-align:left; width:100%">Matka nro @tarina.idmatka.ToString()</h4>
+                <div style="text-align:left; width:100%"><img src="/tripPictures/@matkakohde.kuva" width="150" /></div>
+                <p style="text-align:left; width:100%">Tarinan nro: @tarina.idtarina.ToString()</p>
                 <p>Tarinan kirjoitus pvm: @tarina.pvm.ToString().Replace("0.00.00", "")</p>
                 <p>Matkakohde: @matkakohde.kohdenimi</p>
-                <p>@tarina.teksti</p>
+                <p style="width: 100%;">@tarina.teksti</p>
                 <div style="text-align:left"><a href="trips/edit/">Muokkaa</a></div>
                 <div style="text-align:left"><a href="trips/delete/">Poista</a></div>
             </div>
@@ -98,38 +93,24 @@ else
 
 
 @code {
-    List<SharedLib.matkaDTO>? trips = new List<SharedLib.matkaDTO>();
+
 
     private List<SharedLib.tarinaDTO>? tarinas;
     private List<SharedLib.matkakohdeDTO>? matkakohdes;
     private List<SharedLib.matkaDTO>? matkas;
-    //private List<SharedLib.matkaajaDTO>? matkaajas;
-    //private List<SharedLib.matkaajaDTO>? auth;
     private SharedLib.matkakohdeDTO matkakohde;
     private SharedLib.matkaDTO matka;
     private SharedLib.matkaajaDTO matkaaja;
 
-    public string Email { get; set; }
-    private string Password { get; set; }
-    private matkaajaDTO? response = new matkaajaDTO();
 
     protected override async Task OnInitializedAsync()
     {
-        //Haetaan kaikki matkat         >>> MUOKKAA: Haetaan vain kirjautuneen henkilön matkat > CRUD + loginstate.loggedUser tms.
+        
 
         tarinas = await Http.GetFromJsonAsync<List<SharedLib.tarinaDTO>>("/api/Tarinas");
         matkakohdes = await Http.GetFromJsonAsync<List<SharedLib.matkakohdeDTO>>("/api/Matkakohdes");
         matkas = await Http.GetFromJsonAsync<List<SharedLib.matkaDTO>>("/api/Matkas");
 
 
-
-        var matkaajaid = loginState.loggedUser.idmatkaaja;
-        Console.WriteLine("Matkaajaid on = " + matkaajaid);
-        //Console.WriteLine("Matkaaja id= " + matkaaja.idmatkaaja);
-        //matkaajas = await Http.GetFromJsonAsync<List<SharedLib.matkaajaDTO>>("/api/Matkaajas");
-
-        //auth = await Http.GetFromJsonAsync<List<SharedLib.matkaajaDTO>>("/api/Auth");
-
-        @*loginState.loggedUser = matkaajas.FirstOrDefault(m => m.idmatkaaja == matka.idmatkaaja)*@
     }
 }

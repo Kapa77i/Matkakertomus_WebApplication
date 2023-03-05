@@ -22,7 +22,7 @@ namespace MyApi.Controllers
 
         // GET: api/Matkas
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Matka>>> GetMatkas()
+        public async Task<ActionResult<List<Matka>>> GetMatkas()
         {
             return await _context.Matkas.ToListAsync();
         }

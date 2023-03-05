@@ -12,6 +12,8 @@
 
 <h1>Omat matkat</h1>
 
+
+
 @*
 voi lisätä, selata, päivittää ja poistaa omia matkoja ja niihin liitettyjä tarinoita ja kuvia
 voi merkitä matkan yksityiseksi, jolloin kukaan muu ei saa nähdä kyseistä matkaa, eikä siihen kuuluvia tarinoita tai kuvia
@@ -27,6 +29,7 @@ else
 {
     <br/>
     <h2 style="text-align:left">Matkat</h2>
+    <a style="padding-right: 15px;" href="/trips/addTrip">Lisää uusi matka</a>
      <br/>
     @foreach (var matka in matkas)
     {
@@ -55,8 +58,8 @@ else
                         <td>@matka.idmatka.ToString()</td>
                         <td>@matka.alkupvm.ToString().Replace("0.00.00", "")</td>
                         <td>@matka.loppupvm.ToString().Replace("0.00.00", "")</td>
-                    <td><button type="submit" class="btn btn-primary" style="margin-top:10px;">Päivitä</button></td>
-                    <td><a class="btn btn-danger" style="margin-top:10px" href=" /">Poista</a></td>
+                    <td> <div style="text-align:center"><a href="trips/edit/">Muokkaa</a></div></td>
+                    <td><div style="text-align:center"><a href="trips/delete/">Poista</a></div></td>
 
                     
                     
@@ -73,6 +76,8 @@ else
      <br/>
     <br />
     <h2 style="text-align:left">Tarinat</h2>
+    <a style="text-align:left" href="/trips/addStory">Lisää uusi tarina</a>
+    <br />
 
     @foreach (var tarina in tarinas)
     {

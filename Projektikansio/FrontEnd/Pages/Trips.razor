@@ -25,7 +25,10 @@ HUOM! Porukan matkat- ja Omat matkat-sivut saisivat olla mahdollisimman yhdenmuk
 }
 else
 {
-   @* @foreach (var matka in matkas)
+    <br/>
+    <h2 style="text-align:left">Matkat</h2>
+     <br/>
+    @foreach (var matka in matkas)
     {
         //tarina = tarinas.FirstOrDefault(m => m.idmatka == matka.idmatka);
         var matkaajaid = loginState.loggedUser.idmatkaaja;
@@ -34,20 +37,42 @@ else
 
         if (matka.idmatkaaja == matkaajaid)
         {
-            tarina = tarinas.FirstOrDefault(m => m.idmatka == matka.idmatka);
-            matkakohde = matkakohdes.FirstOrDefault(m => m.idmatkakohde == tarina.idmatkakohde);
+           
+            //matkakohde = matkakohdes.FirstOrDefault(m => m.idmatkakohde == tarina.idmatkakohde);
            // matkakohde = matkakohdes.FirstOrDefault(m => m.idmatkakohde == matka.idmatkakohde);
 
-            <div style="float: left; width: 33.33%; padding: 15px;">            
-                <p style="text-align:left">Matka nro: @matka.idmatka.ToString()</p>
-                <p>Matkan alkupvm @matka.alkupvm.ToString()Replace("0.00.00", "")</p>
-                <p>Matkan loppupvm @matka.loppupvm.ToString()Replace("0.00.00", "")</p>
-                <p>Matkakohde: @matkakohde.kohdenimi</p>
-            </div>
+            <table style="width:100%">
+                <tr>
+                    <th>Matka nro</th>
+                    <th>Matkan alkupvm</th>
+                    <th>Matkan loppupvm</th>
+                    <th>Muokkaa matkaa</th>
+                    <th>Poista matka</th>
+                </tr>
+
+               
+                    <tr>
+                        <td>@matka.idmatka.ToString()</td>
+                        <td>@matka.alkupvm.ToString().Replace("0.00.00", "")</td>
+                        <td>@matka.loppupvm.ToString().Replace("0.00.00", "")</td>
+                    <td><button type="submit" class="btn btn-primary" style="margin-top:10px;">Päivitä</button></td>
+                    <td><a class="btn btn-danger" style="margin-top:10px" href=" /">Poista</a></td>
+
+                    
+                    
+                    </tr>
+
+                
+            </table>
+
         }
 
-    }*@
+    }
 
+    <br/>
+     <br/>
+    <br />
+    <h2 style="text-align:left">Tarinat</h2>
 
     @foreach (var tarina in tarinas)
     {
@@ -60,12 +85,14 @@ else
              matkakohde = matkakohdes.FirstOrDefault(m => m.idmatkakohde == tarina.idmatkakohde);
 
                               <div style="float: left; width: 33.33%; padding: 15px;">
-                                        <h2 style="text-align:left">Matka nro @tarina.idmatka.ToString()</h2>
+                                        <h3 style="text-align:left">Matka nro @tarina.idmatka.ToString()</h3>
                                         <div style="text-align:left"><img src="/tripPictures/@matkakohde.kuva" width="150" /></div>
                                         <p style="text-align:left">Tarinan nro: @tarina.idtarina.ToString()</p>
                                         <p>Tarinan kirjoitus pvm: @tarina.pvm.ToString().Replace("0.00.00", "")</p>
                                         <p>Matkakohde: @matkakohde.kohdenimi</p>
                                         <p>@tarina.teksti</p>
+                                         <div style="text-align:left"><a href="trips/edit/">Muokkaa</a></div>
+                                         <div style="text-align:left"><a href="trips/delete/">Poista</a></div>
                                     </div>
         }
 

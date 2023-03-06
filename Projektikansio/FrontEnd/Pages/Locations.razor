@@ -47,7 +47,7 @@ else if(locations != null){
                     }
                     else
                     {
-                        <div style="text-align:center"><img src="/tripPictures/@l.kuva" width="150" /></div>
+                        <div style="text-align:center"><a href="location/@l.idmatkakohde"><img src="/tripPictures/@l.kuva" width="150" /></a></div>
                     }
                         <div><h3>@l.kohdenimi</h3></div>
                         <div><h4>@l.paikkakunta</h4></div>
@@ -56,7 +56,7 @@ else if(locations != null){
                     @if(loginState.isLoggedIn){
                         <div style="text-align:center"><a href="locations/edit/@l.idmatkakohde">Muokkaa</a></div>
                         <div style="text-align:center"><a href="locations/delete/@l.idmatkakohde">Poista</a></div>
-                        <div style="text-align:center"><a href="location/@l.idmatkakohde">Tarkastele</a></div>
+                        //<div style="text-align:center"><a href="location/@l.idmatkakohde">Tarkastele</a></div> ---> Klikkaa kuvaa!
                     }
             </div>
         }

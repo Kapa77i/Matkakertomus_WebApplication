@@ -22,7 +22,7 @@
             @foreach (var s in stories)
             {
                 trip = trips.FirstOrDefault(m => m.idmatka == s.idmatka);
-                @if(trip.yksityinen == 1){ //jos matka ei ole yksityinen, niin näytetään
+                @if(trip.yksityinen == 1 && s.idmatkakohde == location.idmatkakohde){ //jos matka ei ole yksityinen, niin näytetään
 
                     <div style="float: left; width: 33.33%; padding: 15px;">
                         <h2 style="text-align:left">Matka nro @s.idmatka.ToString()</h2>
@@ -32,12 +32,11 @@
                         <p>@s.teksti</p>
                     </div>
                 }
+               // else{
+               //     <div style="text-align:center">Ei näytettäviä matkoja ja tarinoita </div>
+               // }
             }
-        }
-        else{
-            <div style="text-align:center">Ei näytettäviä matkoja ja tarinoita </div>
-        }
-       
+        }  
     }
 
 }

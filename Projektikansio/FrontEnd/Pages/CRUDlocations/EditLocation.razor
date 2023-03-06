@@ -24,8 +24,8 @@
                 <div>
                     <label>
                         Kuva
-                        <InputText class="form-control" id="kuva" @bind-Value="location.kuva" />
                         <img src="tripPictures/@location.kuva" width="133" height="133" alt="1" />
+                        <InputText class="form-control" id="kuva" @bind-Value="location.kuva" />
                     </label>
                 </div>
                 <div>
@@ -56,11 +56,16 @@
             </EditForm>
         </div>
     }
-    else
-    {
-        <h2>  <img src="/images/loading.gif" width="150" /></h2>
-    }
+ 
     
+    @if(r == 1){@*Jos r = 1, se tarkoittaa ettei matkakohdetta muokattu, koska se sisälsi tarinan*@
+        <div style="text-align:center"><h3>Matkakohde sisältää tarinan.<br/>Matkakohdetta ei voi muokata.</h3></div>
+    }
+}
+else
+{
+    <h2>  <img src="/images/loading.gif" width="150" /></h2>
+    <h2>Kirjaudu sisään muokataksesi matkakohteita</h2>
 }
 
 
@@ -68,6 +73,7 @@
 
     bool isSubmitting;
     SharedLib.matkakohdeDTO? location;
+    int? r; 
 
     [Parameter]
     public long? Id { get; set; }
@@ -76,29 +82,36 @@
 
     protected override async Task OnInitializedAsync()
     {
+        try{
+            location = await Http.GetFromJsonAsync<SharedLib.matkakohdeDTO>($"api/Matkakohdes/{Id}");
+            await base.OnInitializedAsync();
+        }
+        catch(Exception e){
+            Console.WriteLine(e.Message);
+        }
 
-        location = await Http.GetFromJsonAsync<SharedLib.matkakohdeDTO>($"api/Matkakohdes/{Id}");
-
-        await base.OnInitializedAsync(); 
     }
 
 
     async Task EditLocations()
     {
+        try{
+            isSubmitting = true;
+            var result = await Http.PutAsJsonAsync($"api/Matkakohdes/{Id}", location);
 
-        /* if (!loginState.isLoggedIn)// <----------------------------------- EI välttämättä tarvita jos ylhäällä tarkistus
-                {
-                NavigationManager.NavigateTo($"/login");//kuka tahansa ei voi lisätä matkakohteita, vaan pitää olla kirjautunut käyttäjä
+            if (result.StatusCode.Equals("NoContent")) //TÄMÄ EI TOIMI VIELÄ. Tarkoituksena antaa editoijalle viesti, että ei voitu muokata tarinan takia
+            {
+                r = 1;
             }
             else
-            { } */
-
-                isSubmitting = true;
-                //Console.WriteLine(location.idmatkakohde);
-                var result = await Http.PutAsJsonAsync($"api/Matkakohdes/{Id}", location); //ERROR 400:   "The m field is required."
-  
+            {
                 //saako tähän väliin pyöritettyä pyörää?
                 NavigationManager.NavigateTo($"/locations");
-
+            }
+        }
+        catch(Exception e){
+            Console.WriteLine(e.Message);
+        }
+        
     }
 }

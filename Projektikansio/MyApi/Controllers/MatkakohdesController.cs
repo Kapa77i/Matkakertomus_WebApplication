@@ -60,6 +60,7 @@ namespace MyApi.Controllers
         [HttpPut("{id}")]
         public async Task<ActionResult<matkakohdeDTO>> PutLocation(long id, Matkakohde m)
         {
+            //Varmistutaan siitä, että kyseinen matkakohde on olemassa ennen muokkausta
             Matkakohde? location = await _context.Matkakohdes.Where(a => a.Idmatkakohde == id).FirstOrDefaultAsync();
             if (location == null) return NotFound();
 
@@ -76,7 +77,7 @@ namespace MyApi.Controllers
                 location.Maa = m.Maa;
                 location.Kuvausteksti = m.Kuvausteksti;
             }
-
+          
 
             _context.Entry(location).State = EntityState.Modified;
 

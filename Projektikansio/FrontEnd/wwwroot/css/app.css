@@ -261,23 +261,32 @@ h1:focus {
         content: "Virhe tapahtunut."
     }
 
-/*Porukan matka sivun höttökokeilua*/
-.grid-container {
-    display: grid;
-    height: 400px;
-    align-content: space-evenly;
-    grid-template-columns: auto auto auto;
-    gap: 10px;
-    background-color: #2196F3;
-    padding: 10px;
+/*Omat matka sivun höttökokeilua*/
+.flex-c {
+    display: flex;
+    flex-flow: row wrap;
 }
 
-    .grid-container > div {
-        background-color: rgba(255, 255, 255, 0.8);
-        text-align: center;
-        padding: 20px 0;
-        font-size: 30px;
+    .flex-c > div {
+        width: 32%;
+        margin: 5px;
+        padding: 25px;
+        text-align: left;
+        line-height: 25px;
     }
+
+.flex-t {
+    display: flex;
+    flex-flow: row wrap;
+}
+
+    .flex-t > div {
+        width: 17%;
+        margin: 5px;
+        text-align: left;
+        line-height: 20px;
+    }
+
 
 .flex-container {
     display: flex;

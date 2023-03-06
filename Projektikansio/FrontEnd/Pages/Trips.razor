@@ -4,11 +4,38 @@
 @using System.Net.Http
 @using System.Net.Http.Json
 @using SharedLib;
+
 @inject NavigationManager NavigationManager
 @inject ILogger<Index> Logger
 @inject HttpClient Http
 @inject SharedLib.LoginState loginState;
+@* <style>
+    .flex-c {
+        display: flex;
+        flex-flow: row wrap;
+    }
 
+        .flex-c > div {
+            width: 32%;
+            margin: 5px;
+            padding: 25px;
+            text-align: left;
+            line-height: 25px;
+        }
+
+    .flex-t {
+        display: flex;
+        flex-flow: row wrap;
+    }
+
+        .flex-t > div {
+            width: 17%;
+            margin: 5px;
+            text-align: left;
+            line-height: 20px;
+        }
+
+ </style>*@
 
 <h1>Omat matkat</h1>
 
@@ -29,12 +56,37 @@ else
 {
     <br />
     <h2 style="text-align:left">Matkat</h2>
-    <a style="padding-right: 15px;" href="/trips/addTrip">Lisää uusi matka</a>
+
+    <div style="text-align:right; padding-right: 150px; "><a style="padding-right: 15px; " href="/trips/addTrip">Lisää uusi matka</a></div>
     <br />
     //tarina = tarinas.FirstOrDefault(m => m.idmatka == matka.idmatka);
 
     var matkaajaid = loginState.loggedUser.idmatkaaja;
     Console.WriteLine("Matkaajaid on = " + matkaajaid);
+
+
+    <div class="flex-t">
+        <div style="text-decoration-line: underline; text-decoration-color: lightblue"> Matkakoodi</div>
+        <div style="text-decoration-line: underline; text-decoration-color: lightblue"> Matkan aloitus ja lopetus pvm</div>
+        <div> </div>
+        <div> </div>
+        <div> </div>
+
+        @foreach (var matka in matkas)
+        {
+             if (matka.idmatkaaja == matkaajaid)
+            {
+                <div>@matka.idmatka.ToString()</div>
+                <div>@matka.alkupvm.ToString().Replace("0.00.00", "") - @matka.loppupvm.ToString().Replace("0.00.00", "")</div>
+                <div></div>
+                <div><a href="trips/edit/" style="color:black;">Muokkaa</a></div>
+                <div><a href="trips/delete/" style="color:black">Poista</a></div>
+                
+            }
+        }
+
+    </div>
+@*
 
     <table style="width:100%">
         <tr>
@@ -57,36 +109,43 @@ else
                 </tr>
             }
         }
-    </table>
+    </table>*@
 
+    <br />
+    <br />
+    <br />
     <br />
     <br />
     <br />
     <h2 style="text-align:left">Tarinat</h2>
-    <a style="text-align:left" href="/trips/addStory">Lisää uusi tarina</a>
+    <div style="text-align:right; padding-right: 160px;" > <a style="text-align:left" href="/trips/addStory">Lisää uusi tarina</a> </div>
     <br />
+    <div class="flex-c">
 
-    @foreach (var tarina in tarinas)
-    {
-        matka = matkas.FirstOrDefault(m => m.idmatka == tarina.idmatka);
-
-        if (matka.idmatkaaja == matkaajaid)
+        @foreach (var tarina in tarinas)
         {
-            matkakohde = matkakohdes.FirstOrDefault(m => m.idmatkakohde == tarina.idmatkakohde);
+            matka = matkas.FirstOrDefault(m => m.idmatka == tarina.idmatka);
 
-            <div class="flex-container" style="float: left; width: 33.33%; padding: 15px;">
-                <h4 style="text-align:left; width:100%">Matka nro @tarina.idmatka.ToString()</h4>
-                <div style="text-align:left; width:100%"><img src="/tripPictures/@matkakohde.kuva" width="150" /></div>
-                <p style="text-align:left; width:100%">Tarinan nro: @tarina.idtarina.ToString()</p>
+            if (matka.idmatkaaja == matkaajaid)
+            {
+                matkakohde = matkakohdes.FirstOrDefault(m => m.idmatkakohde == tarina.idmatkakohde);
+
+                <div>
+                <h4 style="text-align: left;">Matka nro @tarina.idmatka.ToString()</h4> 
+                <img src="/tripPictures/@matkakohde.kuva" width="150" />
+                <p>Tarinan nro: @tarina.idtarina.ToString()</p>
                 <p>Tarinan kirjoitus pvm: @tarina.pvm.ToString().Replace("0.00.00", "")</p>
                 <p>Matkakohde: @matkakohde.kohdenimi</p>
-                <p style="width: 100%;">@tarina.teksti</p>
-                <div style="text-align:left"><a href="trips/edit/">Muokkaa</a></div>
-                <div style="text-align:left"><a href="trips/delete/">Poista</a></div>
-            </div>
+                <p>@tarina.teksti</p>
+                <a href="trips/edit/">Muokkaa</a>
+                <a href="trips/delete/">Poista</a></div>
+
+
+            }
+
         }
 
-    }
+    </div>
 }
 
 
@@ -104,7 +163,7 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        
+
 
         tarinas = await Http.GetFromJsonAsync<List<SharedLib.tarinaDTO>>("/api/Tarinas");
         matkakohdes = await Http.GetFromJsonAsync<List<SharedLib.matkakohdeDTO>>("/api/Matkakohdes");

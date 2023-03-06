@@ -9,7 +9,7 @@
 @inject HttpClient Http
 @inject SharedLib.LoginState loginState;
 
-<h1>Lisää matkakohde</h1>
+
 @*sis. idmatkakohde, kohdenimi, maa, paikkakunta, kuvausteksti, kuva (id:tä ei tarvitse näyttää, ellei muokata tai poisteta)
     Alustava!
 
@@ -17,17 +17,17 @@
     Tee joku oletuskuva kaikille? ja/tai vetovalikko, mistä valita kuva?
 *@
 
-
-<a href="/locations">Matkakohteet</a>
 @if (loginState.isLoggedIn) @*kuka tahansa ei voi lisätä matkakohteita, vaan pitää olla kirjautunut käyttäjä*@
 {
+    <h1>Lisää matkakohde</h1>
     <div style="text-align:center">
         <EditForm Model="@newlocation" OnValidSubmit="@PostLocations">
             <DataAnnotationsValidator/>
             <ValidationSummary/>
             <div>
-                <label>Kuva
+                <label>
                     <InputText class="form-control" id="kuva" @bind-Value="newlocation.kuva"/>
+                    Kuva
                     <img src="tripPictures/@newlocation.kuva" width="133" height="133" alt="1" /> @*jos kuvaa ei valittu niin tässä ikoni*@
                 </label>
             </div>

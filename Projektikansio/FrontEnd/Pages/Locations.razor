@@ -9,8 +9,6 @@
 @inject HttpClient Http
 @inject SharedLib.LoginState loginState;
 
-<h1>Matkakohteet</h1>
-
 @*Tästä sivusta tulee tavallaan matkakohteiden index sivu > selaaminen
     voi lisätä, poistaa, päivittää ja selata matkakohteita.
     - Sellaista matkakohdetta, johon liittyy joku matkakertomus, ei saa poistaa tai päivittää
@@ -19,15 +17,17 @@
 
 @* Tee: 
         -ylös hakupalkki: voi hakea/suodattaa matkakohteen nimellä > "search-as-you-type"
-        -sivu näyttää matkakohteet (2-3 sarakkeisessa taulukossa?)
+        -matkakohteet eivät overlappaa toistensa päälle
         -matkakohdetta klikkaamalla näkee mahdolliset tarinat?? -> takaisin -nappi 
 
         MUISTA LAITTAA TYYLIT <img src="/profilePictures/@user.kuva.ToString()" width="150" alt="@user.nimimerkki.ToString()">
 *@
+<h1>Matkakohteet</h1>
 <div class="topnav" style="text-align:center">
     @if (loginState.isLoggedIn)
     {
-        <a style="padding-right: 15px;" href="/locations/add">Lisää matkakohteita</a>
+
+        <a href="/locations/add">Lisää matkakohteita</a>
     }
 </div>
 
@@ -36,9 +36,8 @@
 }
 else if(locations != null){
 
-    <div class="flex-container">
+    <div style="margin-top: 5%" class="flex-container">
         @foreach(var l in locations){
-
             
             <div class="flex-item">
                 @*style="float: left; width: 25%; padding: 15px"*@
@@ -59,9 +58,6 @@ else if(locations != null){
                         <div style="text-align:center"><a href="locations/delete/@l.idmatkakohde">Poista</a></div>
                     }
             </div>
-                
-            
-            
         }
     </div>
 }
@@ -76,10 +72,13 @@ else if(locations != null){
 
     protected override async Task OnInitializedAsync(){
 
-        var data = await Http.GetAsync("api/Matkakohdes");
-        locations = await data.Content.ReadFromJsonAsync<List<SharedLib.matkakohdeDTO>>();
-
-
+        try{
+            var data = await Http.GetAsync("api/Matkakohdes");
+            locations = await data.Content.ReadFromJsonAsync<List<SharedLib.matkakohdeDTO>>();
+        }
+        catch (Exception e){
+            Console.WriteLine(e.Message);
+        }
     }
 
 }

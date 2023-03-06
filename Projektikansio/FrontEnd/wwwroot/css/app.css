@@ -278,14 +278,20 @@ h1:focus {
 .flex-t {
     display: flex;
     flex-flow: row wrap;
+    justify-content: center;
 }
 
     .flex-t > div {
-        width: 17%;
-        margin: 5px;
-        text-align: left;
+        width: 25%;
+        margin: 1px;
+        text-align: center;
         line-height: 20px;
     }
+
+hr.rounded {
+    border-top: 8px solid #bbb;
+    border-radius: 5px;
+}
 
 
 .flex-container {

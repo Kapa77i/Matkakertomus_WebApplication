@@ -9,35 +9,11 @@
 @inject ILogger<Index> Logger
 @inject HttpClient Http
 @inject SharedLib.LoginState loginState;
-@* <style>
-    .flex-c {
-        display: flex;
-        flex-flow: row wrap;
-    }
+<link rel="stylesheet" type="text/css" href="css/app.css?version=0.1">
 
-        .flex-c > div {
-            width: 32%;
-            margin: 5px;
-            padding: 25px;
-            text-align: left;
-            line-height: 25px;
-        }
-
-    .flex-t {
-        display: flex;
-        flex-flow: row wrap;
-    }
-
-        .flex-t > div {
-            width: 17%;
-            margin: 5px;
-            text-align: left;
-            line-height: 20px;
-        }
-
- </style>*@
 
 <h1>Omat matkat</h1>
+<hr class="rounded">
 
 
 
@@ -55,7 +31,10 @@ HUOM! Porukan matkat- ja Omat matkat-sivut saisivat olla mahdollisimman yhdenmuk
 else
 {
     <br />
-    <h2 style="text-align:left">Matkat</h2>
+    <h2 style="text-decoration-line: underline;
+  text-decoration-style: double;">
+        Matkat
+    </h2>
 
     <div style="text-align:right; padding-right: 150px; "><a style="padding-right: 15px; " href="/trips/addTrip">Lisää uusi matka</a></div>
     <br />
@@ -64,52 +43,48 @@ else
     var matkaajaid = loginState.loggedUser.idmatkaaja;
     Console.WriteLine("Matkaajaid on = " + matkaajaid);
 
-
+    <h4 style="text-align: left;">Omat matkat</h4>
     <div class="flex-t">
         <div style="text-decoration-line: underline; text-decoration-color: lightblue"> Matkakoodi</div>
         <div style="text-decoration-line: underline; text-decoration-color: lightblue"> Matkan aloitus ja lopetus pvm</div>
         <div> </div>
-        <div> </div>
-        <div> </div>
+
 
         @foreach (var matka in matkas)
         {
+            //Näyttää vain omat matkat
              if (matka.idmatkaaja == matkaajaid)
             {
                 <div>@matka.idmatka.ToString()</div>
                 <div>@matka.alkupvm.ToString().Replace("0.00.00", "") - @matka.loppupvm.ToString().Replace("0.00.00", "")</div>
-                <div></div>
-                <div><a href="trips/edit/" style="color:black;">Muokkaa</a></div>
-                <div><a href="trips/delete/" style="color:black">Poista</a></div>
+                <div><a href="trips/edit/">Muokkaa</a> // <a href="trips/delete/">Poista</a></div>
                 
             }
         }
 
     </div>
-@*
+    <br />
+    <br />
+    <br />
+    <h4 style="text-align: left;">Muut matkat</h4>
+    <div class="flex-t">
+        <div style="text-decoration-line: underline; text-decoration-color: lightblue"> Matkakoodi</div>
+        <div style="text-decoration-line: underline; text-decoration-color: lightblue"> Matkan aloitus ja lopetus pvm</div>
+        <div> </div>
 
-    <table style="width:100%">
-        <tr>
-            <th>Matka nro</th>
-            <th>Matkan alkupvm</th>
-            <th>Matkan loppupvm</th>
-            <th>Muokkaa matkaa</th>
-            <th>Poista matka</th>
-        </tr>
         @foreach (var matka in matkas)
         {
-            if (matka.idmatkaaja == matkaajaid)
+            //Näyttää kaikki julkiset matkat
+            if (matka.yksityinen == 1)
             {
-                <tr>
-                    <td>@matka.idmatka.ToString()</td>
-                    <td>@matka.alkupvm.ToString().Replace("0.00.00", "")</td>
-                    <td>@matka.loppupvm.ToString().Replace("0.00.00", "")</td>
-                    <td> <div style="text-align:center;/* color:black*/"><a href="trips/edit/" style="color:black;">Muokkaa</a></div></td>
-                    <td><div style="text-align:center; /*color:black*/"><a href="trips/delete/" style="color:black">Poista</a></div></td>
-                </tr>
+                <div>@matka.idmatka.ToString()</div>
+                <div>@matka.alkupvm.ToString().Replace("0.00.00", "") - @matka.loppupvm.ToString().Replace("0.00.00", "")</div>
+                <div><a href="trips/edit/">Muokkaa</a> // <a href="trips/delete/">Poista</a></div>
+
             }
         }
-    </table>*@
+
+    </div>
 
     <br />
     <br />
@@ -117,7 +92,11 @@ else
     <br />
     <br />
     <br />
-    <h2 style="text-align:left">Tarinat</h2>
+    <hr class="rounded">
+    <h2 style="text-decoration-line: underline;
+  text-decoration-style: double;">
+        Tarinat
+    </h2>
     <div style="text-align:right; padding-right: 160px;" > <a style="text-align:left" href="/trips/addStory">Lisää uusi tarina</a> </div>
     <br />
     <div class="flex-c">
@@ -137,7 +116,7 @@ else
                 <p>Tarinan kirjoitus pvm: @tarina.pvm.ToString().Replace("0.00.00", "")</p>
                 <p>Matkakohde: @matkakohde.kohdenimi</p>
                 <p>@tarina.teksti</p>
-                <a href="trips/edit/">Muokkaa</a>
+                <a href="trips/edit/">Muokkaa</a> //
                 <a href="trips/delete/">Poista</a></div>
 
 

@@ -58,23 +58,23 @@ namespace MyApi.Controllers
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
 
         [HttpPut("{id}")]
-        public async Task<ActionResult<matkakohdeDTO>> PutLocation(long id, matkakohdeDTO m)
+        public async Task<ActionResult<matkakohdeDTO>> PutLocation(long id, Matkakohde m)
         {
             Matkakohde? location = await _context.Matkakohdes.Where(a => a.Idmatkakohde == id).FirstOrDefaultAsync();
             if (location == null) return NotFound();
 
             //Sellaista matkakohdetta, johon liittyy joku matkakertomus, ei saa poistaa tai päivittää
-           // Tarina? t = await _context.Tarinas.Where(a => a.Idmatkakohde == id).FirstOrDefaultAsync();
-           // if(t != null) { return Ok(); } 
+            Tarina? t = await _context.Tarinas.Where(a => a.Idmatkakohde == id).FirstOrDefaultAsync();
+            if(t != null) { return Ok(); } 
 
             if (m == null) return BadRequest(); 
             else
             {
-                location.Kuva = m.kuva;
-                location.Kohdenimi = m.kohdenimi;
-                location.Paikkakunta = m.paikkakunta;
-                location.Maa = m.maa;
-                location.Kuvausteksti = m.kuvausteksti;
+                location.Kuva = m.Kuva;
+                location.Kohdenimi = m.Kohdenimi;
+                location.Paikkakunta = m.Paikkakunta;
+                location.Maa = m.Maa;
+                location.Kuvausteksti = m.Kuvausteksti;
             }
 
 

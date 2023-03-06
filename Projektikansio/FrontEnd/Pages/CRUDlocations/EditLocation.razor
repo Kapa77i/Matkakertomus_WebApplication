@@ -67,8 +67,7 @@
 @code {
 
     bool isSubmitting;
-
-    public SharedLib.matkakohdeDTO? location;
+    SharedLib.matkakohdeDTO? location;
 
     [Parameter]
     public long? Id { get; set; }
@@ -87,12 +86,12 @@
     async Task EditLocations()
     {
 
-      /* if (!loginState.isLoggedIn)// <----------------------------------- EI välttämättä tarvita jos ylhäällä tarkistus
-          {
-              NavigationManager.NavigateTo($"/login");//kuka tahansa ei voi lisätä matkakohteita, vaan pitää olla kirjautunut käyttäjä
-          }
-          else
-          { } */
+        /* if (!loginState.isLoggedIn)// <----------------------------------- EI välttämättä tarvita jos ylhäällä tarkistus
+                {
+                NavigationManager.NavigateTo($"/login");//kuka tahansa ei voi lisätä matkakohteita, vaan pitää olla kirjautunut käyttäjä
+            }
+            else
+            { } */
 
                 isSubmitting = true;
                 //Console.WriteLine(location.idmatkakohde);

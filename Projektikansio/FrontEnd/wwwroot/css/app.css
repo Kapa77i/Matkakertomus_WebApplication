@@ -261,14 +261,35 @@ h1:focus {
         content: "Virhe tapahtunut."
     }
 
-/*Omat matka sivun höttökokeilua*/
+/*Omat matka/Porukan matkat sivun höttökokeilua*/
+
+.matkojenLinkit {
+    text-align: right;
+    padding-right: 150px;
+}
+
+hr.rounded {
+    border-top: 8px solid #bbb;
+    border-radius: 5px;
+}
+
+.h1otsikot {
+    text-align: center;
+}
+
+.h2otsikot {
+    text-decoration-line: underline;
+    text-decoration-style: double;
+    text-align: center;
+}
+
+
 .flex-c {
     display: flex;
     flex-flow: row wrap;
    /* justify-content: space-evenly;*/
     
 }
-
     .flex-c > div {
         width: 31%;
         margin: 5px;
@@ -276,13 +297,8 @@ h1:focus {
         text-align: left;
         line-height: 25px;
         align-items: flex-start;
+        align-content: center;
     }
-
-@media (max-width: 900px) {
-    .flex-c {
-        flex-direction: column;
-    }
-}
 
 .flex-t {
     display: flex;
@@ -297,34 +313,35 @@ h1:focus {
         text-align: center;
         line-height: 20px;
     }
+
+/*//Sivújen responsiivisuus:*/
 @media (max-width: 900px) {
-    .flex-t {
-        width: 200%;
+    .flex-t, .flex-c {
+        width: 890px;
         flex-direction: column;
+        justify-content: left;
+        align-items: left;
+        text-align: left;
+    }
+
+    .h1otsikot {
+        text-align: left;
+    }
+
+    .h2otsikot {
+        text-decoration-line: underline;
+        text-align: left;
+    }
+
+    hr.rounded {
+        border-top: 5px solid #bbb;
+        border-radius: 5px;
+        margin-right: 500px;
+    }
+
+    .matkojenLinkit {
+        text-align: left;
     }
 }
 
-hr.rounded {
-    border-top: 8px solid #bbb;
-    border-radius: 5px;
-}
-
-
-.flex-container {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: space-around;
-    align-content: space-around;
-    float: left; 
-    width: 33.33%; 
-    padding: 15px;
-}
-.item:nth-child(3n) {
-    page-break-after: always; /* CSS 2.1 syntax */
-    break-after: always; /* CSS 3 syntax */
-}
-    .flex-item{
-        padding: 15px;
-    }
 

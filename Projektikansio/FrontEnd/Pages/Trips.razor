@@ -13,7 +13,7 @@
 <link rel="stylesheet" type="text/css" href="css/app.css?version=0.1">
 
 
-<h1>Omat matkat</h1>
+<h1 class="h1otsikot">Omat matkat</h1>
 <hr class="rounded">
 
 
@@ -32,12 +32,9 @@ HUOM! Porukan matkat- ja Omat matkat-sivut saisivat olla mahdollisimman yhdenmuk
 else
 {
     <br />
-    <h2 style="text-decoration-line: underline;
-  text-decoration-style: double;">
-        Matkat
-    </h2>
+    <h2 class="h2otsikot">Matkat</h2>
 
-    <div style="text-align:right; padding-right: 150px; "><a style="padding-right: 15px; " href="/trips/addTrip">Lisää uusi matka</a></div>
+    <div class="matkojenLinkit"><a style="padding-right: 15px; " href="/trips/addTrip">Lisää uusi matka</a></div>
     <br />
     //tarina = tarinas.FirstOrDefault(m => m.idmatka == matka.idmatka);
 
@@ -94,10 +91,7 @@ else
     <br />
     <br />
     <hr class="rounded">
-    <h2 style="text-decoration-line: underline;
-  text-decoration-style: double;">
-        Tarinat
-    </h2>
+    <h2 class="h2otsikot">Tarinat</h2>
     <div style="text-align:right; padding-right: 160px;" > @*<a style="text-align:left" href="/trips/addStory">Lisää uusi tarina</a> *@</div>
     <br />
     <div class="flex-c">

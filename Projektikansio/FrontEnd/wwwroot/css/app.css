@@ -265,15 +265,24 @@ h1:focus {
 .flex-c {
     display: flex;
     flex-flow: row wrap;
+   /* justify-content: space-evenly;*/
+    
 }
 
     .flex-c > div {
-        width: 32%;
+        width: 31%;
         margin: 5px;
-        padding: 25px;
+        padding: 7px;
         text-align: left;
         line-height: 25px;
+        align-items: flex-start;
     }
+
+@media (max-width: 900px) {
+    .flex-c {
+        flex-direction: column;
+    }
+}
 
 .flex-t {
     display: flex;
@@ -284,9 +293,16 @@ h1:focus {
     .flex-t > div {
         width: 25%;
         margin: 1px;
+        padding: 5px;
         text-align: center;
         line-height: 20px;
     }
+@media (max-width: 900px) {
+    .flex-t {
+        width: 200%;
+        flex-direction: column;
+    }
+}
 
 hr.rounded {
     border-top: 8px solid #bbb;

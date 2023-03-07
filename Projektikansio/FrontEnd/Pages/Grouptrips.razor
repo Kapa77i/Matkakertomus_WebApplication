@@ -19,7 +19,48 @@
 }
 else
 {
+    //Matkat (julkiset)
+    <hr class="rounded">
+        <br />
+@*    <br />
+    <br />
+   
+    <h2 style="text-decoration-line: underline;
+  text-decoration-style: double;">
+        julkiset ryhmämatkat
+    </h2>*@
 
+    <br />
+    <div class="flex-t">
+        <div style="text-decoration-line: underline; text-decoration-color: lightblue"> Matkakoodi</div>
+        <div style="text-decoration-line: underline; text-decoration-color: lightblue"> Matkan aloitus ja lopetus pvm</div>
+        <div> </div>
+
+
+        @foreach (var matka in matkas)
+        {
+            //Näyttää vain omat matkat
+            if (matka.yksityinen == 1)
+            {
+                <div>@matka.idmatka.ToString()</div>
+                <div>@matka.alkupvm.ToString().Replace("0.00.00", "") - @matka.loppupvm.ToString().Replace("0.00.00", "")</div>
+                <div></div>
+
+            }
+        }
+
+    </div>
+    <br />
+    <br />
+    <br />
+    <hr class="rounded">
+    //Tarinat
+         <h2 style="text-decoration-line: underline;
+  text-decoration-style: double;">
+       Matkoihin liittyvät tarinat ja kuvat
+    </h2>
+    <br />
+    <br />
     <div class="flex-c">
 
         @foreach (var tarina in tarinas)

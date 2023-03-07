@@ -205,6 +205,7 @@ a, .btn-link {
     color: #0071c1;
 }
 
+
 h1:focus {
     outline: none;
 }
@@ -260,20 +261,54 @@ h1:focus {
         content: "Virhe tapahtunut."
     }
 
-/*Porukan matka sivun höttökokeilua*/
-.grid-container {
-    display: grid;
-    height: 400px;
-    align-content: space-evenly;
-    grid-template-columns: auto auto auto;
-    gap: 10px;
-    background-color: #2196F3;
-    padding: 10px;
+/*Omat matka sivun höttökokeilua*/
+.flex-c {
+    display: flex;
+    flex-flow: row wrap;
 }
 
-    .grid-container > div {
-        background-color: rgba(255, 255, 255, 0.8);
-        text-align: center;
-        padding: 20px 0;
-        font-size: 30px;
+    .flex-c > div {
+        width: 32%;
+        margin: 5px;
+        padding: 25px;
+        text-align: left;
+        line-height: 25px;
     }
+
+.flex-t {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+}
+
+    .flex-t > div {
+        width: 25%;
+        margin: 1px;
+        text-align: center;
+        line-height: 20px;
+    }
+
+hr.rounded {
+    border-top: 8px solid #bbb;
+    border-radius: 5px;
+}
+
+
+.flex-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-around;
+    align-content: space-around;
+    float: left; 
+    width: 33.33%; 
+    padding: 15px;
+}
+.item:nth-child(3n) {
+    page-break-after: always; /* CSS 2.1 syntax */
+    break-after: always; /* CSS 3 syntax */
+}
+    .flex-item{
+        padding: 15px;
+    }
+

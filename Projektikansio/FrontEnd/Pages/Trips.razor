@@ -1,5 +1,21 @@
 ﻿@page "/trips"
+
+@using System.Threading.Tasks
+@using System.Net.Http
+@using System.Net.Http.Json
+@using SharedLib;
+
+@inject NavigationManager NavigationManager
+@inject ILogger<Index> Logger
+@inject HttpClient Http
+@inject SharedLib.LoginState loginState;
+<link rel="stylesheet" type="text/css" href="css/app.css?version=0.1">
+
+
 <h1>Omat matkat</h1>
+<hr class="rounded">
+
+
 
 @*
 voi lisätä, selata, päivittää ja poistaa omia matkoja ja niihin liitettyjä tarinoita ja kuvia
@@ -8,8 +24,130 @@ navigointi tarinat- ja kuvat-sivuille voi tapahtuma päävalikon tai sivukohtais
 HUOM! Porukan matkat- ja Omat matkat-sivut saisivat olla mahdollisimman yhdenmukaisia
 *@
 
+@if (tarinas == null && matkakohde == null || !loginState.isLoggedIn)
+{
+    <h2>  <img src="/images/loading.gif" width="150" /></h2>
+}
+else
+{
+    <br />
+    <h2 style="text-decoration-line: underline;
+  text-decoration-style: double;">
+        Matkat
+    </h2>
+
+    <div style="text-align:right; padding-right: 150px; "><a style="padding-right: 15px; " href="/trips/addTrip">Lisää uusi matka</a></div>
+    <br />
+    //tarina = tarinas.FirstOrDefault(m => m.idmatka == matka.idmatka);
+
+    var matkaajaid = loginState.loggedUser.idmatkaaja;
+    Console.WriteLine("Matkaajaid on = " + matkaajaid);
+
+    <h4 style="text-align: left;">Omat matkat</h4>
+    <div class="flex-t">
+        <div style="text-decoration-line: underline; text-decoration-color: lightblue"> Matkakoodi</div>
+        <div style="text-decoration-line: underline; text-decoration-color: lightblue"> Matkan aloitus ja lopetus pvm</div>
+        <div> </div>
+
+
+        @foreach (var matka in matkas)
+        {
+            //Näyttää vain omat matkat
+             if (matka.idmatkaaja == matkaajaid)
+            {
+                <div>@matka.idmatka.ToString()</div>
+                <div>@matka.alkupvm.ToString().Replace("0.00.00", "") - @matka.loppupvm.ToString().Replace("0.00.00", "")</div>
+                <div><a href="trips/edit/">Muokkaa</a> // <a href="trips/delete/">Poista</a></div>
+                
+            }
+        }
+
+    </div>
+    <br />
+    <br />
+    <br />
+    <h4 style="text-align: left;">Muut matkat</h4>
+    <div class="flex-t">
+        <div style="text-decoration-line: underline; text-decoration-color: lightblue"> Matkakoodi</div>
+        <div style="text-decoration-line: underline; text-decoration-color: lightblue"> Matkan aloitus ja lopetus pvm</div>
+        <div> </div>
+
+        @foreach (var matka in matkas)
+        {
+            //Näyttää kaikki julkiset matkat
+            if (matka.yksityinen == 1)
+            {
+                <div>@matka.idmatka.ToString()</div>
+                <div>@matka.alkupvm.ToString().Replace("0.00.00", "") - @matka.loppupvm.ToString().Replace("0.00.00", "")</div>
+                <div><a href="trips/edit/">Muokkaa</a> // <a href="trips/delete/">Poista</a></div>
+
+            }
+        }
+
+    </div>
+
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <hr class="rounded">
+    <h2 style="text-decoration-line: underline;
+  text-decoration-style: double;">
+        Tarinat
+    </h2>
+    <div style="text-align:right; padding-right: 160px;" > <a style="text-align:left" href="/trips/addStory">Lisää uusi tarina</a> </div>
+    <br />
+    <div class="flex-c">
+
+        @foreach (var tarina in tarinas)
+        {
+            matka = matkas.FirstOrDefault(m => m.idmatka == tarina.idmatka);
+
+            if (matka.idmatkaaja == matkaajaid)
+            {
+                matkakohde = matkakohdes.FirstOrDefault(m => m.idmatkakohde == tarina.idmatkakohde);
+
+                <div>
+                <h4 style="text-align: left;">Matka nro @tarina.idmatka.ToString()</h4> 
+                <img src="/tripPictures/@matkakohde.kuva" width="150" />
+                <p>Tarinan nro: @tarina.idtarina.ToString()</p>
+                <p>Tarinan kirjoitus pvm: @tarina.pvm.ToString().Replace("0.00.00", "")</p>
+                <p>Matkakohde: @matkakohde.kohdenimi</p>
+                <p>@tarina.teksti</p>
+                <a href="trips/edit/">Muokkaa</a> //
+                <a href="trips/delete/">Poista</a></div>
+
+
+            }
+
+        }
+
+    </div>
+}
+
 
 
 @code {
 
+
+    private List<SharedLib.tarinaDTO>? tarinas;
+    private List<SharedLib.matkakohdeDTO>? matkakohdes;
+    private List<SharedLib.matkaDTO>? matkas;
+    private SharedLib.matkakohdeDTO matkakohde;
+    private SharedLib.matkaDTO matka;
+    private SharedLib.matkaajaDTO matkaaja;
+
+
+    protected override async Task OnInitializedAsync()
+    {
+
+
+        tarinas = await Http.GetFromJsonAsync<List<SharedLib.tarinaDTO>>("/api/Tarinas");
+        matkakohdes = await Http.GetFromJsonAsync<List<SharedLib.matkakohdeDTO>>("/api/Matkakohdes");
+        matkas = await Http.GetFromJsonAsync<List<SharedLib.matkaDTO>>("/api/Matkas");
+
+
+    }
 }

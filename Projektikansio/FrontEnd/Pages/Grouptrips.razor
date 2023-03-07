@@ -5,106 +5,46 @@
 @inject HttpClient Http
 @inject SharedLib.LoginState loginState
 
-<style>
-    * {
-        box-sizing: border-box;
-    }
+<link rel="stylesheet" type="text/css" href="css/app.css?version=0.1">
 
-    body {
-        margin: 0;
-    }
 
-    /* Style the header */
-    .header {
-        background-color: #f1f1f1;
-        padding: 20px;
-        text-align: center;
-    }
 
-    /* Style the top navigation bar */
-    .topnav {
-        overflow: hidden;
-        background-color: #333;
-    }
 
-        /* Style the topnav links */
-        .topnav a {
-            float: left;
-            display: block;
-            color: #f2f2f2;
-            text-align: center;
-            padding: 14px 16px;
-            text-decoration: none;
-        }
-
-            /* Change color on hover */
-            .topnav a:hover {
-                background-color: #ddd;
-                color: black;
-            }
-
-    /* Create three equal columns that floats next to each other */
-    .column {
-        float: left;
-        width: 33.33%;
-        padding: 15px;
-    }
-
-    /* Clear floats after the columns */
-    .row:after {
-        content: "";
-        display: table;
-        clear: both;
-    }
-
-</style>
 <h1>Porukan Matkat</h1>
 @*voi selata (ei-yksityisiä) porukan matkoja ja niihin liitettyjä tarinoita ja kuvia*@
 
-<div class="input-group">
-    <div class="custom-file">
-        <InputFile class="custom-file-input" multiple OnChange="OnChange" accept="image/png, image/jpeg, image/gif" id="inputFile" />
-        <label class="custom-file-label" for="inputFile">Choose file</label>
-    </div>
-    <div class="input-group-append">
-        <button class="btn btn-success" @onclick="Upload" disabled="@isDisabled">Upload</button>
-    </div>
-</div>
-
 @if (tarinas == null && matkakohde == null)
 {
-    <div class="column">
-        <h2>Column</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sit amet pretium urna. Vivamus venenatis velit nec neque ultricies, eget elementum magna tristique. Quisque vehicula, risus eget aliquam placerat, purus leo tincidunt eros, eget luctus quam orci in velit. Praesent scelerisque tortor sed accumsan convallis.</p>
-    </div>
+    <h2>  <img src="/images/loading.gif" width="150" /></h2>
 }
 else
 {
 
-    @foreach (var tarina in tarinas)
-    {
-        matka = matkas.FirstOrDefault(m => m.idmatka == tarina.idmatka);
+    <div class="flex-c">
 
-        //Tsekataan onko matka yksityinen vai ei, 1 == public?
-        if (matka.yksityinen == 1)
+        @foreach (var tarina in tarinas)
         {
-            matkakohde = matkakohdes.FirstOrDefault(m => m.idmatkakohde == tarina.idmatkakohde);
+            matka = matkas.FirstOrDefault(m => m.idmatka == tarina.idmatka);
 
-            <div class="column">
-                <h2>Matka nro @tarina.idmatka.ToString()</h2>
-                <div style="text-align:center"><img src="/tripPictures/@matkakohde.kuva" width="150" /></div>
-                <p>Tarinan nro: @tarina.idtarina.ToString()</p>
-                <p>Tarinan kirjoitus pvm: @tarina.pvm.ToString().Replace("0.00.00", "")</p>
-                <p>Matkakohde: @matkakohde.kohdenimi</p>
-                <p>@tarina.teksti</p>
-            </div>
+            if (matka.yksityinen == 1)
+            {
+                matkakohde = matkakohdes.FirstOrDefault(m => m.idmatkakohde == tarina.idmatkakohde);
+
+                <div>
+                    <h4 style="text-align: left;">Matka nro @tarina.idmatka.ToString()</h4>
+                    <img src="/tripPictures/@matkakohde.kuva" width="150" />
+                    <p>Tarinan nro: @tarina.idtarina.ToString()</p>
+                    <p>Tarinan kirjoitus pvm: @tarina.pvm.ToString().Replace("0.00.00", "")</p>
+                    <p>Matkakohde: @matkakohde.kohdenimi</p>
+                    <p>@tarina.teksti</p>
+                </div>
+
+
+            }
+
         }
 
-        else 
-        {
-
-        }
-    }
+    </div>
 }
 
 @code {
@@ -115,6 +55,9 @@ else
     private SharedLib.matkakohdeDTO matkakohde;
     private SharedLib.matkaDTO matka;
 
+
+    public string Hidden { get; set; }
+
     protected override async Task OnInitializedAsync()
     {
         tarinas = await Http.GetFromJsonAsync<List<SharedLib.tarinaDTO>>("/api/Tarinas");
@@ -122,64 +65,11 @@ else
         matkas = await Http.GetFromJsonAsync<List<SharedLib.matkaDTO>>("/api/Matkas");
     }
 
-    /*Katjan omaa testihömppää, ei toinna välittää, ei tunnista tuota base-64 muutosta, muuten toimii*/
-	string message = "InputFile";
-	bool isDisabled = false;
 
-	async Task OnChange(InputFileChangeEventArgs e)
-	{
-		var files = e.GetMultipleFiles(); // Saa userit valitsemat filut
-		foreach(var file in files)
-		{
-			var resizedFile = await file.RequestImageFileAsync(file.ContentType, 640, 480); // resize the image file
-			var buf = new byte[resizedFile.Size]; // allocate a buffer to fill with the file's data
-			using (var stream = resizedFile.OpenReadStream())
-			{
-				await stream.ReadAsync(buf); // copy the stream to the buffer
-			}
-			kuvatus.Add(new SharedLib.kuvaDTO {idkuva = 1, kuva = Convert.ToBase64String(buf), idtarina = 1}); // convert to a base64 string!!
-		}
-		message = "Click UPLOAD to continue";
-	}
+    protected void OnClick(MouseEventArgs mouseEventArgs)
+    {
+        
+    }
 
-	async Task Upload()
-	{
-		isDisabled = true;
-        using (var msg = await Http.PostAsJsonAsync<List<SharedLib.kuvaDTO>>("/api/Kuvas", kuvatus, System.Threading.CancellationToken.None))
-		{
-			isDisabled = false;
-			if (msg.IsSuccessStatusCode)
-			{
-				message = $"{kuvatus.Count} files uploaded";
-				kuvatus.Clear();
-			}
-		}
-	}
-
-    /* private List<IBrowserFile> loadedFiles = new();
-    private long maxFileSize = 1024 * 15;
-    private int maxAllowedFiles = 3;
-    private bool isLoading;
-
-    private void LoadFiles(InputFileChangeEventArgs e)
-        {
-        isLoading = true;
-        loadedFiles.Clear();
-
-        foreach (var file in e.GetMultipleFiles(maxAllowedFiles))
-            {
-            try
-                {
-                loadedFiles.Add(file);
-            }
-            catch (Exception ex)
-                {
-                Logger.LogError("File: {Filename} Error: {Error}",
-                    file.Name, ex.Message);
-                }
-        }
-
-        isLoading = false;
-    }*/
 
 }

@@ -9,23 +9,23 @@
 @inject HttpClient Http
 @inject SharedLib.LoginState loginState;
 
-@*Mahdollisuus lisätä kuva? Miten!?!? 
-    tee myös vetovalikko vaihtoehdoille
-*@
+@*@Mahdollisuus lisätä kuva? Miten!?!?
+    tee myös vetovalikko vaihtoehdoille*@
+
 @if (loginState.isLoggedIn) { 
 
     @if (location != null)
     {
-        <h3>@location.kohdenimi</h3>
+        <h3>Muokataan matkakohdetta @location.kohdenimi</h3>
         <div style="text-align:center">
             <EditForm Model="@location" OnValidSubmit="@EditLocations">
                 <DataAnnotationsValidator />
                 <ValidationSummary />
                 <div>
                     <label>
+                        <div style="text-align:center"><img src="tripPictures/@location.kuva" width="133" height="133" alt="1" /></div>
                         Kuva
                         <InputText class="form-control" id="kuva" @bind-Value="location.kuva" />
-                        <img src="tripPictures/@location.kuva" width="133" height="133" alt="1" />
                     </label>
                 </div>
                 <div>
@@ -56,58 +56,62 @@
             </EditForm>
         </div>
     }
-    else
-    {
-        <h2>  <img src="/images/loading.gif" width="150" /></h2>
+ 
+    
+    @if(r == 1){@*Jos r = 1, se tarkoittaa ettei matkakohdetta muokattu, koska se sisälsi tarinan*@
+        <div style="text-align:center"><h3>Matkakohde sisältää tarinan.<br/>Matkakohdetta ei voi muokata.</h3></div>
     }
 }
-else{
-
+else
+{
     <h2>  <img src="/images/loading.gif" width="150" /></h2>
-    <h2>Kirjaudu sisään muokataksesi matkakohdetta</h2>
+    <h2>Kirjaudu sisään muokataksesi matkakohteita</h2>
 }
-
 
 
 @code {
-    [Parameter]
-    public long? Id { get; set; }
 
     bool isSubmitting;
     SharedLib.matkakohdeDTO? location;
+    int? r; 
+
+    [Parameter]
+    public long? Id { get; set; }
+
+
 
     protected override async Task OnInitializedAsync()
     {
-        var data = await Http.GetAsync($"api/Matkakohdes/{Id}"); 
-        location = await data.Content.ReadFromJsonAsync<SharedLib.matkakohdeDTO>();
+        try{
+            location = await Http.GetFromJsonAsync<SharedLib.matkakohdeDTO>($"api/Matkakohdes/{Id}");
+            await base.OnInitializedAsync();
+        }
+        catch(Exception e){
+            Console.WriteLine(e.Message);
+        }
 
-        await base.OnInitializedAsync(); 
     }
 
 
     async Task EditLocations()
     {
+        try{
+            isSubmitting = true;
+            var result = await Http.PutAsJsonAsync($"api/Matkakohdes/{Id}", location);
 
-      /*  if (!loginState.isLoggedIn) <----------------------------------- EI välttämättä tarvita jos ylhäällä tarkistus
-          {
-              NavigationManager.NavigateTo($"/login");//kuka tahansa ei voi lisätä matkakohteita, vaan pitää olla kirjautunut käyttäjä
-          }
-          else
-          { }*/
-        isSubmitting = true;
-            var result = await Http.PutAsJsonAsync($"api/Matkakohdes/{Id}", location); 
-
-            //saako tähän väliin pyöritettyä pyörää?
-            NavigationManager.NavigateTo($"/locations");
-
-
-
-
-
-
-            /*HUOM! Muokkaus ei onnistu, mikäli matkakohteella on tarina. --> tästä jonkinlainen ilmoitus!
-             * KUVIEN MUOKKAUS EI TOIMI JOSTAIN SYYSTÄ!! 
-             */
-
+            if (result.StatusCode.Equals("NoContent")) //TÄMÄ EI TOIMI VIELÄ. Tarkoituksena antaa editoijalle viesti, että ei voitu muokata tarinan takia
+            {
+                r = 1;
+            }
+            else
+            {
+                //saako tähän väliin pyöritettyä pyörää?
+                NavigationManager.NavigateTo($"/locations");
+            }
+        }
+        catch(Exception e){
+            Console.WriteLine(e.Message);
+        }
+        
     }
 }

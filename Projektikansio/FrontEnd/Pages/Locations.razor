@@ -9,115 +9,77 @@
 @inject HttpClient Http
 @inject SharedLib.LoginState loginState;
 
-<h1>Matkakohteet</h1>
+@*Tästä sivusta tulee tavallaan matkakohteiden index sivu > selaaminen
+    voi lisätä, poistaa, päivittää ja selata matkakohteita.
+    - Sellaista matkakohdetta, johon liittyy joku matkakertomus, ei saa poistaa tai päivittää
+    - Kuka tahansa ei voi tehdä CRUD toimintoja, vaan siihen pitää vaatia login.
+    - Kuka tahansa voi selata ja hakea matkakohteita*@
 
-@*voi lisätä, poistaa, päivittää ja selata matkakohteita.
-Sellaista matkakohdetta, johon liittyy joku matkakertomus, ei saa poistaa tai päivittää
-
-Kuka tahansa ei voi tehdä CRUD toimintoja, vaan siihen pitää vaatia login.
-Kuka tahansa voi selata ja hakea matkakohteita*@
-
-@*Tästä sivusta tulee tavallaan matkakohteiden index sivu?
-    Tältä sivulta voidaan hakea ja selata matkakohteita. 
-    Tee: 
+@* Tee: 
         -ylös hakupalkki: voi hakea/suodattaa matkakohteen nimellä > "search-as-you-type"
-        -sivu näyttää matkakohteet (2-3 sarakkeisessa taulukossa?)
+        -matkakohteet eivät overlappaa toistensa päälle
         -matkakohdetta klikkaamalla näkee mahdolliset tarinat?? -> takaisin -nappi 
-        -matkakohteiden muokkaus vain jos olet sisäänkirjautuneena
-
-        sis. idmatkakohde, kohdenimi, maa, paikkakunta, kuvausteksti, kuva (id:tä ei tarvitse näyttää, ellei muokata tai poisteta)
-
 
         MUISTA LAITTAA TYYLIT <img src="/profilePictures/@user.kuva.ToString()" width="150" alt="@user.nimimerkki.ToString()">
 *@
+<h1>Matkakohteet</h1>
 <div class="topnav" style="text-align:center">
     @if (loginState.isLoggedIn)
     {
-        <a style="padding-right: 15px;" href="/locations/add">Lisää matkakohteita</a>
+
+        <a href="/locations/add">Lisää matkakohteita</a>
     }
-    <input type="text" placeholder="Hae..." style="padding: 8px; border: 2px solid #457b9d; border-radius: 4px;" value="@SearchText" oninput="@Search" />
 </div>
 
-@*HUOM! Zoomatessa kuvat ei pysy paikoillaan vaan menevät toistensa päälle ja objektit sijoittuu miten sattuu*@
 @if(locations == null){
      <h2><img src="/images/loading.gif" width="150" /></h2> //tämä ei pyöri jostain syystä
 }
 else if(locations != null){
-    
+
+    <div style="margin-top: 5%" class="flex-container">
         @foreach(var l in locations){
-
-            <div style="float: left; width: 25.00%; padding: 15px;">
-                @*aiemmin class = keskitys*@
-                <div style="text-align:center"><img src="/tripPictures/@l.kuva" width="150" /></div>
-                <div><h3>@l.kohdenimi</h3></div>
-                <div><h4>@l.paikkakunta</h4></div>
-                <div><h4>@l.maa</h4></div>
-                <div style="text-align:center">@l.kuvausteksti</div>
-                @if(loginState.isLoggedIn){
-                    <div style="text-align:center"><a href="locations/edit/@l.idmatkakohde">Muokkaa</a></div>
-                    <div style="text-align:center"><a href="locations/delete/@l.idmatkakohde">Poista</a></div>
-                }
-                
-            </div>
             
-        }
-}
-else {
-    @if(locationsLike != null){
-
-  
-        @foreach(var l in locationsLike){
-
-            <div style="float: left; width: 25.00%; padding: 15px;">
-                @*aiemmin class = keskitys*@
-                <div style="text-align:center"><img src="/tripPictures/@l.kuva" width="150" /></div>
-                <div><h3>@l.kohdenimi</h3></div>
-                <div><h4>@l.paikkakunta</h4></div>
-                <div><h4>@l.maa</h4></div>
-                <div style="text-align:center">@l.kuvausteksti</div>
-                @if (loginState.isLoggedIn)
-                {
-                    <div style="text-align:center"><a href="/locations/edit/@l.idmatkakohde">Muokkaa</a></div>
-                    <div style="text-align:center"><a href="locations/delete/@l.idmatkakohde">Poista</a></div>
-                }
+            <div class="flex-item">
+                @*style="float: left; width: 25%; padding: 15px"*@
+                    @*aiemmin class = keskitys*@
+                    @if(@l.kuva == null){
+                    <div style="text-align:center"><a href="location/@l.idmatkakohde">Ei kuvaa saatavilla</a></div>
+                    }
+                    else
+                    {
+                        <div style="text-align:center"><a href="location/@l.idmatkakohde"><img src="/tripPictures/@l.kuva" width="150" /></a></div>
+                    }
+                        <div><h3>@l.kohdenimi</h3></div>
+                        <div><h4>@l.paikkakunta</h4></div>
+                        <div><h4>@l.maa</h4></div>
+                        <div style="text-align:center">@l.kuvausteksti</div>
+                    @if(loginState.isLoggedIn){
+                        <div style="text-align:center"><a href="locations/edit/@l.idmatkakohde">Muokkaa</a></div>
+                        <div style="text-align:center"><a href="locations/delete/@l.idmatkakohde">Poista</a></div>
+                        //<div style="text-align:center"><a href="location/@l.idmatkakohde">Tarkastele</a></div> ---> Klikkaa kuvaa!
+                    }
             </div>
-            
         }
-    
-    }
+    </div>
 }
-
 
 
 
 
 @code {
-    [Parameter]
-    public string? SearchText { get; set; }
 
     List<SharedLib.matkakohdeDTO>? locations = new List<SharedLib.matkakohdeDTO>();
-    List<SharedLib.matkakohdeDTO>? locationsLike = new List<SharedLib.matkakohdeDTO>();
+
 
     protected override async Task OnInitializedAsync(){
 
-        var data = await Http.GetAsync("api/Matkakohdes");
-        locations = await data.Content.ReadFromJsonAsync<List<SharedLib.matkakohdeDTO>>();
-
-
+        try{
+            var data = await Http.GetAsync("api/Matkakohdes");
+            locations = await data.Content.ReadFromJsonAsync<List<SharedLib.matkakohdeDTO>>();
+        }
+        catch (Exception e){
+            Console.WriteLine(e.Message);
+        }
     }
-
-    private async Task Search(){
-
-        // var dataLike = await Http.GetAsync("api/Matkakohdes/{SearchText}");
-        // locationsLike = await dataLike.Content.ReadFromJsonAsync<List<SharedLib.matkakohdeDTO>>();
-
-        foreach(var l in locations){
-            if (l.kohdenimi.ToLower().CompareTo(SearchText.ToLower()) == 0)
-            { //Object reference not set to an instance of an object.
-                locationsLike.Add(l);
-            }
-       }
-   }
-
 
 }

@@ -13,7 +13,7 @@
 @if(!loginState.isLoggedIn){
 
     <h2>  <img src="/images/loading.gif" width="150" /></h2>
-    <h2>Kirjaudu sisään poistaaksesi matkakohteen</h2>
+    <h2>Kirjaudu sisään poistaaksesi matkakohteita</h2>
 }
 else{
     
@@ -21,11 +21,10 @@ else{
     {
         <h2>@location.kohdenimi</h2>
         <h3>Haluatko varmasti poistaa matkakohteen?</h3>
-
+        /*TARKISTA TYYLI*/
         <div style="text-align:center">
-            <div>@location.idmatkakohde</div>
+            <div><img src="tripPictures/@location.kuva" width="133" height="133" alt="1" /></div>
             <div>@location.kuva</div>
-            <img src="tripPictures/@location.kuva" width="133" height="133" alt="1" />
             <div>@location.kohdenimi</div>
             <div>@location.paikkakunta</div>
             <div>@location.maa</div>
@@ -33,8 +32,6 @@ else{
             <br />
             <button type="submit" class="btn btn-danger" disabled="@isSubmitting" onclick="@DeleteLocations">Poista</button>
         </div>
-
-
     }
     else
     {
@@ -61,20 +58,17 @@ else{
         await base.OnInitializedAsync();
     }
 
-
     private async Task DeleteLocations()
     {
-        if (!loginState.isLoggedIn)
-         {
-             NavigationManager.NavigateTo($"/login");
-         }
-         else
-         {
+        try{
             isSubmitting = true;
             var result = await Http.DeleteAsync($"api/Matkakohdes/{Id}");
 
             //saako tähän väliin pyöritettyä pyörää?
             NavigationManager.NavigateTo($"/locations");
+        }
+        catch(Exception e){
+            Console.WriteLine(e.Message);
         }
 
     }

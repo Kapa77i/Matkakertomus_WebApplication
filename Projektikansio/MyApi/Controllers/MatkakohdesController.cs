@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -21,27 +22,6 @@ namespace MyApi.Controllers
         {
             _context = context;
         }
-
-        // GET: api/Matkakohdes/tekstihaku
-        [HttpGet("{SearchText}")]
-        public async Task<ActionResult<List<matkakohdeDTO>>> GetLocationsLike(string SearchText)
-        {
-            var l = await _context.Matkakohdes.ToListAsync();
-            List<matkakohdeDTO> locationsLike = new List<matkakohdeDTO>();
-
-            foreach (var item in l)
-            {
-                matkakohdeDTO m = item.toMatkakohdeDTO();
-                if(m.kohdenimi.ToLower().CompareTo(SearchText.ToLower()) == 0) //jos vastaavuutta löytyy
-                {
-                    locationsLike.Add(m);
-                }
- 
-            }
-
-            if (locationsLike == null) return NotFound();
-            return locationsLike;
-        }       
 
         // GET: api/Matkakohdes
         [HttpGet]
@@ -76,9 +56,11 @@ namespace MyApi.Controllers
 
         // PUT: api/Matkakohdes/5 
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+
         [HttpPut("{id}")]
-        public async Task<ActionResult<matkakohdeDTO>> PutLocation(long id, matkakohdeDTO m)
+        public async Task<ActionResult<matkakohdeDTO>> PutLocation(long id, Matkakohde m)
         {
+            //Varmistutaan siitä, että kyseinen matkakohde on olemassa ennen muokkausta
             Matkakohde? location = await _context.Matkakohdes.Where(a => a.Idmatkakohde == id).FirstOrDefaultAsync();
             if (location == null) return NotFound();
 
@@ -89,13 +71,13 @@ namespace MyApi.Controllers
             if (m == null) return BadRequest(); 
             else
             {
-                location.Kuva = m.kuva;
-                location.Kohdenimi = m.kohdenimi;
-                location.Paikkakunta = m.paikkakunta;
-                location.Maa = m.maa;
-                location.Kuvausteksti = m.kuvausteksti;
+                location.Kuva = m.Kuva;
+                location.Kohdenimi = m.Kohdenimi;
+                location.Paikkakunta = m.Paikkakunta;
+                location.Maa = m.Maa;
+                location.Kuvausteksti = m.Kuvausteksti;
             }
-
+          
 
             _context.Entry(location).State = EntityState.Modified;
 

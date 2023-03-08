@@ -13,7 +13,7 @@
    //Ladataan käyttäjän tiedot oliosta.
             <div class="palsta"> 
                       <EditForm Model="@user" OnValidSubmit="@UpdateUser">
-                        <img src="profilePictures/@user.kuva" width="133" height="133" alt="1" />
+                        <img src="profilePictures/@user.kuva"  alt="1" />
             <div class="form-group">
                 <label for="etunimi">Etunimi</label>
                 <InputText class="form-control" id="etunimi" @bind-Value="loginState.loggedUser.etunimi"></InputText>
@@ -53,7 +53,7 @@
                         <td ><img src="profilePictures/4.png" width="133" height="133" alt="4" /></td>
                     </tr>
                     <tr>
-                        <td><input type="radio" name="kuva" value="1.png" @onchange="uusiKuva" checked="checked" /></td>
+                        <td><input type="radio" name="kuva" value="1.png" @onchange="uusiKuva"  /></td>
                         <td><input type="radio" name="kuva" value="2.png" @onchange="uusiKuva" /></td>
                         <td ><input type="radio" name="kuva" value="3.png" @onchange="uusiKuva"/></td>
                         <td><input type="radio" name="kuva" value="4.png" @onchange="uusiKuva" /></td>
@@ -123,7 +123,7 @@ mutta jos sen sallii, niin se pitää huomioida kirjautumisessa.*@
     private string kuva { get; set; }
     //Sivun lataus
 
- 
+
     protected override async Task OnInitializedAsync()
     {
         //ladataan käyttäjän tiedot tietokannasta, käyttämällä id:eetä.
@@ -140,7 +140,7 @@ mutta jos sen sallii, niin se pitää huomioida kirjautumisessa.*@
             await JSRuntime.InvokeAsync<string>("alert", "You are not authorized");
         }
 
-  
+
 
 
     }
@@ -148,7 +148,7 @@ mutta jos sen sallii, niin se pitää huomioida kirjautumisessa.*@
     //Päivitys
     private async Task UpdateUser()
     {
-        user.kuva = kuva;
+        loginState.loggedUser.kuva = kuva;
         await Http.PutAsJsonAsync($"api/Matkaajas/{Id}", loginState.loggedUser);
         NavManager.NavigateTo("/");
     }
@@ -156,6 +156,7 @@ mutta jos sen sallii, niin se pitää huomioida kirjautumisessa.*@
     private void uusiKuva(ChangeEventArgs e)
     {
         kuva = e.Value as string;
+        user.kuva = kuva;
         
     }
 

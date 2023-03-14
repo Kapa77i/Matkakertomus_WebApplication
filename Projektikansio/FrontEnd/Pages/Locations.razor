@@ -9,21 +9,21 @@
 @inject HttpClient Http
 @inject SharedLib.LoginState loginState;
 
-@*Tästä sivusta tulee tavallaan matkakohteiden index sivu > selaaminen
+@*Tästä sivu on tavallaan matkakohteiden index sivu > selaaminen
     voi lisätä, poistaa, päivittää ja selata matkakohteita.
     - Sellaista matkakohdetta, johon liittyy joku matkakertomus, ei saa poistaa tai päivittää
     - Kuka tahansa ei voi tehdä CRUD toimintoja, vaan siihen pitää vaatia login.
     - Kuka tahansa voi selata ja hakea matkakohteita*@
 
 @* Tee: 
-        -ylös hakupalkki: voi hakea/suodattaa matkakohteen nimellä > "search-as-you-type"
-        -matkakohteet eivät overlappaa toistensa päälle
+        -ylös hakupalkki? voi hakea/suodattaa matkakohteen nimellä > "search-as-you-type"
         -matkakohdetta klikkaamalla näkee mahdolliset tarinat?? -> takaisin -nappi 
 
-        MUISTA LAITTAA TYYLIT <img src="/profilePictures/@user.kuva.ToString()" width="150" alt="@user.nimimerkki.ToString()">
+        <img src="/profilePictures/@user.kuva.ToString()" width="150" alt="@user.nimimerkki.ToString()">
 *@
-<h1>Matkakohteet</h1>
+
 <div class="topnav" style="text-align:center">
+    <h1>Matkakohteet</h1>
     @if (loginState.isLoggedIn)
     {
 
@@ -40,8 +40,6 @@ else if(locations != null){
         @foreach(var l in locations){
             
             <div class="flex-item">
-                @*style="float: left; width: 25%; padding: 15px"*@
-                    @*aiemmin class = keskitys*@
                     @if(@l.kuva == null){
                     <div style="text-align:center"><a href="location/@l.idmatkakohde">Ei kuvaa saatavilla</a></div>
                     }

@@ -23,7 +23,14 @@
                 <ValidationSummary />
                 <div>
                     <label>
-                        <div style="text-align:center"><img src="tripPictures/@location.kuva" width="133" height="133" alt="1" /></div>
+                        @if (@location.kuva == null)
+                        {
+                            <div>Ei kuvaa saatavilla</div>
+                        }
+                        else
+                        {
+                            <div style="text-align:center"><img src="tripPictures/@location.kuva" width="133" height="133" alt="1" /></div>
+                        }
                         Kuva
                         <InputText class="form-control" id="kuva" @bind-Value="location.kuva" />
                     </label>

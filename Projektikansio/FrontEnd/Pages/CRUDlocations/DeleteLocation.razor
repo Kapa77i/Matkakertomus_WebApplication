@@ -23,7 +23,7 @@ else{
         <h3>Haluatko varmasti poistaa matkakohteen?</h3>
         /*TARKISTA TYYLI*/
         <div style="text-align:center">
-            @if (@location.kuva == null)
+          @* @if (@location.kuva == null)
             {
                 <div>Ei kuvaa saatavilla</div>
             }
@@ -37,7 +37,53 @@ else{
             <div>@location.maa</div>
             <div>@location.kuvausteksti</div>
             <br />
-            <button type="submit" class="btn btn-danger" disabled="@isSubmitting" onclick="@DeleteLocations">Poista</button>
+    <button type="submit" class="btn btn-danger" disabled="@isSubmitting" onclick="@DeleteLocations">Poista</button>*@
+
+
+
+            <EditForm Model="@location" OnValidSubmit="@DeleteLocations">
+                <DataAnnotationsValidator />
+                <ValidationSummary />
+                <div>
+                    <label>
+                        @if (@location.kuva == null)
+                        {
+                            <div>Ei kuvaa saatavilla</div>
+                        }
+                        else
+                        {
+                            <div style="text-align:center"><img src="tripPictures/@location.kuva" width="133" height="133" alt="1" /></div>
+                        }
+                        Kuva
+                        <InputText class="form-control" id="kuva" disabled @bind-Value="location.kuva" />
+                    </label>
+                </div>
+                <div>
+                    <label>
+                        Kohdenimi
+                        <InputText class="form-control" id="kohdenimi" disabled @bind-Value="location.kohdenimi" />
+                    </label>
+                </div>
+                <div>
+                    <label>
+                        Paikkakunta
+                        <InputText class="form-control" id="paikkakunta" disabled @bind-Value="location.paikkakunta" />
+                    </label>
+                </div>
+                <div>
+                    <label>
+                        Maa
+                        <InputText class="form-control" id="maa" disabled @bind-Value="location.maa" />
+                    </label>
+                </div>
+                <div>
+                    <label>
+                        Kuvausteksti
+                        <InputText class="form-control" id="kuvausteksti" disabled @bind-Value="location.kuvausteksti" />
+                    </label>
+                </div>
+                <button type="submit" class="btn btn-danger" disabled="@isSubmitting">Poista</button>
+            </EditForm>
         </div>
     }
     else

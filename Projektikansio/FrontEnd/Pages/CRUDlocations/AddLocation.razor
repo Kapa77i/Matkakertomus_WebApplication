@@ -26,9 +26,16 @@
             <ValidationSummary/>
             <div>
                 <label>
-                    <InputText class="form-control" id="kuva" @bind-Value="newlocation.kuva"/>
-                    Kuva
-                    <img src="tripPictures/@newlocation.kuva" width="133" height="133" alt="1" /> @*jos kuvaa ei valittu niin tässä ikoni*@
+                    @if (@newlocation.kuva == null)
+                    {
+                        <div>Ei kuvaa saatavilla</div>
+                    }
+                    else
+                    {
+                        <div style="text-align:center"><img src="tripPictures/@newlocation.kuva" width="133" height="133" alt="1" /> </div>
+                    }
+                    Kuva<br />
+                    <InputText class="form-control" id="kuva" @bind-Value="newlocation.kuva" />
                 </label>
             </div>
             <div>
@@ -49,7 +56,7 @@
             </div>
             <div>
                 <label>Kuvausteksti
-                    <InputText class="form-control" id="kuvausteksti" @bind-Value="newlocation.kuvausteksti"/>
+                    <InputTextArea class="form-control" id="kuvausteksti" @bind-Value="newlocation.kuvausteksti"/>
                 </label>
             </div>
             <button type="submit" class="btn btn-primary" disabled="@isSubmitting">Lisää</button>

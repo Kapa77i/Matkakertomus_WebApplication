@@ -16,7 +16,15 @@
     @if(location != null){
 
         <h3>@location.kohdenimi</h3>
-        <div style="text-align:center"> <img src="/tripPictures/@location.kuva" width="150" /></div>
+        @if (@location.kuva == null)
+        {
+            <div style="text-align:center">Ei kuvaa saatavilla</div>
+        }
+        else
+        {
+            <div style="text-align:center"> <img src="/tripPictures/@location.kuva" width="150" /></div>
+        }
+        
 
         @if(stories != null){
             @foreach (var s in stories)

@@ -19,7 +19,7 @@ public partial class Matka
             alkupvm = this.Alkupvm,
             loppupvm = this.Loppupvm,
             yksityinen = this.Yksityinen,
-            idmatka = this.Idmatkaaja
+            idmatka = this.Idmatka
         };
     }
 

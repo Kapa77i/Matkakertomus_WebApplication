@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MyApi.Data;
+using SharedLib;
 
 namespace MyApi.Controllers
 {
@@ -76,12 +77,14 @@ namespace MyApi.Controllers
         // POST: api/Matkas
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Matka>> PostMatka(Matka matka)
+        public async Task<ActionResult<Matka>> PostMatka(Matka matka)//ei toiminut myöskään jos Actionresultin sisällä oli matkaDTO
         {
+            if (!ModelState.IsValid) return BadRequest();
+
             _context.Matkas.Add(matka);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetMatka", new { id = matka.Idmatka }, matka);
+            return CreatedAtAction("GetMatka", new { id = matka.Idmatka }, matka.toMatkaDTO());
         }
 
         // DELETE: api/Matkas/5

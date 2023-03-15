@@ -83,6 +83,8 @@ else{
      * -> Toimii jos virtual matjaaja on tyhjä?? Swaggeristä syötettynä toimii, miksi ei apista?*/
     async Task EditTrips(){
         try{
+
+            //If radiobuttonia ei valittu -> oletus yksityinen
             isSubmitting = true;
             var result = await Http.PutAsJsonAsync($"api/Matkas/{IdMatka}", editTrip);
 

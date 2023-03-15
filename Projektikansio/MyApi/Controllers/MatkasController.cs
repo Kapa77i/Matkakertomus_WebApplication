@@ -46,15 +46,22 @@ namespace MyApi.Controllers
         // PUT: api/Matkas/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<ActionResult<matkaDTO>> PutMatka(long id, Matka matka)
+        public async Task<ActionResult<matkaDTO>> PutMatka(long id, matkaDTO matka)
         {
+            Matka? m = await _context.Matkas.FindAsync(id);
+            if (m == null) return NotFound();
+
             if(matka == null) return BadRequest();
-            if (id != matka.Idmatka)
+            if (id != matka.idmatka) return BadRequest();
+            else
             {
-                return BadRequest();
+                m.Idmatkaaja = matka.idmatkaaja;
+                m.Alkupvm = matka.alkupvm;
+                m.Loppupvm = matka.loppupvm;
+                m.Yksityinen = matka.yksityinen;
             }
 
-            _context.Entry(matka).State = EntityState.Modified;
+            _context.Entry(m).State = EntityState.Modified;
 
             try
             {

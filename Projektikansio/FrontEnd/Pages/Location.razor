@@ -13,6 +13,7 @@
 
 
 @if (loginState.isLoggedIn) {
+
     @if(location != null){
 
         <h3>@location.kohdenimi</h3>
@@ -26,12 +27,9 @@
         }
         
 
-        @if(stories != null){
+        @if(stories.Count != 0){
             @foreach (var s in stories)
             {
-                trip = trips.FirstOrDefault(m => m.idmatka == s.idmatka);
-                @if(trip.yksityinen == 1 && s.idmatkakohde == location.idmatkakohde){ //jos matka ei ole yksityinen, niin näytetään
-
                     <div style="float: left; width: 33.33%; padding: 15px;">
                         <h2 style="text-align:left">Matka nro @s.idmatka.ToString()</h2>
                         <div>@trip.alkupvm.ToString().Replace("0.00.00", "") - @trip.loppupvm.ToString().Replace("0.00.00", "")</div>
@@ -39,7 +37,6 @@
                         <p>Tarinan kirjoitus pvm: @s.pvm.ToString().Replace("0.00.00", "")</p>
                         <p>@s.teksti</p>
                     </div>
-                }
             }
         }
         else{
@@ -47,7 +44,6 @@
             <div style="text-align:center"><h3>Ei tarinoita saatavilla</h3></div>
         }
     }
-
 }
 else{
     <h2>  <img src="/images/loading.gif" width="150" /></h2>
@@ -58,6 +54,7 @@ else{
     SharedLib.matkakohdeDTO? location;
     SharedLib.matkaDTO? trip;
     List<SharedLib.matkaDTO>? trips = new List<SharedLib.matkaDTO>();
+    List<SharedLib.tarinaDTO>? allstories = new List<SharedLib.tarinaDTO>();
     List<SharedLib.tarinaDTO>? stories = new List<SharedLib.tarinaDTO>();
 
     [Parameter]
@@ -70,8 +67,15 @@ else{
         {
             location = await Http.GetFromJsonAsync<SharedLib.matkakohdeDTO>($"api/Matkakohdes/{Id}");
             trips = await Http.GetFromJsonAsync<List<SharedLib.matkaDTO>>("/api/Matkas");
-            stories = await Http.GetFromJsonAsync<List<SharedLib.tarinaDTO>>("/api/Tarinas");
-            
+            allstories = await Http.GetFromJsonAsync<List<SharedLib.tarinaDTO>>("/api/Tarinas");
+            foreach(var s in allstories){
+
+                trip = trips.FirstOrDefault(m => m.idmatka == s.idmatka);
+                @if (trip.yksityinen == 1 && s.idmatkakohde == location.idmatkakohde)
+                { //jos matka on julkinen ja jos se liittyy ko. matkakohteeseen, niin pääsee näytettävälle listalle
+                    stories.Add(s);
+                }
+            }
         }
         catch (Exception e)
         {

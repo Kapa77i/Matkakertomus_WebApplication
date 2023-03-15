@@ -16,7 +16,7 @@
 
 
     @if (editTrip != null)
-    {
+    {@*MATKAA EI VOI MUOKATA, JOS EI OLE OMA*@
                 <h3>Muokataan matkaa @editTrip.idmatka</h3>
                 <div style="text-align:center">
                     <EditForm Model="@editTrip" OnValidSubmit="@EditTrips">

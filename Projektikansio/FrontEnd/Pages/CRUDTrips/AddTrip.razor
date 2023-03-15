@@ -24,7 +24,8 @@
                 <div>
                     <label>
                        Matkaaja(t) @*Piilota tai etsi tapa näyttää matkaajan nimi, ota huomioon useamman matkaajan lisääminen?*@
-                        <InputNumber class="form-control" id="matkaaja" @bind-Value="loginState.loggedUser.idmatkaaja" />
+                       <InputNumber class="form-control" id="idmatkaaja" disabled @bind-Value="loginState.loggedUser.idmatkaaja" /><br/>
+                       <InputText class="form-control" id="etunimi" disabled @bind-Value="matkaaja.etunimi"/>  
                     </label>
                 </div>
                 <div>

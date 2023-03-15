@@ -129,7 +129,7 @@ namespace MyApi.Controllers
 
             //Sellaista matkakohdetta, johon liittyy joku matkakertomus, ei saa poistaa tai päivittää
             Tarina? t = await _context.Tarinas.Where(a => a.Idmatkakohde == id).FirstOrDefaultAsync();
-            if (t != null) { return BadRequest(); }
+            if (t != null)  return BadRequest(); 
 
             _context.Matkakohdes.Remove(m);
             await _context.SaveChangesAsync();

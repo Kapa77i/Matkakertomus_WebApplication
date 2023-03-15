@@ -66,6 +66,12 @@ else{
                 <button type="submit" class="btn btn-danger" disabled="@isSubmitting">Poista</button>
             </EditForm>
         </div>
+
+        @if (r == 1)
+        {@*Jos r = 1, se tarkoittaa ettei matkakohdetta muokattu, koska se sisälsi tarinan*@
+            <br />
+            <div style="text-align:center"><h3>Matkakohde sisältää tarinan.<br />Matkakohdetta ei voi poistaa.</h3></div>
+        }
     }
     else
     {
@@ -97,6 +103,16 @@ else{
         try{
             isSubmitting = true;
             var result = await Http.DeleteAsync($"api/Matkakohdes/{Id}");
+
+            if (result.StatusCode == System.Net.HttpStatusCode.NoContent) //editoijalle viesti, että ei voitu poistaa tarinan takia
+            {
+                r = 1;
+            }
+            else
+            {
+                //saako tähän väliin pyöritettyä pyörää?
+                NavigationManager.NavigateTo($"/locations");
+            }
 
             //saako tähän väliin pyöritettyä pyörää?
             NavigationManager.NavigateTo($"/locations");

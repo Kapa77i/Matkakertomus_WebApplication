@@ -107,7 +107,7 @@ else
             isSubmitting = true;
             var result = await Http.PutAsJsonAsync($"api/Matkakohdes/{Id}", location);
 
-            if (result.StatusCode == System.Net.HttpStatusCode.NoContent) //TÄMÄ EI TOIMI VIELÄ. Tarkoituksena antaa editoijalle viesti, että ei voitu muokata tarinan takia
+            if (result.StatusCode == System.Net.HttpStatusCode.NoContent) //editoijalle viesti, että ei voitu muokata tarinan takia
             {
                 r = 1;
             }

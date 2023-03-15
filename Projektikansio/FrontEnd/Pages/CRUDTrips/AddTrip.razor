@@ -9,14 +9,14 @@
 @inject HttpClient Http
 @inject SharedLib.LoginState loginState;
 
-<h3>Lisää matka</h3>
 
-<a href="/trips">Omat matkat</a>
 
     @*Matkojen lisäysformi (ota huomioon yksityinen/julkinen sekä mahdollinen ryhmämatka?*@
     @if (loginState.isLoggedIn) @*kuka tahansa ei voi lisätä matkoja, vaan pitää olla kirjautunut käyttäjä*@
     {
-        <h1>Lisää matkakohde</h1>
+        <h1>Lisää matka</h1>
+        <a href="/trips">Omat matkat</a>
+
         <div style="text-align:center">
             <EditForm Model="@newtrip" OnValidSubmit="@PostTrips">
                 <DataAnnotationsValidator />
@@ -24,7 +24,7 @@
                 <div>
                     <label>
                        Matkaaja(t) @*Piilota tai etsi tapa näyttää matkaajan nimi, ota huomioon useamman matkaajan lisääminen?*@
-                        <InputNumber class="form-control" id="matkaaja" @bind-Value="newtrip.idmatkaaja" />
+                        <InputNumber class="form-control" id="matkaaja" @bind-Value="loginState.loggedUser.idmatkaaja" />
                     </label>
                 </div>
                 <div>
@@ -55,7 +55,7 @@
     else
     {
         <h2>  <img src="/images/loading.gif" width="150" /></h2>
-        <h2>Kirjaudu sisään lisätäksesi matkakohteita</h2>
+        <h2>Kirjaudu sisään lisätäksesi matkoja</h2>
     }
 
 
@@ -69,17 +69,22 @@
     protected override async Task OnInitializedAsync()
     {
         matkaaja = await Http.GetFromJsonAsync<SharedLib.matkaajaDTO>($"api/Matkaajas/{loginState.loggedUser.idmatkaaja}");
-        newtrip.idmatkaaja = matkaaja.idmatkaaja;
         newtrip.alkupvm = DateTime.Now;
         newtrip.loppupvm = DateTime.Now;
         await base.OnInitializedAsync();
     }
 
     async Task PostTrips(){ //EI TOIMI VIELÄ, MIKSI!? -> 400. idmatka näyttää nollaa, mutta ei johdu siitä?
-        isSubmitting = true;
-        var result = await Http.PostAsJsonAsync($"api/Matkas", newtrip);
+        try{
+            newtrip.idmatkaaja = matkaaja.idmatkaaja;
+            isSubmitting = true;
+            var result = await Http.PostAsJsonAsync($"api/Matkas", newtrip);
 
-        //Ohjataanko postaamisen jälkeen omalle matkasivulle?
-        NavigationManager.NavigateTo($"/trips");
+            //Ohjataanko postaamisen jälkeen omalle matkasivulle?
+            NavigationManager.NavigateTo($"/trips");
+        }
+        catch(Exception e){
+            Console.WriteLine(e.Message);
+        }
     }
 }

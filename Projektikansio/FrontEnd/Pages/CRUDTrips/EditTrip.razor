@@ -15,9 +15,63 @@
 @if (loginState.isLoggedIn) { 
 
 
-
+    @if (location != null)
+    {
+                <h3>Muokataan matkakohdetta @location.kohdenimi</h3>
+                <div style="text-align:center">
+                    <EditForm Model="@location" OnValidSubmit="@EditLocations">
+                        <DataAnnotationsValidator />
+                        <ValidationSummary />
+                        <div>
+                            <label>
+                        @if (@location.kuva == null)
+                        {
+                                        <div>Ei kuvaa saatavilla</div>
+                        }
+                        else
+                        {
+                                        <div style="text-align:center"><img src="tripPictures/@location.kuva" width="133" height="133" alt="1" /></div>
+                        }
+                                Kuva
+                                <InputText class="form-control" id="kuva" @bind-Value="location.kuva" />
+                            </label>
+                        </div>
+                        <div>
+                            <label>
+                                Kohdenimi
+                                <InputText class="form-control" id="kohdenimi" @bind-Value="location.kohdenimi" />
+                            </label>
+                        </div>
+                        <div>
+                            <label>
+                                Paikkakunta
+                                <InputText class="form-control" id="paikkakunta" @bind-Value="location.paikkakunta" />
+                            </label>
+                        </div>
+                        <div>
+                            <label>
+                                Maa
+                                <InputText class="form-control" id="maa" @bind-Value="location.maa" />
+                            </label>
+                        </div>
+                        <div>
+                            <label>
+                                Kuvausteksti
+                                <InputTextArea class="form-control" id="kuvausteksti" @bind-Value="location.kuvausteksti" />
+                            </label>
+                        </div>
+                        <button type="submit" class="btn btn-primary" disabled="@isSubmitting">Lisää</button>
+                    </EditForm>
+                </div>
+    }
 
 }
+else{
+    <h2>  <img src="/images/loading.gif" width="150" /></h2>
+    <h2>Kirjaudu sisään muokataksesi matkoja</h2>
+}
+
+
 @code {
     [Parameter]
     public long? IdMatka { get; set; }

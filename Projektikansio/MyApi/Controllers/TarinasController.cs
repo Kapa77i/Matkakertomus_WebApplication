@@ -92,6 +92,13 @@ namespace MyApi.Controllers
         [HttpPost]
         public async Task<ActionResult<Tarina>> PostTarina(Tarina tarina)
         {
+            /*Tarina t = new Tarina();
+            t.Idtarina = tarina.idtarina;
+            t.Idmatka = tarina.idmatka;
+            t.Idmatkakohde = tarina.idmatkakohde;
+            t.Teksti = tarina.teksti;
+            t.Pvm = tarina.pvm;*/
+
             _context.Tarinas.Add(tarina);
             await _context.SaveChangesAsync();
 

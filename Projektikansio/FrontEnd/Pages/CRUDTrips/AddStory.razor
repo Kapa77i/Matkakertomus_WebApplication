@@ -26,8 +26,13 @@
             </div>
             <div>
                 <label>
-                    Matkakohde  @*Tähän inputselect? -> Matkakohteiden nimet ja kuvat?*@
-                    <InputNumber class="form-control" id="idmatkakohde" @bind-Value="newstory.idmatkakohde" />
+                    Matkakohde  @*Tähän inputselect? -> Matkakohteiden nimet ja kuvat?
+                <InputNumber class="form-control" id="idmatkakohde" @bind-Value="newstory.idmatkakohde" />*@
+                    <InputSelect @bind-Value="newstory.idmatkakohde">
+                        @foreach(var l in locations){
+                            <option value="@l.idmatkakohde">@l.kohdenimi</option>
+                        }   
+                    </InputSelect>
                 </label>
             </div>
             <div>
@@ -38,7 +43,7 @@
             </div>
             <div>
                 <label>
-                    Loppu pvm
+                    Teksti
                     <InputTextArea class="form-control" id="teksti" @bind-Value="newstory.teksti" />
                 </label>
             </div>
@@ -58,7 +63,7 @@ else
     bool isSubmitting;
     SharedLib.tarinaDTO newstory = new SharedLib.tarinaDTO();
     SharedLib.matkaDTO? matka = new SharedLib.matkaDTO();
-    SharedLib.matkakohdeDTO? location = new SharedLib.matkakohdeDTO();
+    List<SharedLib.matkakohdeDTO?> locations = new List<SharedLib.matkakohdeDTO>();
 
     [Parameter]
     public long? IdMatka { get; set; }
@@ -66,9 +71,10 @@ else
     protected override async Task OnInitializedAsync()
     {
         matka = await Http.GetFromJsonAsync<SharedLib.matkaDTO>($"api/Matkas/{IdMatka}");
+        locations = await Http.GetFromJsonAsync<List<SharedLib.matkakohdeDTO>>($"api/Matkakohdes");
 
         newstory.idmatka = matka.idmatka;
-        newstory.pvm = DateTime.Now;
+        newstory.pvm = matka.alkupvm;
         await base.OnInitializedAsync();
     }
 
@@ -77,7 +83,7 @@ else
         try
         {
             isSubmitting = true;
-            await Http.PostAsJsonAsync($"api/Tarinas", newstory);
+            await Http.PostAsJsonAsync($"api/Tarinas", newstory); //EI TOIMI VIELÄ
 
             //Ohjataan omalle matkasivulle
             NavigationManager.NavigateTo($"/trips");

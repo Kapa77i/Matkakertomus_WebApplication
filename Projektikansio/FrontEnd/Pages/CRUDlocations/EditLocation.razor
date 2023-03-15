@@ -66,6 +66,7 @@
  
     
     @if(r == 1){@*Jos r = 1, se tarkoittaa ettei matkakohdetta muokattu, koska se sisälsi tarinan*@
+        <br/>
         <div style="text-align:center"><h3>Matkakohde sisältää tarinan.<br/>Matkakohdetta ei voi muokata.</h3></div>
     }
 }
@@ -80,7 +81,7 @@ else
 
     bool isSubmitting;
     SharedLib.matkakohdeDTO? location;
-    int? r; 
+    private int? r { get; set; } 
 
     [Parameter]
     public long? Id { get; set; }
@@ -106,7 +107,7 @@ else
             isSubmitting = true;
             var result = await Http.PutAsJsonAsync($"api/Matkakohdes/{Id}", location);
 
-            if (result.StatusCode.Equals("NoContent")) //TÄMÄ EI TOIMI VIELÄ. Tarkoituksena antaa editoijalle viesti, että ei voitu muokata tarinan takia
+            if (result.StatusCode == System.Net.HttpStatusCode.NoContent) //TÄMÄ EI TOIMI VIELÄ. Tarkoituksena antaa editoijalle viesti, että ei voitu muokata tarinan takia
             {
                 r = 1;
             }

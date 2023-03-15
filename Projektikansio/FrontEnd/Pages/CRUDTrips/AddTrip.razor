@@ -62,8 +62,11 @@
 
 @code {
     bool isSubmitting;
-    SharedLib.matkaDTO? newtrip = new SharedLib.matkaDTO();
-    SharedLib.matkaajaDTO? matkaaja = new SharedLib.matkaajaDTO();
+    SharedLib.matkaDTO newtrip = new SharedLib.matkaDTO();
+    SharedLib.matkaajaDTO matkaaja = new SharedLib.matkaajaDTO();
+    //Voisiko ongelma olla, että idMatkaajaNavigation puuttuu (koska DTO?)
+    // Matka? matka = new Matka();
+
 
 
     protected override async Task OnInitializedAsync()
@@ -75,12 +78,16 @@
     }
 
     async Task PostTrips(){ //EI TOIMI VIELÄ, MIKSI!? -> 400. idmatka näyttää nollaa, mutta ei johdu siitä?
+        /* A possible object cycle was detected -> Path: $.IdmatkaajaNavigation.Matkas.IdmatkaajaNavigation.Matkas.IdmatkaajaNavigation.Matkas.... (jos virtual matkaaja tyhjä)
+         * An error occurred while saving the entity changes. See the inner exception for details. -> SQLite Error 19: 'UNIQUE constraint failed: matkaaja.idmatkaaja'. (jos virtualmatkaajassa id)
+        */
         try{
             newtrip.idmatkaaja = matkaaja.idmatkaaja;
+            newtrip.idmatka = 0;
             isSubmitting = true;
             var result = await Http.PostAsJsonAsync($"api/Matkas", newtrip);
 
-            //Ohjataanko postaamisen jälkeen omalle matkasivulle?
+            //Ohjataan omalle matkasivulle
             NavigationManager.NavigateTo($"/trips");
         }
         catch(Exception e){

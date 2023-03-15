@@ -82,10 +82,19 @@ namespace MyApi.Controllers
         {
             if (!ModelState.IsValid) return BadRequest();
 
-            _context.Matkas.Add(matka);
+            //testi
+            Matka m = new Matka();
+            m.Idmatkaaja = matka.Idmatkaaja;
+            m.Alkupvm = matka.Alkupvm;
+            m.Loppupvm = matka.Loppupvm;
+            m.Yksityinen = matka.Yksityinen;
+            m.IdmatkaajaNavigation = matka.IdmatkaajaNavigation;
+            //testi loppuu
+
+            _context.Matkas.Add(m);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetMatka", new { id = matka.Idmatka }, matka);
+            return CreatedAtAction("GetMatka", new { id = m.Idmatka }, m.toMatkaDTO());
         }
 
         // DELETE: api/Matkas/5

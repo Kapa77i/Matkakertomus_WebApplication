@@ -79,7 +79,8 @@ else{
 
 
     //TARKISTA TOIMIIKO
-    /*Jostain syystä matkan muokkaus onnistuu swaggerissä, jos ei ole annettu mitään tietoja (esim matkaajaa) -> 500 FOREIGN KEY CONSTRAINT FAIL -> Toimii jos virtual matjaaja on tyhjä*/
+    /*Jostain syystä matkan muokkaus onnistuu swaggerissä, jos ei ole annettu mitään tietoja (esim matkaajaa) -> 500 FOREIGN KEY CONSTRAINT FAIL 
+     * -> Toimii jos virtual matjaaja on tyhjä?? Swaggeristä syötettynä toimii, miksi ei apista?*/
     async Task EditTrips(){
         try{
             isSubmitting = true;

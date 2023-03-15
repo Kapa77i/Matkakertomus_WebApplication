@@ -46,8 +46,9 @@ namespace MyApi.Controllers
         // PUT: api/Matkas/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutMatka(long id, Matka matka)
+        public async Task<ActionResult<matkaDTO>> PutMatka(long id, Matka matka)
         {
+            if(matka == null) return BadRequest();
             if (id != matka.Idmatka)
             {
                 return BadRequest();

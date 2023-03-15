@@ -78,23 +78,20 @@ namespace MyApi.Controllers
         // POST: api/Matkas
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Matka>> PostMatka(Matka matka)//ei toiminut myöskään jos Actionresultin sisällä oli matkaDTO/Matka
+        public async Task<ActionResult<Matka>> PostMatka(matkaDTO matka)//ei toiminut myöskään jos Actionresultin sisällä oli matkaDTO/Matka
         {
             if (!ModelState.IsValid) return BadRequest();
 
-            //testi
             Matka m = new Matka();
-            m.Idmatkaaja = matka.Idmatkaaja;
-            m.Alkupvm = matka.Alkupvm;
-            m.Loppupvm = matka.Loppupvm;
-            m.Yksityinen = matka.Yksityinen;
-            m.IdmatkaajaNavigation = matka.IdmatkaajaNavigation;
-            //testi loppuu
+            m.Idmatkaaja = matka.idmatkaaja;
+            m.Alkupvm = matka.alkupvm;
+            m.Loppupvm = matka.loppupvm;
+            m.Yksityinen = matka.yksityinen;
 
             _context.Matkas.Add(m);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetMatka", new { id = m.Idmatka }, m.toMatkaDTO());
+            return CreatedAtAction("GetMatka", new { id = m.Idmatka }, m);
         }
 
         // DELETE: api/Matkas/5

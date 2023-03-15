@@ -1,4 +1,4 @@
-﻿@page "/trips/edit/{Id:long}"
+﻿@page "/trips/edit/{IdMatka:long}"
 
 @using System.Net.Http
 @using System.Net.Http.Json
@@ -15,49 +15,39 @@
 @if (loginState.isLoggedIn) { 
 
 
-    @if (location != null)
+    @if (editTrip != null)
     {
-                <h3>Muokataan matkakohdetta @location.kohdenimi</h3>
+                <h3>Muokataan matkaa @editTrip.idmatka</h3>
                 <div style="text-align:center">
-                    <EditForm Model="@location" OnValidSubmit="@EditLocations">
+                    <EditForm Model="@editTrip" OnValidSubmit="@EditTrips">
                         <DataAnnotationsValidator />
                         <ValidationSummary />
                         <div>
                             <label>
-                        @if (@location.kuva == null)
-                        {
-                                        <div>Ei kuvaa saatavilla</div>
-                        }
-                        else
-                        {
-                                        <div style="text-align:center"><img src="tripPictures/@location.kuva" width="133" height="133" alt="1" /></div>
-                        }
-                                Kuva
-                                <InputText class="form-control" id="kuva" @bind-Value="location.kuva" />
+                                Matkaaja(t)
+                                <InputNumber class="form-control" id="matkaaja" @bind-Value="editTrip.idmatkaaja" />
                             </label>
                         </div>
                         <div>
                             <label>
-                                Kohdenimi
-                                <InputText class="form-control" id="kohdenimi" @bind-Value="location.kohdenimi" />
+                                Aloitus pvm
+                                <InputDate class="form-control" id="alku" @bind-Value="editTrip.alkupvm" />
                             </label>
                         </div>
                         <div>
                             <label>
-                                Paikkakunta
-                                <InputText class="form-control" id="paikkakunta" @bind-Value="location.paikkakunta" />
+                                Loppu pvm
+                                <InputDate class="form-control" id="loppu" @bind-Value="editTrip.loppupvm" />
                             </label>
                         </div>
                         <div>
                             <label>
-                                Maa
-                                <InputText class="form-control" id="maa" @bind-Value="location.maa" />
-                            </label>
-                        </div>
-                        <div>
-                            <label>
-                                Kuvausteksti
-                                <InputTextArea class="form-control" id="kuvausteksti" @bind-Value="location.kuvausteksti" />
+                                Yksityisyys
+                                <InputRadioGroup class="form-control" id="yksityinen" @bind-Value="editTrip.yksityinen">
+                                    <br />
+                                    <InputRadio Value="0" />Yksityinen
+                                    <InputRadio Value="1" />Julkinen
+                                </InputRadioGroup>
                             </label>
                         </div>
                         <button type="submit" class="btn btn-primary" disabled="@isSubmitting">Lisää</button>
@@ -91,9 +81,15 @@ else{
     //TARKISTA TOIMIIKO
 
     async Task EditTrips(){
-        isSubmitting = true;
-        var result = await Http.PutAsJsonAsync($"api/Matkas/{IdMatka}", editTrip);
+        try{
+            isSubmitting = true;
+            var result = await Http.PutAsJsonAsync($"api/Matkas/{IdMatka}", editTrip);
 
-        NavigationManager.NavigateTo($"/trips");
+            NavigationManager.NavigateTo($"/trips");
+        }
+        catch(Exception e){
+            Console.WriteLine(e.Message);
+        }
+        
     }
 }

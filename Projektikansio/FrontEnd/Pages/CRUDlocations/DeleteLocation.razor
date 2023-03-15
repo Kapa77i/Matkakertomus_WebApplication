@@ -1,5 +1,4 @@
 ﻿@page "/locations/delete/{Id:long}"
-@*tarvitseeko myös user?*@
 
 @using System.Net.Http
 @using System.Net.Http.Json
@@ -68,7 +67,7 @@ else{
         </div>
 
         @if (r == 1)
-        {@*Jos r = 1, se tarkoittaa ettei matkakohdetta muokattu, koska se sisälsi tarinan*@
+        {@*matkakohdetta ei poisteta, koska se sisälsi tarinan*@
             <br />
             <div style="text-align:center"><h3>Matkakohde sisältää tarinan.<br />Matkakohdetta ei voi poistaa.</h3></div>
         }

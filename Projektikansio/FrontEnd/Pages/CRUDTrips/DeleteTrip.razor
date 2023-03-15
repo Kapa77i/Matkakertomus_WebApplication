@@ -1,4 +1,4 @@
-﻿@page "/trips/delete/{Id:long}"
+﻿@page "/trips/delete/{IdMatka:long}"
 
 @using System.Net.Http
 @using System.Net.Http.Json
@@ -9,15 +9,56 @@
 @inject HttpClient Http
 @inject SharedLib.LoginState loginState;
 
-<h3>Poista matka</h3>
-
-<a href="/trips">Omat matkat</a>
 @if (loginState.isLoggedIn)
 {
 
 
-
-
+    @if (deletetrip != null)
+    {
+        <a href="/trips">Omat matkat</a>
+        <h2>@deletetrip.idmatka</h2>
+        <h3>Haluatko varmasti poistaa matkan (ja sen tarinat)?</h3>
+        <div style="text-align:center">
+            <EditForm Model="@deletetrip" OnValidSubmit="@DeleteTrips">
+                <DataAnnotationsValidator />
+                <ValidationSummary />
+                <div>
+                    <label>
+                        Matkaaja(t)
+                        <InputNumber class="form-control" id="matkaaja" disabled @bind-Value="deletetrip.idmatkaaja" />
+                    </label>
+                </div>
+                <div>
+                    <label>
+                        Aloitus pvm
+                        <InputDate class="form-control" id="alku" disabled @bind-Value="deletetrip.alkupvm" />
+                    </label>
+                </div>
+                <div>
+                    <label>
+                        Loppu pvm
+                        <InputDate class="form-control" id="loppu" disabled @bind-Value="deletetrip.loppupvm" />
+                    </label>
+                </div>
+                <div>
+                    <label>
+                        Yksityisyys
+                        <InputRadioGroup class="form-control" id="yksityinen" disabled @bind-Value="deletetrip.yksityinen">
+                            <br />
+                            <InputRadio disabled Value="0" />Yksityinen @*Saako tänne arvon alustettua/näytettyä?*@
+                            <InputRadio disabled Value="1" />Julkinen
+                        </InputRadioGroup>
+                    </label>
+                </div>
+                <button type="submit" class="btn btn-danger" disabled="@isSubmitting">Poista</button>
+            </EditForm>
+        </div>
+    }
+}
+else
+{
+    <h2>  <img src="/images/loading.gif" width="150" /></h2>
+    <h2>Kirjaudu sisään poistaaksesi matkoja</h2>
 }
 
 @code {
@@ -37,10 +78,16 @@
     }
 
     private async Task DeleteTrips(){
-        isSubmitting = true;
-        var result = await Http.DeleteAsync($"api/;atkas/{IdMatka}");
+        try{
+            isSubmitting = true;
+            var result = await Http.DeleteAsync($"api/Matkas/{IdMatka}"); //VOIKO POISTAA VAIKKA ON TARINOITA, VAI PITÄÄKÖ TARINAT POISTAA ENSIN?
 
-        NavigationManager.NavigateTo($"/trips");
+            NavigationManager.NavigateTo($"/trips");
+        }
+        catch(Exception e){
+            Console.WriteLine(e.Message);
+        }
+        
     }
 
 

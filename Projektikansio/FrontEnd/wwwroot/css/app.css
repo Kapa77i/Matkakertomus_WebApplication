@@ -198,7 +198,7 @@ p, a, li, th, td, label {
 }
 
 a {
-    color: #a8dadc;
+    color: #a8dadc !important;
     text-decoration: none;
     text-transform: uppercase;
 }
@@ -207,12 +207,6 @@ a {
 a, .btn-link {
     color: #0071c1;
 }
-
-
-a:hover{
-    color:chartreuse !important;
-}
-
 
 
 h1:focus {

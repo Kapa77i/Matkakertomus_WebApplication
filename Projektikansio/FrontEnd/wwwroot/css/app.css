@@ -316,6 +316,10 @@ hr.rounded {
         line-height: 20px;
     }
 
+    .radioButton{
+        font-size: 55px;
+    }
+
 /*//Sivújen responsiivisuus:*/
 @media (max-width: 900px) {
     .flex-t, .flex-c {

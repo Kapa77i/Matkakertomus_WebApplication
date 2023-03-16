@@ -18,13 +18,14 @@ else{
     
     @if (location != null)
     {
-        <h2>@location.kohdenimi</h2>
-        <h3>Haluatko varmasti poistaa matkakohteen?</h3>
-        <div style="text-align:center">
+        <h2 class="h1otsikot">@location.kohdenimi</h2>
+        <h3 class="h1otsikot">Haluatko varmasti poistaa matkakohteen?</h3>
+        <div class="flex-t">
             <EditForm Model="@location" OnValidSubmit="@DeleteLocations">
                 <DataAnnotationsValidator />
                 <ValidationSummary />
                 <div>
+                    <br />
                     <label>
                         @if (@location.kuva == null)
                         {
@@ -32,36 +33,41 @@ else{
                         }
                         else
                         {
-                            <div style="text-align:center"><img src="tripPictures/@location.kuva" width="133" height="133" alt="1" /></div>
+                            <div style="text-align:center"><img src="tripPictures/@location.kuva" width="133" height="133" alt="1" /></div> <br />
                         }
                         Kuva
                         <InputText class="form-control" id="kuva" disabled @bind-Value="location.kuva" />
                     </label>
                 </div>
+                <br />
                 <div>
                     <label>
                         Kohdenimi
                         <InputText class="form-control" id="kohdenimi" disabled @bind-Value="location.kohdenimi" />
                     </label>
                 </div>
+                <br />
                 <div>
                     <label>
                         Paikkakunta
                         <InputText class="form-control" id="paikkakunta" disabled @bind-Value="location.paikkakunta" />
                     </label>
                 </div>
+                <br/>
                 <div>
                     <label>
                         Maa
                         <InputText class="form-control" id="maa" disabled @bind-Value="location.maa" />
                     </label>
                 </div>
+                <br />
                 <div>
                     <label>
                         Kuvausteksti
                         <InputTextArea class="form-control" id="kuvausteksti" disabled @bind-Value="location.kuvausteksti" />
                     </label>
                 </div>
+                <br />
                 <button type="submit" class="btn btn-danger" disabled="@isSubmitting">Poista</button>
             </EditForm>
         </div>

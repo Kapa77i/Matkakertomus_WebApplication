@@ -14,10 +14,10 @@
     @*Matkojen lisäysformi (ota huomioon yksityinen/julkinen sekä mahdollinen ryhmämatka?*@
     @if (loginState.isLoggedIn) @*kuka tahansa ei voi lisätä matkoja, vaan pitää olla kirjautunut käyttäjä*@
     {
-        <h1>Lisää matka</h1>
+    <h1 class="h1otsikot">Lisää matka</h1>
         <a href="/trips">Omat matkat</a>
 
-        <div style="text-align:center">
+    <div class="flex-t">
             <EditForm Model="@newtrip" OnValidSubmit="@PostTrips">
                 <DataAnnotationsValidator />
                 <ValidationSummary />
@@ -28,27 +28,31 @@
                        <InputText class="form-control" id="etunimi" disabled @bind-Value="matkaaja.etunimi"/>  
                     </label>
                 </div>
+            <br />
                 <div>
                     <label>
                         Aloitus pvm
                         <InputDate class="form-control" id="alku"  @bind-Value="newtrip.alkupvm" />
                     </label>
                 </div>
+            <br />
                 <div>
                     <label>
                         Loppu pvm
                         <InputDate class="form-control" id="loppu" @bind-Value="newtrip.loppupvm" />
                     </label>
                 </div>
+            <br />
                 <div>
-                    <label>
+                <label style="font-size: 18px;">
                         Yksityisyys
                         <InputRadioGroup class="form-control" id="yksityinen" @bind-Value="newtrip.yksityinen" ><br/>
-                            <InputRadio Value="0"/>Yksityinen
+                            <InputRadio Value="0" />Yksityinen <br/>
                             <InputRadio Value="1"/>Julkinen
                         </InputRadioGroup>
                     </label>
                 </div>
+            <br />
                 <button type="submit" class="btn btn-primary" disabled="@isSubmitting">Lisää</button>
             </EditForm>
         </div>

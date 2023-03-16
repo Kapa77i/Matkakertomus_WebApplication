@@ -16,12 +16,13 @@
 
     @if (location != null)
     {
-        <h3>Muokataan matkakohdetta @location.kohdenimi</h3>
-        <div style="text-align:center">
+        <h3 class="h1otsikot">Muokataan matkakohdetta @location.kohdenimi</h3>
+        <div class="flex-t">
             <EditForm Model="@location" OnValidSubmit="@EditLocations">
                 <DataAnnotationsValidator />
                 <ValidationSummary />
                 <div>
+                    <br />
                     <label>
                         @if (@location.kuva == null)
                         {
@@ -29,36 +30,41 @@
                         }
                         else
                         {
-                            <div style="text-align:center"><img src="tripPictures/@location.kuva" width="133" height="133" alt="1" /></div>
+                            <div style="text-align:center"><img src="tripPictures/@location.kuva" width="133" height="133" alt="1" /></div> <br />
                         }
                         Kuva
                         <InputText class="form-control" id="kuva" @bind-Value="location.kuva" />
                     </label>
                 </div>
+                <br/>
                 <div>
                     <label>
                         Kohdenimi
                         <InputText class="form-control" id="kohdenimi" @bind-Value="location.kohdenimi" />
                     </label>
                 </div>
+                <br />
                 <div>
                     <label>
                         Paikkakunta
                         <InputText class="form-control" id="paikkakunta" @bind-Value="location.paikkakunta" />
                     </label>
                 </div>
+                <br/>
                 <div>
                     <label>
                         Maa
                         <InputText class="form-control" id="maa" @bind-Value="location.maa" />
                     </label>
                 </div>
+                        <br/>
                 <div>
                     <label>
                         Kuvausteksti
                         <InputTextArea class="form-control" id="kuvausteksti" @bind-Value="location.kuvausteksti" />
                     </label>
                 </div>
+                <br />
                 <button type="submit" class="btn btn-primary" disabled="@isSubmitting">Muokkaa</button>
             </EditForm>
         </div>

@@ -8,33 +8,23 @@ namespace ProjectTest
         [Fact]
         public void EditUser()
         {
-
-
             var component = RenderComponent<User>();
 
-            // Act
             var etunimi = component.Find("#etunimi");
             etunimi.Change("Hello, world!");
-
             var sukunimi = component.Find("#sukunimi");
             sukunimi.Change("Hello, world!");
-
             var nimimerkki = component.Find("#nimimerkki");
             nimimerkki.Change("Hello, world!");
-
             var paikkakunta = component.Find("#paikkakunta");
             paikkakunta.Change("Hello, world!");
-
             var esittely = component.Find("#esittely");
             esittely.Change("Hello, world!");
-
             var sahkoposti = component.Find("#sähköposti");
             sahkoposti.Change("Hello, world!");
-
             var salasana = component.Find("#salasana");
             salasana.Change("Hello, world!");
 
-            // Assert
             Assert.Equal("Hello, world!", etunimi.GetAttribute("value"));
             Assert.Equal("Hello, world!", sukunimi.GetAttribute("value"));
             Assert.Equal("Hello, world!", nimimerkki.GetAttribute("value"));
@@ -43,6 +33,8 @@ namespace ProjectTest
             Assert.Equal("Hello, world!", sahkoposti.GetAttribute("value"));
             Assert.Equal("Hello, world!", salasana.GetAttribute("value"));
 
+            Console.WriteLine("Savonia on kyllä syvältä perseestä");
+            Assert.True(true);
         }
     }
 }

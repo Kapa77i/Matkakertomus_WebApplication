@@ -82,8 +82,8 @@ else
             {
                 matkakohde = matkakohdes.FirstOrDefault(m => m.idmatkakohde == tarina.idmatkakohde);
                 <div>
-                <h4 style="text-align: left;">Matka nro @tarina.idmatka.ToString()</h4> 
-                <img src="/tripPictures/@matkakohde.kuva" width="150" />
+                <h4 style="text-align: left;">Matka nro @tarina.idmatka.ToString()</h4>
+                    <img src="/tripPictures/@matkakohde.kuva" width="250" height="200" />
                     <div style="font-style: italic"> @matka.alkupvm.ToString().Replace("0.00.00", "") - @matka.loppupvm.ToString().Replace("0.00.00", "")</div>
                 @*<p>Tarinan nro: @tarina.idtarina.ToString()</p>*@
                

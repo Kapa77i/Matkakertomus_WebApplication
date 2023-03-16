@@ -2,8 +2,8 @@
 @using System.Net.Http
 @using System.Net.Http.Json
 @using System.Threading.Tasks
-@inject NavigationManager NavManager
-@inject HttpClient Http
+@*@inject NavigationManager NavManager
+@inject HttpClient Http*@
 
 <h1>Rekisteröidy</h1>
 @if (user != null)
@@ -116,9 +116,11 @@ Muut tiedot voi antaa omissa tiedoissa*@.
 @code {
 
     private string kuva { get; set; }  
-    private SharedLib.matkaajaDTO? user = new();
+    public SharedLib.matkaajaDTO? user = new();
+    [Inject] public HttpClient Http { get; set; }
+    [Inject] public NavigationManager NavManager { get; set; }
 
-    private async Task SignUp()
+    public async Task SignUp()
 
     {
         if (kuva == null)

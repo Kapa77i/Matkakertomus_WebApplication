@@ -32,9 +32,7 @@ steps:
   inputs:
  testSelector: 'testAssemblies'
     testAssemblyVer2: |
-      *test*.dll
-      !*TestAdapter.dll
-      !*\obj*
+      **\*ProjectTest.dll
+      !**\*TestAdapter.dll
+      !**\obj\**
     searchFolder: '$(System.DefaultWorkingDirectory)'
-    vsTestVersion: 'latest'
-    publishRunAttachments: false

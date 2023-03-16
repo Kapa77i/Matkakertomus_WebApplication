@@ -62,36 +62,14 @@ else
 
     </div>
     <br />
-    <br />
-    <br />
-    <h4 style="text-align: left;">Muut matkat (julkiset)</h4>
-    <div class="flex-t">
-        <div style="text-decoration-line: underline; text-decoration-color: lightblue"> Matkakoodi</div>
-        <div style="text-decoration-line: underline; text-decoration-color: lightblue"> Matkan aloitus ja lopetus pvm</div>
-        <div> </div>
 
-        @foreach (var matka in matkas)
-        {
-            //Näyttää kaikki julkiset matkat
-            if (matka.yksityinen == 1)
-            {
-                <div>@matka.idmatka.ToString()</div>
-                <div>@matka.alkupvm.ToString().Replace("0.00.00", "") - @matka.loppupvm.ToString().Replace("0.00.00", "")</div>
-                <div><a href="trips/edit/@matka.idmatka">Muokkaa</a> // <a href="trips/delete/@matka.idmatka">Poista</a> // <a style="text-align:left" href="/trips/addStory">Lisää matkaan tarina</a></div>
-
-            }
-        }
-
-    </div>
-
-    <br />
-    <br />
-    <br />
-    <br />
     <br />
     <br />
     <hr class="rounded">
-    <h2 class="h2otsikot">Tarinat</h2>
+    <h2 class="h2otsikot">Omien matkojen tarinat</h2>
+        <br />
+    <br />
+    <br />
     <div style="text-align:right; padding-right: 160px;" > @*<a style="text-align:left" href="/trips/addStory">Lisää uusi tarina</a> *@</div>
     <br />
     <div class="flex-c">
@@ -106,10 +84,12 @@ else
                 <div>
                 <h4 style="text-align: left;">Matka nro @tarina.idmatka.ToString()</h4> 
                 <img src="/tripPictures/@matkakohde.kuva" width="150" />
-                <p>Tarinan nro: @tarina.idtarina.ToString()</p>
-                <p>Tarinan kirjoitus pvm: @tarina.pvm.ToString().Replace("0.00.00", "")</p>
-                <p>Matkakohde: @matkakohde.kohdenimi</p>
+                    <div style="font-style: italic"> @matka.alkupvm.ToString().Replace("0.00.00", "") - @matka.loppupvm.ToString().Replace("0.00.00", "")</div>
+                @*<p>Tarinan nro: @tarina.idtarina.ToString()</p>*@
+               
+                <p>@matkakohde.kohdenimi</p>
                 <p>@tarina.teksti</p>
+                    <p>Tarina kirjoitettu @tarina.pvm.ToString().Replace("0.00.00", "")</p>
                 <a href="trips/edit/">Muokkaa</a> //
                 <a href="trips/delete/">Poista</a></div>
 

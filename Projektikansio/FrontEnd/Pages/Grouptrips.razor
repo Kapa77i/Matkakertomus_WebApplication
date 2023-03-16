@@ -71,10 +71,11 @@ else
                 <div>
                     <h4 style="text-align: left;">Matka nro @tarina.idmatka.ToString()</h4>
                     <img src="/tripPictures/@matkakohde.kuva" width="150" />
-                    <p>Tarinan nro: @tarina.idtarina.ToString()</p>
-                    <p>Tarinan kirjoitus pvm: @tarina.pvm.ToString().Replace("0.00.00", "")</p>
-                    <p>Matkakohde: @matkakohde.kohdenimi</p>
+                    <div style="font-style: italic">@matka.alkupvm.ToString().Replace("0.00.00", "") - @matka.loppupvm.ToString().Replace("0.00.00", "")</div>
+                    @*<p>Tarinan nro: @tarina.idtarina.ToString()</p>*@
+                    <p> @matkakohde.kohdenimi</p>
                     <p>@tarina.teksti</p>
+                    <p>Tarina kirjoitettu @tarina.pvm.ToString().Replace("0.00.00", "")</p>
                 </div>
 
 

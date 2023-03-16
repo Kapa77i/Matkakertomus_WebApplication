@@ -35,21 +35,21 @@ namespace ProjectTest
             Assert.Equal("http://localhost/", navigationManager.Uri);
 
 
-            //var comp = RenderComponent<Login>();
-            //var emailInput = comp.Find("#email");
-            //var passwordInput = comp.Find("#password");
-            //var submitButton = comp.Find("button[type='submit']");
+            var comp = RenderComponent<Login>();
+            var emailInput = comp.Find("#email");
+            var passwordInput = comp.Find("#password");
+            var submitButton = comp.Find("button[type='submit']");
 
 
-            //// Act
-            //emailInput.Input("user@example.com");
-            //passwordInput.Input("password");
-            //submitButton.Click();
+            // Act
+            emailInput.Change("sebastian@halonen.fi");
+            passwordInput.Change("12345");
+            submitButton.Click();
 
-            //// Wait for the login to complete
+            // Wait for the login to complete
 
-            //// Assert
-            //Assert.Equal(loginState.isLoggedIn.Equals(true), loginState.isLoggedIn.Equals(true));
+            // Assert
+            Assert.Equal(loginState.isLoggedIn.Equals(true), loginState.isLoggedIn.Equals(true));
 
 
         }

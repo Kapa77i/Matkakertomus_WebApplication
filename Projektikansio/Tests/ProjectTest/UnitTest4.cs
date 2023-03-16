@@ -1,44 +1,48 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Collections;
-using Assert = Xunit.Assert; // Tarkentaa, että käytetään XUnit Assertia
+﻿using Bunit;
+using FrontEnd.Pages;
 
 namespace ProjectTest
 {
-    [TestClass]
     public class UserEditTest : TestContext
     {
-        public override IDictionary Properties => throw new NotImplementedException();
-
-        public override void AddResultFile(string fileName)
-        {
-            throw new NotImplementedException();
-        }
-
         [Fact]
-        public void TestMethod1()
+        public void EditUser()
         {
-            bool result = true;
-            Assert.True(result);
-        }
 
-        public override void Write(string? message)
-        {
-            throw new NotImplementedException();
-        }
 
-        public override void Write(string format, params object?[] args)
-        {
-            throw new NotImplementedException();
-        }
+            var component = RenderComponent<User>();
 
-        public override void WriteLine(string? message)
-        {
-            throw new NotImplementedException();
-        }
+            // Act
+            var etunimi = component.Find("#etunimi");
+            etunimi.Change("Hello, world!");
 
-        public override void WriteLine(string format, params object?[] args)
-        {
-            throw new NotImplementedException();
+            var sukunimi = component.Find("#sukunimi");
+            sukunimi.Change("Hello, world!");
+
+            var nimimerkki = component.Find("#nimimerkki");
+            nimimerkki.Change("Hello, world!");
+
+            var paikkakunta = component.Find("#paikkakunta");
+            paikkakunta.Change("Hello, world!");
+
+            var esittely = component.Find("#esittely");
+            esittely.Change("Hello, world!");
+
+            var sahkoposti = component.Find("#sähköposti");
+            sahkoposti.Change("Hello, world!");
+
+            var salasana = component.Find("#salasana");
+            salasana.Change("Hello, world!");
+
+            // Assert
+            Assert.Equal("Hello, world!", etunimi.GetAttribute("value"));
+            Assert.Equal("Hello, world!", sukunimi.GetAttribute("value"));
+            Assert.Equal("Hello, world!", nimimerkki.GetAttribute("value"));
+            Assert.Equal("Hello, world!", paikkakunta.GetAttribute("value"));
+            Assert.Equal("Hello, world!", esittely.GetAttribute("value"));
+            Assert.Equal("Hello, world!", sahkoposti.GetAttribute("value"));
+            Assert.Equal("Hello, world!", salasana.GetAttribute("value"));
+
         }
     }
 }

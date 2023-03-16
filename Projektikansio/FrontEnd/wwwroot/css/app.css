@@ -198,14 +198,21 @@ p, a, li, th, td, label {
 }
 
 a {
-    color: #a8dadc !important;
+    color: #a8dadc;
     text-decoration: none;
     text-transform: uppercase;
 }
+ 
 
 a, .btn-link {
     color: #0071c1;
 }
+
+
+a:hover{
+    color:chartreuse !important;
+}
+
 
 
 h1:focus {
@@ -289,9 +296,13 @@ hr.rounded {
 .flex-c {
     display: flex;
     flex-flow: row wrap;
+
+
    /* justify-content: space-evenly;*/
     
 }
+
+
     .flex-c > div {
         width: 31%;
         margin: 5px;
@@ -316,9 +327,7 @@ hr.rounded {
         line-height: 20px;
     }
 
-    .radioButton{
-        font-size: 55px;
-    }
+
 
 /*//Sivújen responsiivisuus:*/
 @media (max-width: 900px) {

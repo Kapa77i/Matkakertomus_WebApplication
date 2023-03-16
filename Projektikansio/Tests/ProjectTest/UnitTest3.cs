@@ -5,7 +5,7 @@ using Assert = Xunit.Assert; // Tarkentaa, että käytetään XUnit Assertia
 namespace ProjectTest
 {
     [TestClass]
-    public class FuckYouTest : TestContext
+    public class UserPagesTest : TestContext
     {
         public override IDictionary Properties => throw new NotImplementedException();
 

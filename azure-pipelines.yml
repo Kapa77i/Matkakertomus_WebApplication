@@ -30,7 +30,7 @@ steps:
 
 - task: VSTest@2
   inputs:
- testSelector: 'testAssemblies'
+    testSelector: 'testAssemblies'
     testAssemblyVer2: |
       **\*ProjectTest.dll
       !**\*TestAdapter.dll

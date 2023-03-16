@@ -1,5 +1,7 @@
 ﻿using Bunit;
 using FrontEnd.Pages;
+using Microsoft.Extensions.DependencyInjection;
+using SharedLib;
 
 namespace ProjectTest
 {
@@ -8,6 +10,16 @@ namespace ProjectTest
         [Fact]
         public void EditUser()
         {
+
+            Services.AddSingleton<LoginState>();
+            var loginState = Services.GetRequiredService<LoginState>();
+            matkaajaDTO user = new matkaajaDTO();
+            user.email = "keijo.kuosmanen@savonia.fi";
+            user.password = "Salasana12345";
+            loginState.SetLogin(true, user);
+
+            Console.WriteLine("Helevetti on jäässä, ennenkuin Savoniasta saa opetusta.");
+
             var component = RenderComponent<User>();
 
             var etunimi = component.Find("#etunimi");

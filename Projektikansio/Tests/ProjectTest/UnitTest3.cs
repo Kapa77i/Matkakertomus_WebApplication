@@ -10,17 +10,13 @@ namespace ProjectTest
     [TestClass]
     public class UserPagesTest : Bunit.TestContext
     {
-
-
-
-
         [TestMethod]
         public void TestUsefulnessOfCourse()
         {
             Random random = new Random();
             bool vastaus = random.Next(2) == 0;
 
-            Console.WriteLine("Tämä kurssi on hyödyllinen: " + vastaus);
+            Console.WriteLine(".net on kivaa: " + vastaus);
 
             Assert.False(true);
         }
@@ -35,7 +31,7 @@ namespace ProjectTest
             user.password = "12345";
             loginState.SetLogin(true, user);
 
-            Console.WriteLine("Helevetti on jäässä, ennenkuin Savoniasta saa opetusta.");
+
 
             var component = RenderComponent<User>();
             var etunimi = component.Find("#etunimi");
@@ -54,7 +50,6 @@ namespace ProjectTest
             Assert.Equal("pertti@erareika.com", sahkoposti.GetAttribute("value"));
             Assert.Equal("12345", salasana.GetAttribute("value"));
 
-            Console.WriteLine("Savonia on kyllä syvältä perseestä");
 
         }
 

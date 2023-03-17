@@ -18,7 +18,7 @@ namespace ProjectTest
             user.password = "Salasana12345";
             loginState.SetLogin(true, user);
 
-            Console.WriteLine("Helevetti on jäässä, ennenkuin Savoniasta saa opetusta.");
+
 
             var component = RenderComponent<User>();
 
@@ -45,7 +45,7 @@ namespace ProjectTest
             Assert.Equal("Hello, world!", sahkoposti.GetAttribute("value"));
             Assert.Equal("Hello, world!", salasana.GetAttribute("value"));
 
-            Console.WriteLine("Savonia on kyllä syvältä perseestä");
+
             Assert.True(true);
         }
     }

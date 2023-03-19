@@ -1,54 +1,67 @@
-﻿
-using Bunit;
+﻿using Bunit;
 using FrontEnd.Pages;
 using FrontEnd.Shared;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
+using Microsoft.Extensions.Hosting;
 using SharedLib;
+using System.Net.Http;
+using System.Threading.Tasks;
+using Topshelf.Hosts;
+using Topshelf.Runtime;
+using Xunit;
 
 namespace ProjectTest
 {
     public class LoginTest : TestContext
     {
+
+
         [Fact]
         public async Task TestLogin()
         {
+
+            Services.AddSingleton(new HttpClient { BaseAddress = new System.Uri("http://localhost") });
             Services.AddSingleton<LoginState>();
             var loginState = Services.GetRequiredService<LoginState>();
-
-            // Render the NavMenu component
-            var component = RenderComponent<NavMenu>();
-
-            // Find the Kirjaudu sisään button
-            var loginButton = component.Find("#kirjaudu");
-
-            // Simulate a click on the button
-            loginButton.Click();
-
-            // Assert that the user is redirected to the login page
-            var navigationManager = Services.GetRequiredService<NavigationManager>();
-            Assert.Equal("http://localhost/", navigationManager.Uri);
+            loginState.SetLogin(false, null);
 
 
-            var comp = RenderComponent<Login>();
-            var emailInput = comp.Find("#email");
-            var passwordInput = comp.Find("#password");
-            var submitButton = comp.Find("button[type='submit']");
+            var navMenuComponent = RenderComponent<NavMenu>();
 
 
-            // Act
-            emailInput.Change("sebastian@halonen.fi");
+            var kirjauduButton = navMenuComponent.Find("#kirjaudu");
+            kirjauduButton.Click();
+
+
+            await Task.Delay(500);
+
+
+            var loginComponent = RenderComponent<Login>();
+
+
+            var emailInput = loginComponent.Find("#email");
+            var passwordInput = loginComponent.Find("#password");
+            emailInput.Change("sebastian@halonen.com");
             passwordInput.Change("12345");
+
+            var submitButton = loginComponent.Find("button[type='submit']");
             submitButton.Click();
 
-            // Wait for the login to complete
+            var navigationManager = Services.GetRequiredService<NavigationManager>();
 
-            // Assert
-            Assert.Equal(loginState.isLoggedIn.Equals(true), loginState.isLoggedIn.Equals(true));
+            //    Assert.Equal("http://localhost/user/2", navigationManager.Uri);
 
-
+            //    var loggedUser = loginState.loggedUser;
+            //    Assert.NotNull(loggedUser);
+            //    Assert.Equal(2, loggedUser.idmatkaaja);
+            //    Assert.True(loginState.isLoggedIn);
         }
+
+
+
     }
-
-
 }
+

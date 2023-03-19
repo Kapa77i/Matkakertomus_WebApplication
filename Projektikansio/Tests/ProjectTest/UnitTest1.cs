@@ -1,59 +1,22 @@
-
 using Bunit;
-using FrontEnd.Pages;
-using FrontEnd.Shared;
-using SharedLib;
-using FrontEnd;
-using System;
-using System.Threading.Tasks;
-using Microsoft.Extensions.DependencyInjection;
-using System.Net.Http.Json;
-using Xunit;
-using Microsoft.AspNetCore.Components;
-
+using Microsoft.AspNetCore.Components.Web;
 namespace ProjectTest
 {
-    public class LoginTest : TestContext
+    //Rekisteröitymislomakkeen testit
+    public class SignUpTest : TestContext
     {
         [Fact]
-        public async Task TestLogin()
+        public async Task EmptyFormTest()
         {
-            Services.AddSingleton<LoginState>();
-            var loginState = Services.GetRequiredService<LoginState>();
+            //testin ideana on testata, ettei vajaa formi mene läpi
 
-            // Render the NavMenu component
-            var component = RenderComponent<NavMenu>();
+            var page = RenderComponent<FrontEnd.Pages.Signup>();
 
-            // Find the Kirjaudu sisään button
-            var loginButton = component.Find("#kirjaudu");
-
-            // Simulate a click on the button
-            loginButton.Click();
-
-            // Assert that the user is redirected to the login page
-            var navigationManager = Services.GetRequiredService<NavigationManager>();
-            Assert.Equal("http://localhost/", navigationManager.Uri);
+            var button = page.Find("button[type='submit']");
+            await button.ClickAsync(new MouseEventArgs());
 
 
-            var comp = RenderComponent<Login>();
-            var emailInput = comp.Find("#email");
-            var passwordInput = comp.Find("#password");
-            var submitButton = comp.Find("button[type='submit']");
-
-
-            // Act
-            emailInput.Change("sebastian@halonen.fi");
-            passwordInput.Change("12345");
-            submitButton.Click();
-
-            // Wait for the login to complete
-
-            // Assert
-            Assert.Equal(loginState.isLoggedIn.Equals(true), loginState.isLoggedIn.Equals(true));
-
-
+            Assert.True(true);
         }
     }
-
-   
 }

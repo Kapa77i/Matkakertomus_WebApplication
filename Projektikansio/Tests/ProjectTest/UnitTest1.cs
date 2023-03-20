@@ -7,7 +7,7 @@ namespace ProjectTest
         [Fact]
         public async void SignInExists()
         {
-            //Tarkistetaan että rekisteröitymissivu on kunnossa, ja rekistreöiryminen on mahdollista.
+            //Tarkistetaan että rekisteröitymissivu on kunnossa, ja että rekistreöiryminen on mahdollista.
             var page = RenderComponent<FrontEnd.Pages.Signup>();
 
             Checkpoint1(page);

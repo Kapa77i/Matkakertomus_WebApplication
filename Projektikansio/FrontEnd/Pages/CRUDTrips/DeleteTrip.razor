@@ -54,6 +54,11 @@
             </EditForm>
         </div>
     }
+    @if (r == 1)
+    {@*matkaa ei poisteta, koska se sisälsi tarinan*@
+        <br />
+        <div style="text-align:center"><h3>Matka sisältää tarinan.<br />Matkaa ei voi poistaa.</h3></div>
+    }
 }
 else
 {
@@ -64,6 +69,7 @@ else
 @code {
     bool isSubmitting;
     SharedLib.matkaDTO? deletetrip = new SharedLib.matkaDTO();
+    private int? r { get; set; }
 
     [Parameter]
     public long? IdMatka { get; set; }
@@ -82,7 +88,16 @@ else
             isSubmitting = true;
             var result = await Http.DeleteAsync($"api/Matkas/{IdMatka}"); //VOIKO POISTAA VAIKKA ON TARINOITA, VAI PITÄÄKÖ TARINAT POISTAA ENSIN?
 
-            NavigationManager.NavigateTo($"/trips");
+            if (result.StatusCode == System.Net.HttpStatusCode.BadRequest) //editoijalle viesti, että ei voitu poistaa tarinan takia
+            {
+                r = 1;
+            }
+            else
+            {
+                //saako tähän väliin pyöritettyä pyörää?
+                NavigationManager.NavigateTo($"/trips");
+            }
+            
         }
         catch(Exception e){
             Console.WriteLine(e.Message);

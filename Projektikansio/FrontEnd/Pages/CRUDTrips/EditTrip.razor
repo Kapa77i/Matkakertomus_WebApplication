@@ -54,6 +54,11 @@
                     </EditForm>
                 </div>
     }
+    @if (r == 1)
+    {@*Jos r = 1, se tarkoittaa ettei matkaa muokattu, koska se sisälsi tarinan*@
+        <br />
+        <div style="text-align:center"><h3>Matka sisältää tarinan.<br />Matkaa ei voi muokata.</h3></div>
+    }
 
 }
 else{
@@ -68,6 +73,7 @@ else{
 
     bool isSubmitting;
     SharedLib.matkaDTO? editTrip; 
+    private int? r { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
@@ -88,7 +94,16 @@ else{
             isSubmitting = true;
             var result = await Http.PutAsJsonAsync($"api/Matkas/{IdMatka}", editTrip);
 
-            NavigationManager.NavigateTo($"/trips");
+            if (result.StatusCode == System.Net.HttpStatusCode.NoContent) //editoijalle viesti, että ei voitu muokata tarinan takia
+            {
+                r = 1;
+            }
+            else
+            {
+                //saako tähän väliin pyöritettyä pyörää?
+                NavigationManager.NavigateTo($"/trips");
+            }
+            
         }
         catch(Exception e){
             Console.WriteLine(e.Message);

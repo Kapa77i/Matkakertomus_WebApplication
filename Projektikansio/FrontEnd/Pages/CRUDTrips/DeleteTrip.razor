@@ -24,8 +24,9 @@
                 <ValidationSummary />
                 <div>
                     <label>
-                        Matkaaja(t)
-                        <InputNumber class="form-control" id="matkaaja" disabled @bind-Value="deletetrip.idmatkaaja" />
+                        Matkaaja
+                        <InputNumber class="form-control" id="matkaaja" disabled @bind-Value="deletetrip.idmatkaaja" /><br />
+                        <InputText class="form-control" id="etunimi" disabled @bind-Value="loginState.loggedUser.etunimi" />
                     </label>
                 </div>
                 <div>

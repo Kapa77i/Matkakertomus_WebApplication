@@ -90,19 +90,19 @@ namespace MyApi.Controllers
         // POST: api/Tarinas
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Tarina>> PostTarina(Tarina tarina)
+        public async Task<ActionResult<tarinaDTO>> PostTarina(tarinaDTO tarina)
         {
-            /*Tarina t = new Tarina();
+            Tarina t = new Tarina();
             t.Idtarina = tarina.idtarina;
             t.Idmatka = tarina.idmatka;
             t.Idmatkakohde = tarina.idmatkakohde;
             t.Teksti = tarina.teksti;
-            t.Pvm = tarina.pvm;*/
+            t.Pvm = tarina.pvm;
 
-            _context.Tarinas.Add(tarina);
+            _context.Tarinas.Add(t);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetTarina", new { id = tarina.Idtarina }, tarina);
+            return CreatedAtAction("GetTarina", new { id = t.Idtarina }, t.toTarinaDTO());
         }
 
         // DELETE: api/Tarinas/5

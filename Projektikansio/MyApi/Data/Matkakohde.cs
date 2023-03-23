@@ -35,5 +35,5 @@ public partial class Matkakohde
 
     public string? Kuva { get; set; }
 
-    public virtual ICollection<Tarina> Tarinas { get; } = new List<Tarina>();
+    public virtual ICollection<Tarina>? Tarinas { get; } = new List<Tarina>();
 }

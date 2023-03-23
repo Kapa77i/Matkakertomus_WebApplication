@@ -59,12 +59,21 @@ namespace MyApi.Controllers
         // PUT: api/Tarinas/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutTarina(long id, Tarina tarina)
+        public async Task<ActionResult<tarinaDTO>> PutTarina(long id, Tarina tarina)
         {
-            if (id != tarina.Idtarina)
+           /* Tarina? t = await _context.Tarinas.FindAsync(id);
+            if (t == null) return NotFound();*/
+
+            if (tarina == null) return BadRequest();
+            if (id != tarina.Idtarina) return BadRequest();
+           /* else
             {
-                return BadRequest();
-            }
+                t.Idtarina = tarina.idtarina;
+                t.Idmatka = tarina.idmatka;
+                t.Idmatkakohde = tarina.idmatkakohde;
+                t.Pvm = tarina.pvm;
+                t.Teksti = tarina.teksti;
+            }*/
 
             _context.Entry(tarina).State = EntityState.Modified;
 
@@ -90,19 +99,19 @@ namespace MyApi.Controllers
         // POST: api/Tarinas
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<tarinaDTO>> PostTarina(tarinaDTO tarina)
+        public async Task<ActionResult<tarinaDTO>> PostTarina(Tarina tarina)
         {
-            Tarina t = new Tarina();
+            /*Tarina t = new Tarina();
             t.Idtarina = tarina.idtarina;
             t.Idmatka = tarina.idmatka;
             t.Idmatkakohde = tarina.idmatkakohde;
             t.Teksti = tarina.teksti;
-            t.Pvm = tarina.pvm;
+            t.Pvm = tarina.pvm;*/
 
-            _context.Tarinas.Add(t);
+            _context.Tarinas.Add(tarina);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetTarina", new { id = t.Idtarina }, t.toTarinaDTO());
+            return CreatedAtAction("GetTarina", new { id = tarina.Idtarina }, tarina.toTarinaDTO());
         }
 
         // DELETE: api/Tarinas/5

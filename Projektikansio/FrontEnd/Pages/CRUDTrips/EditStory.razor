@@ -27,14 +27,14 @@
                         <div>
                             <label>
                                 Matka
-                                <InputNumber class="form-control" id="idmatka" disabled @bind-Value="newstory.idmatka" />
+                                <InputNumber class="form-control" id="idmatka" disabled @bind-Value="editstory.idmatka" />
                             </label>
                         </div>
                         <div>
                             <label>
                                 Matkakohde  @*inputselect -> Matkakohteiden nimet ja kuvat?
                                 <InputNumber class="form-control" id="idmatkakohde" @bind-Value="newstory.idmatkakohde" />*@
-                                <InputSelect @bind-Value="newstory.idmatkakohde">
+                                <InputSelect @bind-Value="editstory.idmatkakohde">
                                     @foreach(var l in locations){
                                         <option value="@l.idmatkakohde">@l.kohdenimi</option>
                                     }   
@@ -44,13 +44,13 @@
                         <div>
                             <label>
                                 Pvm
-                                <InputDate class="form-control" id="pvm" @bind-Value="newstory.pvm" />
+                                <InputDate class="form-control" id="pvm" @bind-Value="editstory.pvm" />
                             </label>
                         </div>
                         <div>
                             <label>
                                 Teksti
-                                <InputTextArea class="form-control" id="teksti" @bind-Value="newstory.teksti" />
+                                <InputTextArea class="form-control" id="teksti" @bind-Value="editstory.teksti" />
                             </label>
                         </div>
                         <button type="submit" class="btn btn-primary" disabled="@isSubmitting">Muokkaa</button>

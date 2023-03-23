@@ -72,6 +72,7 @@ else
     {
         matka = await Http.GetFromJsonAsync<SharedLib.matkaDTO>($"api/Matkas/{IdMatka}");
         locations = await Http.GetFromJsonAsync<List<SharedLib.matkakohdeDTO>>($"api/Matkakohdes");
+        
 
 
         newstory.idmatka = matka.idmatka;
@@ -86,6 +87,7 @@ else
             if(newstory.idmatkakohde == 0){ //jos matkakohdetta ei valittu, otetaan ensimmäinen
                 newstory.idmatkakohde = 1;
             }
+           
             // newstory.Matkakohde = locations.Where(a => a.idmatkakohde == newstory.idmatkakohde).FirstOrDefault();
             // newstory.Matkak = matka;
             // newstory.idtarina = 0;
@@ -96,6 +98,7 @@ else
             //EI TOIMI VIELÄ: SQLite Error 19: 'UNIQUE constraint failed: matkaaja.idmatkaaja'.
             //Jos kaikki tiedot jättää tyhjäksi, että id:t luodaan, niin menee perille combolla tarinaDTO ja Tarina -> menee perille swagassa
             //Matkakohteita ei voi poistaa, koska luodaan automaattisesti joku tarina, jolla idt ja pvm?? -> selvitä ensin lisäyssotku, tai siirry suoraan poistoon
+
 
             //Ohjataan omalle matkasivulle
             NavigationManager.NavigateTo($"/trips");

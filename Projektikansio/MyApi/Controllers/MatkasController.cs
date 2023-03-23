@@ -83,7 +83,7 @@ namespace MyApi.Controllers
                 }
             }
 
-            return NoContent();
+            return Ok();
         }
 
         // POST: api/Matkas

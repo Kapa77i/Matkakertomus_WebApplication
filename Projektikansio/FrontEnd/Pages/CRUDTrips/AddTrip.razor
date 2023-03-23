@@ -11,8 +11,8 @@
 
 
 
-    @*Matkojen lisäysformi (ota huomioon yksityinen/julkinen sekä mahdollinen ryhmämatka?*@
-    @if (loginState.isLoggedIn) @*kuka tahansa ei voi lisätä matkoja, vaan pitää olla kirjautunut käyttäjä*@
+@*Matkojen lisäysformi: kuka tahansa ei voi lisätä matkoja, vaan pitää olla kirjautunut käyttäjä*@
+    @if (loginState.isLoggedIn) 
     {
     <h1 class="h1otsikot">Lisää matka</h1>
         <a href="/trips">Omat matkat</a>
@@ -23,7 +23,7 @@
                 <ValidationSummary />
                 <div>
                     <label>
-                       Matkaaja(t) @*Piilota tai etsi tapa näyttää matkaajan nimi, ota huomioon useamman matkaajan lisääminen?*@
+                       Matkaaja 
                        <InputNumber class="form-control" id="idmatkaaja" disabled @bind-Value="loginState.loggedUser.idmatkaaja" /><br/>
                        <InputText class="form-control" id="etunimi" disabled @bind-Value="matkaaja.etunimi"/>  
                     </label>
@@ -44,11 +44,11 @@
                 </div>
             <br />
                 <div>
-                <label style="font-size: 18px;">
+                    <label style="font-size: 18px;">
                         Yksityisyys
                         <InputRadioGroup class="form-control" id="yksityinen" @bind-Value="newtrip.yksityinen" ><br/>
-                            <InputRadio Value="0"/>Yksityinen <br/>
-                            <InputRadio Value="1"/>Julkinen
+                            <InputRadio id="0" Value="0" />Yksityinen <br/>
+                            <InputRadio id="1" Value="1" />Julkinen
                         </InputRadioGroup>
                     </label>
                 </div>
@@ -82,6 +82,8 @@
         try{
             newtrip.idmatkaaja = matkaaja.idmatkaaja;
             isSubmitting = true;
+            if (newtrip.yksityinen != 0 && newtrip.yksityinen != 1) newtrip.yksityinen = 0; //jos unohtui valita matkan yksityisyys, niin se on yksityinen
+
             await Http.PostAsJsonAsync($"api/Matkas", newtrip);
 
             //Ohjataan omalle matkasivulle

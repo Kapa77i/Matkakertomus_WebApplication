@@ -26,8 +26,8 @@
             </div>
             <div>
                 <label>
-                    Matkakohde  @*Tähän inputselect? -> Matkakohteiden nimet ja kuvat?
-                <InputNumber class="form-control" id="idmatkakohde" @bind-Value="newstory.idmatkakohde" />*@
+                    Matkakohde  @*inputselect -> Matkakohteiden nimet ja kuvat?
+                    <InputNumber class="form-control" id="idmatkakohde" @bind-Value="newstory.idmatkakohde" />*@
                     <InputSelect @bind-Value="newstory.idmatkakohde">
                         @foreach(var l in locations){
                             <option value="@l.idmatkakohde">@l.kohdenimi</option>

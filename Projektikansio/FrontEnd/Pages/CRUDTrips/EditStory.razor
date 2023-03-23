@@ -16,9 +16,10 @@
 @if (loginState.isLoggedIn) { 
 
 
-    @if (editstory != null)
-    {@*MATKAA EI VOI MUOKATA, JOS EI OLE OMA*@
+    @if (editstory != null && matka.idmatkaaja == loginState.loggedUser.idmatkaaja)
+    {@*TARINAA EI VOI MUOKATA, JOS EI OLE OMA MATKA*@
                 <h3>Muokataan tarinaa @editstory.idtarina</h3>
+
                 <div style="text-align:center">
                     <EditForm Model="@editstory" OnValidSubmit="@EditStories">
                         <DataAnnotationsValidator />

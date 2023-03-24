@@ -18,44 +18,44 @@
 
     @if (editstory != null && matka.idmatkaaja == loginState.loggedUser.idmatkaaja)
     {@*TARINAA EI VOI MUOKATA, JOS EI OLE OMA MATKA*@
-                <h3>Muokataan tarinaa @editstory.idtarina</h3>
+        <h3>Muokataan tarinaa @editstory.idtarina</h3>
 
-                <div style="text-align:center">
-                    <EditForm Model="@editstory" OnValidSubmit="@EditStories">
-                        <DataAnnotationsValidator />
-                        <ValidationSummary />
-                        <div>
-                            <label>
-                                Matka
-                                <InputNumber class="form-control" id="idmatka" disabled @bind-Value="editstory.idmatka" />
-                            </label>
-                        </div>
-                        <div>
-                            <label>
-                                Matkakohde  @*inputselect -> Matkakohteiden nimet ja kuvat?
-                                <InputNumber class="form-control" id="idmatkakohde" @bind-Value="newstory.idmatkakohde" />*@
-                                <InputSelect @bind-Value="editstory.idmatkakohde">
-                                    @foreach(var l in locations){
-                                        <option value="@l.idmatkakohde">@l.kohdenimi</option>
-                                    }   
-                                </InputSelect>
-                            </label>
-                        </div>
-                        <div>
-                            <label>
-                                Pvm
-                                <InputDate class="form-control" id="pvm" @bind-Value="editstory.pvm" />
-                            </label>
-                        </div>
-                        <div>
-                            <label>
-                                Teksti
-                                <InputTextArea class="form-control" id="teksti" @bind-Value="editstory.teksti" />
-                            </label>
-                        </div>
-                        <button type="submit" class="btn btn-primary" disabled="@isSubmitting">Muokkaa</button>
-                    </EditForm>
-                </div>
+        <div style="text-align:center">
+           <EditForm Model="@editstory" OnValidSubmit="@EditStories">
+              <DataAnnotationsValidator />
+              <ValidationSummary />
+                 <div>
+                    <label>
+                        Matka
+                        <InputNumber class="form-control" id="idmatka" disabled @bind-Value="editstory.idmatka" />
+                    </label>
+                 </div>
+                 <div>
+                     <label>
+                         Matkakohde  @*inputselect -> Matkakohteiden nimet ja kuvat?
+                         <InputNumber class="form-control" id="idmatkakohde" @bind-Value="newstory.idmatkakohde" />*@
+                         <InputSelect @bind-Value="editstory.idmatkakohde">
+                             @foreach(var l in locations){
+                                 <option value="@l.idmatkakohde">@l.kohdenimi</option>
+                             }   
+                         </InputSelect>
+                     </label>
+                 </div>
+                 <div>
+                     <label>
+                         Pvm
+                         <InputDate class="form-control" id="pvm" @bind-Value="editstory.pvm" />
+                     </label>
+                 </div>
+                 <div>
+                     <label>
+                         Teksti
+                         <InputTextArea class="form-control" id="teksti" @bind-Value="editstory.teksti" />
+                     </label>
+                 </div>
+                 <button type="submit" class="btn btn-primary" disabled="@isSubmitting">Muokkaa</button>
+           </EditForm>
+        </div>
     }
 
 }

@@ -9,13 +9,13 @@
 @inject HttpClient Http
 @inject SharedLib.LoginState loginState;
 
-<h3>Muokkaa matkaa</h3>
 
-<a href="/trips">Omat matkat</a>
-@if (loginState.isLoggedIn) { 
+@if (loginState.isLoggedIn) {
 
+    <h3>Muokkaa matkaa</h3>
 
-    @if (editTrip != null)
+    <a href="/trips">Omat matkat</a>
+    @if (editTrip != null && editTrip.idmatkaaja == loginState.loggedUser.idmatkaaja)
     {@*MATKAA EI VOI MUOKATA, JOS EI OLE OMA*@
                 <h3>Muokataan matkaa @editTrip.idmatka</h3>
                 <div style="text-align:center">

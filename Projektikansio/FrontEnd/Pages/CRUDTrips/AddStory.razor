@@ -72,7 +72,7 @@ else
     {
         matka = await Http.GetFromJsonAsync<SharedLib.matkaDTO>($"api/Matkas/{IdMatka}");
         locations = await Http.GetFromJsonAsync<List<SharedLib.matkakohdeDTO>>($"api/Matkakohdes");
-        
+
 
 
         newstory.idmatka = matka.idmatka;
@@ -89,6 +89,7 @@ else
             }
 
             isSubmitting = true;
+            Console.WriteLine(newstory);
             var result = await Http.PostAsJsonAsync($"api/Tarinas", newstory);
             Console.WriteLine(result);
             //EI TOIMI VIELÄ: SQLite Error 19: 'UNIQUE constraint failed: matkaaja.idmatkaaja'.

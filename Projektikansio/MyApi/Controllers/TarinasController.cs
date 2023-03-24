@@ -46,7 +46,8 @@ namespace MyApi.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Tarina>> GetTarina(long id)
         {
-            var tarina = await _context.Tarinas.Include(e => e.IdmatkaNavigation).FirstOrDefaultAsync(e => e.Idtarina == id);
+            //var tarina = await _context.Tarinas.Include(e => e.IdmatkaNavigation).FirstOrDefaultAsync(e => e.Idtarina == id);
+            var tarina = await _context.Tarinas.FindAsync(id);
 
             if (tarina == null)
             {

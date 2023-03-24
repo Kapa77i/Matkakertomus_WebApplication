@@ -89,13 +89,9 @@ else
             }
 
             isSubmitting = true;
-            Console.WriteLine(newstory);
             var result = await Http.PostAsJsonAsync($"api/Tarinas", newstory);
             Console.WriteLine(result);
-            //EI TOIMI VIELÄ: SQLite Error 19: 'UNIQUE constraint failed: matkaaja.idmatkaaja'.
-            //Jos kaikki tiedot jättää tyhjäksi, että id:t luodaan, niin menee perille combolla tarinaDTO ja Tarina -> menee perille swagassa
-                // -> paitsi että, vaikka laittaisi tarinan swagassa jo olemassa olevaan matkaan ja kohteeseen, niin luo täysin uuden matkakohteen, matkaajan ja tarinan
-            //Matkakohteita ei voi poistaa, koska luodaan automaattisesti joku tarina, jolla idt ja pvm?? -> selvitä ensin lisäyssotku, tai siirry suoraan poistoon
+           //Ei toimi elävässä elämässä mutta swaggerissa kyllä
 
 
             //Ohjataan omalle matkasivulle

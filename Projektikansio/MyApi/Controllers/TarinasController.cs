@@ -102,7 +102,11 @@ namespace MyApi.Controllers
         [HttpPost]
         public async Task<ActionResult<tarinaDTO>> PostTarina(Tarina tarina)
         {
-            if (!ModelState.IsValid) return BadRequest();
+            if (!ModelState.IsValid)
+            {
+                Console.WriteLine(ModelState.ToString());
+                return BadRequest();
+            }
 
             Tarina t = new Tarina();
             t.Idtarina = tarina.Idtarina;

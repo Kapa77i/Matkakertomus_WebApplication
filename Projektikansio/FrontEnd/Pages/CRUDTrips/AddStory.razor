@@ -87,16 +87,13 @@ else
             if(newstory.idmatkakohde == 0){ //jos matkakohdetta ei valittu, otetaan ensimmäinen
                 newstory.idmatkakohde = 1;
             }
-           
-            // newstory.Matkakohde = locations.Where(a => a.idmatkakohde == newstory.idmatkakohde).FirstOrDefault();
-            // newstory.Matkak = matka;
-            // newstory.idtarina = 0;
 
             isSubmitting = true;
             var result = await Http.PostAsJsonAsync($"api/Tarinas", newstory);
             Console.WriteLine(result);
             //EI TOIMI VIELÄ: SQLite Error 19: 'UNIQUE constraint failed: matkaaja.idmatkaaja'.
             //Jos kaikki tiedot jättää tyhjäksi, että id:t luodaan, niin menee perille combolla tarinaDTO ja Tarina -> menee perille swagassa
+                // -> paitsi että, vaikka laittaisi tarinan swagassa jo olemassa olevaan matkaan ja kohteeseen, niin luo täysin uuden matkakohteen, matkaajan ja tarinan
             //Matkakohteita ei voi poistaa, koska luodaan automaattisesti joku tarina, jolla idt ja pvm?? -> selvitä ensin lisäyssotku, tai siirry suoraan poistoon
 
 

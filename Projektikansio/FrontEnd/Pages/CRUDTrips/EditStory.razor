@@ -3,18 +3,14 @@
 @using System.Net.Http
 @using System.Net.Http.Json
 @using System.Threading.Tasks
-@using Microsoft.AspNetCore.Components.Forms@*tunnistetaanko editForm tämän avulla?*@
 
 @inject NavigationManager NavigationManager
 @inject ILogger<Index> Logger
 @inject HttpClient Http
 @inject SharedLib.LoginState loginState;
 
-
-
-
-
-@if (loginState.isLoggedIn) {
+@if (loginState.isLoggedIn)
+{
     <h3>Muokkaa tarinaa</h3>
     <a href="/trips">Omat matkat</a>
 
@@ -23,45 +19,47 @@
         <h3>Muokataan tarinaa @editstory.idtarina</h3>
 
         <div style="text-align:center">
-           <EditForm Model="@editstory" OnValidSubmit="@EditStories">
-              <DataAnnotationsValidator />
-              <ValidationSummary />
-                 <div>
+            <EditForm Model="@editstory" OnValidSubmit="@EditStories">
+                <DataAnnotationsValidator />
+                <ValidationSummary />
+                <div>
                     <label>
                         Matka
                         <InputNumber class="form-control" id="idmatka" disabled @bind-Value="editstory.idmatka" />
                     </label>
-                 </div>
-                 <div>
-                     <label>
-                         Matkakohde  @*inputselect -> Matkakohteiden nimet ja kuvat?
-                         <InputNumber class="form-control" id="idmatkakohde" @bind-Value="newstory.idmatkakohde" />*@
-                         <InputSelect @bind-Value="editstory.idmatkakohde">
-                             @foreach(var l in locations){
-                                 <option value="@l.idmatkakohde">@l.kohdenimi</option>
-                             }   
-                         </InputSelect>
-                     </label>
-                 </div>
-                 <div>
-                     <label>
-                         Pvm
-                         <InputDate class="form-control" id="pvm" @bind-Value="editstory.pvm" />
-                     </label>
-                 </div>
-                 <div>
-                     <label>
-                         Teksti
-                         <InputTextArea class="form-control" id="teksti" @bind-Value="editstory.teksti" />
-                     </label>
-                 </div>
-                 <button type="submit" class="btn btn-primary" disabled="@isSubmitting">Muokkaa</button>
-           </EditForm>
+                </div>
+                <div>
+                    <label>
+                        Matkakohde  @*inputselect -> Matkakohteiden nimet ja kuvat?
+                <InputNumber class="form-control" id="idmatkakohde" @bind-Value="newstory.idmatkakohde" />*@
+                        <InputSelect @bind-Value="editstory.idmatkakohde">
+                            @foreach (var l in locations)
+                            {
+                                <option value="@l.idmatkakohde">@l.kohdenimi</option>
+                            }
+                        </InputSelect>
+                    </label>
+                </div>
+                <div>
+                    <label>
+                        Pvm
+                        <InputDate class="form-control" id="pvm" @bind-Value="editstory.pvm" />
+                    </label>
+                </div>
+                <div>
+                    <label>
+                        Teksti
+                        <InputTextArea class="form-control" id="teksti" @bind-Value="editstory.teksti" />
+                    </label>
+                </div>
+                <button type="submit" class="btn btn-primary" disabled="@isSubmitting">Muokkaa</button>
+            </EditForm>
         </div>
     }
 
 }
-else{
+else
+{
     <h2>  <img src="/images/loading.gif" width="150" /></h2>
     <h2>Kirjaudu sisään muokataksesi tarinoita</h2>
 }
@@ -72,7 +70,7 @@ else{
     public long? IdTarina { get; set; }
 
     bool isSubmitting;
-    SharedLib.tarinaDTO? editstory; 
+    SharedLib.tarinaDTO? editstory;
     SharedLib.matkaDTO? matka = new SharedLib.matkaDTO();
     List<SharedLib.matkakohdeDTO>? locations = new List<SharedLib.matkakohdeDTO>();
     List<SharedLib.matkaDTO>? trips = new List<SharedLib.matkaDTO>();
@@ -80,7 +78,7 @@ else{
     protected override async Task OnInitializedAsync()
     {
         editstory = await Http.GetFromJsonAsync<SharedLib.tarinaDTO>($"api/Tarinas/{IdTarina}");
-        trips = await Http.GetFromJsonAsync<List<SharedLib.matkaDTO>>($"api/Matkas");    
+        trips = await Http.GetFromJsonAsync<List<SharedLib.matkaDTO>>($"api/Matkas");
         locations = await Http.GetFromJsonAsync<List<SharedLib.matkakohdeDTO>>($"api/Matkakohdes");
 
         matka = trips.Where(a => a.idmatka == editstory.idmatka).FirstOrDefault();
@@ -88,20 +86,22 @@ else{
         await base.OnInitializedAsync();
     }
 
-    async Task EditStories(){
-        try{
+    async Task EditStories()
+    {
+        try
+        {
 
             isSubmitting = true;
             var result = await Http.PutAsJsonAsync($"api/Tarinas/{IdTarina}", editstory);
 
-           
+
             //saako tähän väliin pyöritettyä pyörää?
             NavigationManager.NavigateTo($"/trips");
         }
-        catch(Exception e){
+        catch (Exception e)
+        {
             Console.WriteLine(e.Message);
         }
-        
+
     }
 }
-

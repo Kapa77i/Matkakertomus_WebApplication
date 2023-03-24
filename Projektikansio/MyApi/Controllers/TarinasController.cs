@@ -116,13 +116,11 @@ namespace MyApi.Controllers
 
         // DELETE: api/Tarinas/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteTarina(long id)
+        public async Task<ActionResult<tarinaDTO>> DeleteTarina(long id)
         {
-            var tarina = await _context.Tarinas.FindAsync(id);
-            if (tarina == null)
-            {
-                return NotFound();
-            }
+            Tarina? tarina = await _context.Tarinas.FindAsync(id);
+            if (tarina == null) return NotFound();
+            
 
             _context.Tarinas.Remove(tarina);
             await _context.SaveChangesAsync();

@@ -7,11 +7,6 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <Content Remove="Pages\CRUDTrips\EditStory.razor" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<None Include="Pages\CRUDTrips\EditStory.razor" />
 		<None Include="wwwroot\images\index.png" />
 	</ItemGroup>
 
@@ -27,14 +22,6 @@
 	<ItemGroup>
 	  <Folder Include="wwwroot\uploadedPictures\" />
 	  <Folder Include="wwwroot\profilePictures\" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <UpToDateCheckInput Remove="Pages\CRUDTrips\EditStory.razor" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <_ContentIncludedByDefault Remove="Pages\CRUDTrips\EditStory.razor" />
 	</ItemGroup>
 
 </Project>

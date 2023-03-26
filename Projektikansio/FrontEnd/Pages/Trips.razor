@@ -34,7 +34,7 @@ else
     <br />
     <h2 class="h2otsikot">Matkat</h2>
 
-    <div class="matkojenLinkit"><a style="padding-right: 15px; " href="/trips/addTrip">Lisää uusi matka</a></div>
+    <div class="matkojenLinkit"><a style="padding-right: 15px; " href="/trips/add/trip">Lisää uusi matka</a></div>
     <br />
     //tarina = tarinas.FirstOrDefault(m => m.idmatka == matka.idmatka);
 
@@ -55,7 +55,7 @@ else
             {
                 <div>@matka.idmatka.ToString()</div>
                 <div>@matka.alkupvm.ToString().Replace("0.00.00", "") - @matka.loppupvm.ToString().Replace("0.00.00", "")</div>
-                <div><a href="trips/edit/@matka.idmatka">Muokkaa</a> // <a href="trips/delete/@matka.idmatka">Poista</a> // <a style="text-align:left" href="/trips/addStory/@matka.idmatka">Lisää matkaan tarina</a></div>
+                <div><a href="trips/edit/@matka.idmatka">Muokkaa</a> // <a href="trips/delete/@matka.idmatka">Poista</a> // <a style="text-align:left" href="/trips/add/story/@matka.idmatka">Lisää matkaan tarina</a></div>
                 
             }
         }
@@ -90,8 +90,8 @@ else
                 <p>@matkakohde.kohdenimi</p>
                 <p>@tarina.teksti</p>
                     <p>Tarina kirjoitettu @tarina.pvm.ToString().Replace("0.00.00", "")</p>
-                <a href="trips/edit/">Muokkaa</a> | 
-                <a href="trips/delete/">Poista</a></div>
+                <a href="trips/edit/story/@tarina.idtarina">Muokkaa</a> | 
+                <a href="trips/delete/story/@tarina.idtarina">Poista</a></div>
 
             }
 

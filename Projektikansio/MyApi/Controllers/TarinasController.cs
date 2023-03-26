@@ -46,7 +46,8 @@ namespace MyApi.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Tarina>> GetTarina(long id)
         {
-            var tarina = await _context.Tarinas.Include(e => e.IdmatkaNavigation).FirstOrDefaultAsync(e => e.Idtarina == id);
+            //var tarina = await _context.Tarinas.Include(e => e.IdmatkaNavigation).FirstOrDefaultAsync(e => e.Idtarina == id);
+            var tarina = await _context.Tarinas.FindAsync(id);
 
             if (tarina == null)
             {
@@ -59,14 +60,23 @@ namespace MyApi.Controllers
         // PUT: api/Tarinas/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutTarina(long id, Tarina tarina)
+        public async Task<ActionResult<tarinaDTO>> PutTarina(long id, Tarina tarina)//tämä pitää olla joko Tarina -Tarina tai tarinaDTO -Tarina että swagger menee läpi
         {
-            if (id != tarina.Idtarina)
+            Tarina? t = await _context.Tarinas.FindAsync(id);
+            if (t == null) return NotFound();
+
+            if (tarina == null) return BadRequest();
+            if (id != tarina.Idtarina) return BadRequest();
+            else
             {
-                return BadRequest();
+                t.Idtarina = tarina.Idtarina;
+                t.Idmatka = tarina.Idmatka;
+                t.Idmatkakohde = tarina.Idmatkakohde;
+                t.Pvm = tarina.Pvm;
+                t.Teksti = tarina.Teksti;
             }
 
-            _context.Entry(tarina).State = EntityState.Modified;
+            _context.Entry(t).State = EntityState.Modified;
 
             try
             {
@@ -90,30 +100,34 @@ namespace MyApi.Controllers
         // POST: api/Tarinas
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Tarina>> PostTarina(Tarina tarina)
+        public async Task<ActionResult<tarinaDTO>> PostTarina(Tarina tarina)
         {
-            /*Tarina t = new Tarina();
-            t.Idtarina = tarina.idtarina;
-            t.Idmatka = tarina.idmatka;
-            t.Idmatkakohde = tarina.idmatkakohde;
-            t.Teksti = tarina.teksti;
-            t.Pvm = tarina.pvm;*/
+            if (!ModelState.IsValid)
+            {
+                Console.WriteLine(ModelState.ToString());
+                return BadRequest();
+            }
 
-            _context.Tarinas.Add(tarina);
+            Tarina t = new Tarina();
+            t.Idtarina = tarina.Idtarina;
+            t.Idmatka = tarina.Idmatka;
+            t.Idmatkakohde = tarina.Idmatkakohde;
+            t.Teksti = tarina.Teksti;
+            t.Pvm = tarina.Pvm;
+
+            _context.Tarinas.Add(t);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetTarina", new { id = tarina.Idtarina }, tarina);
+            return CreatedAtAction("GetTarina", new { id = t.Idtarina }, t.toTarinaDTO());
         }
 
         // DELETE: api/Tarinas/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteTarina(long id)
+        public async Task<ActionResult<tarinaDTO>> DeleteTarina(long id)
         {
-            var tarina = await _context.Tarinas.FindAsync(id);
-            if (tarina == null)
-            {
-                return NotFound();
-            }
+            Tarina? tarina = await _context.Tarinas.FindAsync(id);
+            if (tarina == null) return NotFound();
+            
 
             _context.Tarinas.Remove(tarina);
             await _context.SaveChangesAsync();

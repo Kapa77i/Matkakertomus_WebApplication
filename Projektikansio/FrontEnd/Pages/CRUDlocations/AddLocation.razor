@@ -37,6 +37,11 @@
                     }
                     Kuva<br />
                     @*InputSelect -> anna mahdollisuus valita mikä tahansa kuva mikä löytyy? -> <option value>*@
+                    @* <InputSelect @bind-Value="newlocation.kuva">
+                        foreach(var img in images){
+                        <option value="@newlocation.kuva"><img src="img" /></option>
+                        }
+                    </InputSelect>*@
                     <InputText class="form-control" id="kuva" @bind-Value="newlocation.kuva" />
                 </label>
             </div>
@@ -79,6 +84,17 @@ else {
 
     bool isSubmitting;
     SharedLib.matkakohdeDTO newlocation = new SharedLib.matkakohdeDTO();
+    private List<string>? images = new List<string>();
+
+   /* protected override async Task OnInitializedAsync()
+      {
+          string directory = "\tripPictures";
+         foreach (string img in System.IO.Directory.GetFiles(directory))
+         { //Directory.GetFiles(directory, "*.jpg")
+              images.Add(img);
+         }
+          await base.OnInitializedAsync();
+      }*/
 
     async Task PostLocations(){
 

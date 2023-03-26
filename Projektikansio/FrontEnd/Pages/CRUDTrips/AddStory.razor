@@ -1,4 +1,4 @@
-﻿@page "/trips/addStory/{IdMatka:long}"
+﻿@page "/trips/add/story/{IdMatka:long}"
 
 @using System.Net.Http
 @using System.Net.Http.Json
@@ -26,8 +26,8 @@
             </div>
             <div>
                 <label>
-                    Matkakohde  @*Tähän inputselect? -> Matkakohteiden nimet ja kuvat?
-                <InputNumber class="form-control" id="idmatkakohde" @bind-Value="newstory.idmatkakohde" />*@
+                    Matkakohde  @*inputselect -> Matkakohteiden nimet ja kuvat  <img src="/tripPictures/@matkakohde.kuva" width="250" height="200" />?
+                    <InputNumber class="form-control" id="idmatkakohde" @bind-Value="newstory.idmatkakohde" />*@
                     <InputSelect @bind-Value="newstory.idmatkakohde">
                         @foreach(var l in locations){
                             <option value="@l.idmatkakohde">@l.kohdenimi</option>
@@ -73,6 +73,8 @@ else
         matka = await Http.GetFromJsonAsync<SharedLib.matkaDTO>($"api/Matkas/{IdMatka}");
         locations = await Http.GetFromJsonAsync<List<SharedLib.matkakohdeDTO>>($"api/Matkakohdes");
 
+
+
         newstory.idmatka = matka.idmatka;
         newstory.pvm = matka.alkupvm;
         await base.OnInitializedAsync();
@@ -82,8 +84,15 @@ else
     {
         try
         {
+            if(newstory.idmatkakohde == 0){ //jos matkakohdetta ei valittu, otetaan ensimmäinen
+                newstory.idmatkakohde = 1;
+            }
+
             isSubmitting = true;
-            await Http.PostAsJsonAsync($"api/Tarinas", newstory); //EI TOIMI VIELÄ
+            var result = await Http.PostAsJsonAsync($"api/Tarinas", newstory);
+            Console.WriteLine(result);
+           //Ei toimi elävässä elämässä mutta swaggerissa kyllä
+
 
             //Ohjataan omalle matkasivulle
             NavigationManager.NavigateTo($"/trips");

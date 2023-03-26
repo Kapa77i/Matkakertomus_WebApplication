@@ -51,7 +51,11 @@ namespace MyApi.Controllers
             Matka? m = await _context.Matkas.FindAsync(id);
             if (m == null) return NotFound();
 
-            if(matka == null) return BadRequest();
+            //Sellaista matkaa, johon liittyy joku matkakertomus, ei saa poistaa tai päivittää
+            //Tarina? t = await _context.Tarinas.Where(a => a.Idmatkakohde == id).FirstOrDefaultAsync();
+            //if (t != null) { return NoContent(); }
+
+            if (matka == null) return BadRequest();
             if (id != matka.idmatka) return BadRequest();
             else
             {
@@ -79,7 +83,7 @@ namespace MyApi.Controllers
                 }
             }
 
-            return NoContent();
+            return Ok();
         }
 
         // POST: api/Matkas
@@ -107,7 +111,10 @@ namespace MyApi.Controllers
         {
             Matka? matka = await _context.Matkas.FindAsync(id);
             if (matka == null) return NotFound();
-            
+
+            //Sellaista matkaa, johon liittyy joku matkakertomus, ei saa poistaa tai päivittää
+            //Tarina? t = await _context.Tarinas.Where(a => a.Idmatkakohde == id).FirstOrDefaultAsync();
+            //if (t != null) { return BadRequest(); }
 
             _context.Matkas.Remove(matka);
             await _context.SaveChangesAsync();

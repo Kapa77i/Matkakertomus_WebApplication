@@ -9,13 +9,13 @@
 @inject HttpClient Http
 @inject SharedLib.LoginState loginState;
 
-<h3>Muokkaa matkaa</h3>
 
-<a href="/trips">Omat matkat</a>
-@if (loginState.isLoggedIn) { 
+@if (loginState.isLoggedIn) {
 
+    <h3>Muokkaa matkaa</h3>
 
-    @if (editTrip != null)
+    <a href="/trips">Omat matkat</a>
+    @if (editTrip != null && editTrip.idmatkaaja == loginState.loggedUser.idmatkaaja)
     {@*MATKAA EI VOI MUOKATA, JOS EI OLE OMA*@
                 <h3>Muokataan matkaa @editTrip.idmatka</h3>
                 <div style="text-align:center">
@@ -24,8 +24,9 @@
                         <ValidationSummary />
                         <div>
                             <label>
-                                Matkaaja(t)
-                                <InputNumber class="form-control" id="matkaaja" @bind-Value="editTrip.idmatkaaja" />
+                                Matkaaja
+                                <InputNumber class="form-control" id="matkaaja" disabled @bind-Value="editTrip.idmatkaaja" /><br/>
+                                <InputText class="form-control" id="etunimi" disabled @bind-Value="loginState.loggedUser.etunimi" />
                             </label>
                         </div>
                         <div>
@@ -45,14 +46,19 @@
                                 Yksityisyys
                                 <InputRadioGroup class="form-control" id="yksityinen" @bind-Value="editTrip.yksityinen">
                                     <br />
-                                    <InputRadio Value="0" />Yksityinen
-                                    <InputRadio Value="1" />Julkinen
+                                    <InputRadio id="0" Value="0" />Yksityinen
+                                    <InputRadio id="1" Value="1" />Julkinen
                                 </InputRadioGroup>
                             </label>
                         </div>
                         <button type="submit" class="btn btn-primary" disabled="@isSubmitting">Lisää</button>
                     </EditForm>
                 </div>
+    }
+    @if (r == 1)
+    {@*Jos r = 1, se tarkoittaa ettei matkaa muokattu, koska se sisälsi tarinan*@
+        <br />
+        <div style="text-align:center"><h3>Matka sisältää tarinan.<br />Matkaa ei voi muokata.</h3></div>
     }
 
 }
@@ -68,27 +74,44 @@ else{
 
     bool isSubmitting;
     SharedLib.matkaDTO? editTrip; 
+    private int? r { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
 
         editTrip = await Http.GetFromJsonAsync<SharedLib.matkaDTO>($"api/Matkas/{IdMatka}");
+        if (editTrip.yksityinen == 0){
+            //Haluaisin, että yksityisyyden arvo näytettäisiin matkan tiedoissa sitä muokatessa tai poistettaessa
+        }
+        else{
+        
+        }
+
+    
 
         await base.OnInitializedAsync();
     }
 
 
-    //TARKISTA TOIMIIKO
+    //TÄMÄ SELVITETTY, JÄTIN KOSKA SAMA ONGELMA ADDSTORY PUOLELLA
     /*Jostain syystä matkan muokkaus onnistuu swaggerissä, jos ei ole annettu mitään tietoja (esim matkaajaa) -> 500 FOREIGN KEY CONSTRAINT FAIL 
      * -> Toimii jos virtual matjaaja on tyhjä?? Swaggeristä syötettynä toimii, miksi ei apista?*/
     async Task EditTrips(){
         try{
 
-            //If radiobuttonia ei valittu -> oletus yksityinen
             isSubmitting = true;
             var result = await Http.PutAsJsonAsync($"api/Matkas/{IdMatka}", editTrip);
 
-            NavigationManager.NavigateTo($"/trips");
+            if (result.StatusCode == System.Net.HttpStatusCode.NoContent) //editoijalle viesti, että ei voitu muokata tarinan takia
+            {
+                r = 1; //EI TOIMI VIELÄ (TAI TOIMII LIIAN HYVIN)
+            }
+            else
+            {
+                //saako tähän väliin pyöritettyä pyörää?
+                NavigationManager.NavigateTo($"/trips");
+            }
+            
         }
         catch(Exception e){
             Console.WriteLine(e.Message);

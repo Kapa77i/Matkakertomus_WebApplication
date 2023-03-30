@@ -9,9 +9,6 @@
 @inject HttpClient Http
 @inject SharedLib.LoginState loginState;
 
-@*@Mahdollisuus lisätä kuva? Miten!?!?
-    tee myös vetovalikko vaihtoehdoille*@
-
 @if (loginState.isLoggedIn) { 
 
     @if (location != null)
@@ -33,7 +30,14 @@
                             <div style="text-align:center"><img src="tripPictures/@location.kuva" width="133" height="133" alt="1" /></div> <br />
                         }
                         Kuva
-                        <InputText class="form-control" id="kuva" @bind-Value="location.kuva" />
+                        <InputSelect id="kuva" @bind-Value="location.kuva">
+                            <option>- Valitse kuva -</option>
+                            @foreach (var i in pictures)
+                            {
+                                <option value="@i"><img src="tripPictures/@i" />@i</option>
+                            }
+                        </InputSelect>
+                        @*<InputText class="form-control" id="kuva" @bind-Value="location.kuva" />*@
                     </label>
                 </div>
                 <br/>
@@ -65,7 +69,7 @@
                     </label>
                 </div>
                 <br />
-                <button type="submit" class="btn btn-primary" disabled="@isSubmitting">Muokkaa</button>
+                <button type="submit" class="btn btn-primary" id="EditButton" disabled="@isSubmitting">Muokkaa</button>
             </EditForm>
         </div>
     }
@@ -91,8 +95,9 @@ else
 
     [Parameter]
     public long? Id { get; set; }
-
-
+    //Nämä laitettu käsin, koska dynaaminen kuvien nimien haku tiedostosta ei onnistunut -> PURKKARATKAISU
+    private string[] pictures = { "Bellano.jpg", "Bellano2.jpg", "Fréhel.jpg", "Hollanti.jpg", "Hollanti2.jpg", "img.jpg", "Keukenhof.jpg", "Koli.jpg", "Kööpenhamina.jpg",
+    "Lyypekki.jpg", "Mont-Saint-Michel.jpg", "MualimanNapa2.jpg", "MualimanNapa.jpg", "Oulu.jpg", "Pariisi.jpg", "Pariisi2.jpg", "Uhrikivi.jpg", "Westport.jpg" };
 
     protected override async Task OnInitializedAsync()
     {

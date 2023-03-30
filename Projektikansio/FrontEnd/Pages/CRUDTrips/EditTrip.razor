@@ -44,10 +44,12 @@
                         <div>
                             <label>
                                 Yksityisyys
+                                @if(editTrip.yksityinen == 0){<div>Yksityinen</div>}
+                                else if(editTrip.yksityinen == 1){<div>Julkinen</div>}
                                 <InputRadioGroup class="form-control" id="yksityinen" @bind-Value="editTrip.yksityinen">
                                     <br />
-                                    <InputRadio id="0" Value="0" />Yksityinen
-                                    <InputRadio id="1" Value="1" />Julkinen
+                                    <InputRadio id="0" Value="0"/>Yksityinen@*Value="editTrip.yksityinen=0"*@
+                                    <InputRadio id="1" Value="1"/> Julkinen
                                 </InputRadioGroup>
                             </label>
                         </div>
@@ -78,17 +80,7 @@ else{
 
     protected override async Task OnInitializedAsync()
     {
-
         editTrip = await Http.GetFromJsonAsync<SharedLib.matkaDTO>($"api/Matkas/{IdMatka}");
-        if (editTrip.yksityinen == 0){
-            //Haluaisin, että yksityisyyden arvo näytettäisiin matkan tiedoissa sitä muokatessa tai poistettaessa
-        }
-        else{
-        
-        }
-
-    
-
         await base.OnInitializedAsync();
     }
 
@@ -104,7 +96,7 @@ else{
 
             if (result.StatusCode == System.Net.HttpStatusCode.NoContent) //editoijalle viesti, että ei voitu muokata tarinan takia
             {
-                r = 1; //EI TOIMI VIELÄ (TAI TOIMII LIIAN HYVIN)
+                r = 1; 
             }
             else
             {

@@ -14,7 +14,7 @@
 
 
     @if (deletestory != null && matka.idmatkaaja == loginState.loggedUser.idmatkaaja)
-    {@*TARINAA EI VOI MUOKATA, JOS EI OLE OMA MATKA*@
+    {@*TARINAA EI VOI POISTAA, JOS EI OLE OMA MATKA*@
         <a href="/trips">Omat matkat</a>
         <h2 class="h1otsikot">@deletestory.idtarina</h2>
         <h3 class="h1otsikot">Haluatko varmasti poistaa tarinan?</h3>
@@ -31,8 +31,7 @@
                 </div>
                 <div>
                     <label>
-                        Matkakohde  @*inputselect -> Matkakohteiden nimet ja kuvat?
-                <InputNumber class="form-control" id="idmatkakohde" @bind-Value="newstory.idmatkakohde" />*@
+                        Matkakohde  @*inputselect -> Matkakohteiden nimet ja kuvat?*@
                         <InputSelect disabled @bind-Value="deletestory.idmatkakohde">
                                 <option value="@location.idmatkakohde">@location.kohdenimi</option>
                         </InputSelect>
@@ -90,7 +89,7 @@ else
         try
         {
             isSubmitting = true;
-            var result = await Http.DeleteAsync($"api/Tarinas/{IdTarina}"); //VOIKO POISTAA VAIKKA ON TARINOITA, VAI PITÄÄKÖ TARINAT POISTAA ENSIN?
+            var result = await Http.DeleteAsync($"api/Tarinas/{IdTarina}"); 
  
             //saako tähän väliin pyöritettyä pyörää?
             NavigationManager.NavigateTo($"/trips");

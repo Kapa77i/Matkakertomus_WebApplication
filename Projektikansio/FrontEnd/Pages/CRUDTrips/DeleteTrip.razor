@@ -45,9 +45,14 @@
                     <label>
                         Yksityisyys
                         <InputRadioGroup class="form-control" id="yksityinen" disabled @bind-Value="deletetrip.yksityinen">
-                            <br />
-                            <InputRadio disabled Value="0" />Yksityinen @*Saako tänne arvon alustettua/näytettyä?*@
-                            <InputRadio disabled Value="1" />Julkinen
+                            
+                            @if (deletetrip.yksityinen == 0)
+                            {
+                                <InputRadio disabled Value="0" /> <label>Yksityinen</label>
+                            }
+                            else {
+                                <InputRadio disabled Value="1" /> <label>Julkinen</label>
+                            }
                         </InputRadioGroup>
                     </label>
                 </div>
@@ -87,7 +92,7 @@ else
     private async Task DeleteTrips(){
         try{
             isSubmitting = true;
-            var result = await Http.DeleteAsync($"api/Matkas/{IdMatka}"); //VOIKO POISTAA VAIKKA ON TARINOITA, VAI PITÄÄKÖ TARINAT POISTAA ENSIN?
+            var result = await Http.DeleteAsync($"api/Matkas/{IdMatka}");
 
             if (result.StatusCode == System.Net.HttpStatusCode.BadRequest) //editoijalle viesti, että ei voitu poistaa tarinan takia
             {

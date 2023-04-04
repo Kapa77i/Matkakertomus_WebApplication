@@ -13,7 +13,7 @@ namespace ProjectTest
 {
     public class GroupTrips : TestContext
     {
-        //Tämä facta pittää olla että näkkyyy tuolla test explorelilla <---
+        //Tämä facta pittää olla että näkkyyy tuolla test explorelilla <-- Tiedoksi tyhmälle Kapatille
         [Fact]
         public async Task TestGrouptripsPage()
         {
@@ -28,8 +28,6 @@ namespace ProjectTest
             kirjauduButton.Click();
 
             await Task.Delay(500);
-
-            var loginComponent = RenderComponent<Login>();
 
 
         }

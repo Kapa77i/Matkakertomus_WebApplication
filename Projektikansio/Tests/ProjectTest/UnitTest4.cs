@@ -13,6 +13,7 @@ namespace ProjectTest
 {
     public class GroupTrips : TestContext
     {
+        //Tämä facta pittää olla että näkkyyy tuolla test explorelilla <---
         [Fact]
         public async Task TestGrouptripsPage()
         {
@@ -21,16 +22,12 @@ namespace ProjectTest
             var loginState = Services.GetRequiredService<LoginState>();
             loginState.SetLogin(false, null);
 
-
             var navMenuComponent = RenderComponent<NavMenu>();
-
 
             var kirjauduButton = navMenuComponent.Find("#kirjaudu");
             kirjauduButton.Click();
 
-
             await Task.Delay(500);
-
 
             var loginComponent = RenderComponent<Login>();
 

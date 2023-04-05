@@ -29,7 +29,7 @@
     @if (loginState.isLoggedIn)
     {
 
-        <a href="/locations/add">Lisää matkakohteita</a>
+        <a id="addlink" href="/locations/add">Lisää matkakohteita</a>
     }
 </div>
 
@@ -43,18 +43,18 @@ else if(locations != null){
             
             <div>
                     @if(@l.kuva == null){
-                    <div style="text-align:center"><a href="location/@l.idmatkakohde">Ei kuvaa saatavilla</a></div>
+                    <div id="nopicture" style="text-align:center"><a href="location/@l.idmatkakohde">Ei kuvaa saatavilla</a></div>
                     }
                     else
                     {
-                        <div style="text-align:center"><a href="location/@l.idmatkakohde"><img src="/tripPictures/@l.kuva" width="250" height="200" /></a></div>
+                        <div id="picture" style="text-align:center"><a id="picturelink" href="location/@l.idmatkakohde"><img src="/tripPictures/@l.kuva" width="250" height="200" /></a></div>
                     }
-                        <div><h3>@l.kohdenimi</h3></div>
-                <div><h4>@l.paikkakunta, @l.maa</h4></div>
+                        <div id="target"><h3>@l.kohdenimi</h3></div>
+                        <div id="placeandcountry"><h4>@l.paikkakunta, @l.maa</h4></div>
                         <div></div>
-                        <div style="text-align:center">@l.kuvausteksti</div><br/>
+                        <div id="description" style="text-align:center">@l.kuvausteksti</div><br/>
                     @if(loginState.isLoggedIn){
-                    <div style="text-align:center"><a href="locations/edit/@l.idmatkakohde">Muokkaa</a> | <a href="locations/delete/@l.idmatkakohde">Poista</a></div> <br /><br />
+                    <div style="text-align:center"><a id="editlink" href="locations/edit/@l.idmatkakohde">Muokkaa</a> | <a id="deletelink" href="locations/delete/@l.idmatkakohde">Poista</a></div> <br /><br />
                         <div style="text-align:center"></div>
                         //<div style="text-align:center"><a href="location/@l.idmatkakohde">Tarkastele</a></div> ---> Klikkaa kuvaa!
                     }

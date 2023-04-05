@@ -41,7 +41,7 @@ else if(locations != null){
     <div style="margin-top: 5%" class="flex-c">
         @foreach(var l in locations){
             
-            <div>
+            <div id="info">
                     @if(@l.kuva == null){
                     <div id="nopicture" style="text-align:center"><a href="location/@l.idmatkakohde">Ei kuvaa saatavilla</a></div>
                     }

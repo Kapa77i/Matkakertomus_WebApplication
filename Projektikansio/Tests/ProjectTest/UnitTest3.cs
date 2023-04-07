@@ -4,6 +4,9 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.DependencyInjection;
 using AngleSharp.Html.Dom;
 using Microsoft.AspNetCore.Components.Forms;
+using System.Threading.Tasks;
+using Moq;
+
 
 namespace ProjectTest
 {
@@ -14,6 +17,9 @@ namespace ProjectTest
         [Fact]
         public async void TestLocations()
         {
+            //using var ctx = new TestContext();
+            //ctx.Services.AddSingleton<HttpClient>(new HttpClient());
+
             Services.AddSingleton(new HttpClient { BaseAddress = new System.Uri("http://localhost") });
             Services.AddSingleton<LoginState>();
             var loginState = Services.GetRequiredService<LoginState>();
@@ -33,30 +39,82 @@ namespace ProjectTest
 
             loginState.loggedUser = loggeduser;
             Checkpoint1(page, loggeduser, loginState);
-            await Task.Delay(300);
 
         }
 
-        //Kirjautunut käyttäjä näkee sivun pääsisällön ja linkit
-        private static void Checkpoint1(IRenderedComponent<FrontEnd.Pages.Locations> page, SharedLib.matkaajaDTO loggeduser, LoginState loginstate)
+        //sivu renderöityy
+        private static async void Checkpoint1(IRenderedComponent<FrontEnd.Pages.Locations> page, SharedLib.matkaajaDTO loggeduser, LoginState loginstate)
         {
             SharedLib.AuthUser.CurrentUser = loggeduser;
             Assert.NotNull(page);
             Assert.NotNull(loginstate.loggedUser);
-            
-           // Assert.True(loginstate.isLoggedIn);
 
-            // var ctx = new TestContext();
-            // var cut = ctx.RenderComponent<EditForm>();
+            var otsikko = page.Find("#otsikko");
+            Assert.NotNull(otsikko);
+            Assert.NotNull(page.Find("#klikkaa"));
+
+            loginstate.isLoggedIn = true; 
+            Assert.True(loginstate.isLoggedIn);
+
+            Assert.NotNull(page.Instance.locations);
+
+
+            //var ctx = new TestContext();
+            //var cut = ctx.RenderComponent<EditForm>();
             //var addbutton = cut.Find("button");
 
+            //- - - - - - - - - - - - - - - - - - - - -
+
             //Ei löydä kuvia tai linkkejä vielä, missä vika? -Kata
+            //hae locations
 
+            //joku vika loginstatessä?
 
-           // var picture = page.Find("#picture");
-           // Assert.NotNull(picture);
+            //- - - - - - - - - - - - - - - - - - - - - 
+
+            //var addlink = page.Find("#addlink");
+            //Assert.NotNull(addlink);
+
+            // var picture = page.Find("#picture");
+            // Assert.NotNull(picture);
         }
 
 
+        //Kirjautunut käyttäjä näkee sivun pääsisällön ja linkit
+        [Fact]
+        public void TestFetchData()
+        {
+            //mock datan alustaminen
+            List<SharedLib.matkakohdeDTO>? locations = new List<matkakohdeDTO>(); 
+            var location1 = new SharedLib.matkakohdeDTO();
+            location1.idmatkakohde = 1;
+            location1.kohdenimi = "Uhrikivi";
+            location1.maa = "Suomi";
+            location1.paikkakunta = "Kotalahti";
+            location1.kuvausteksti = "Joku sisällissodan aikainen muistihärpäke";
+            location1.kuva = "Uhrikivi.jpg";
+
+            var location2 = new SharedLib.matkakohdeDTO();
+            location2.idmatkakohde = 2;
+            location2.kohdenimi = "Mualiman Napa";
+            location2.maa = "Suomi";
+            location2.paikkakunta = "Kuopio";
+            location2.kuvausteksti = "Maailman napa.";
+            location2.kuva = "MualimanNapa.jpg";
+
+            locations.Add(location1);
+            locations.Add(location2);
+
+           
+            //mock datan hakeminen
+            //var fetchService = new MockFetchDataService<matkakohdeDTO>();
+            
+            //fetchService.Setup(x => x.FetchDataAsync()).ReturnsAsync(locations);
+
+            
+        }
+
+       
+       
     }
 }

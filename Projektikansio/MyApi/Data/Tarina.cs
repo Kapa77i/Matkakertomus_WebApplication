@@ -10,8 +10,6 @@ public partial class Tarina
 
     internal Tarina(tarinaDTO tarinadto)
     {
-
-
     }
     internal tarinaDTO toTarinaDTO()
     {
@@ -26,7 +24,6 @@ public partial class Tarina
 
         };
     }
-
 
     public long Idtarina { get; set; }
 

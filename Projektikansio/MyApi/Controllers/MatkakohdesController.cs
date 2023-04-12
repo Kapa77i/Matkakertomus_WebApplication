@@ -58,7 +58,7 @@ namespace MyApi.Controllers
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
 
         [HttpPut("{id}")]
-        public async Task<ActionResult<matkakohdeDTO>> PutLocation(long id, Matkakohde m)
+        public async Task<ActionResult<matkakohdeDTO>> PutLocation(long id, matkakohdeDTO m)
         {
             //Varmistutaan siitä, että kyseinen matkakohde on olemassa ennen muokkausta
             Matkakohde? location = await _context.Matkakohdes.Where(a => a.Idmatkakohde == id).FirstOrDefaultAsync();
@@ -71,11 +71,11 @@ namespace MyApi.Controllers
             if (m == null) return BadRequest(); 
             else
             {
-                location.Kuva = m.Kuva;
-                location.Kohdenimi = m.Kohdenimi;
-                location.Paikkakunta = m.Paikkakunta;
-                location.Maa = m.Maa;
-                location.Kuvausteksti = m.Kuvausteksti;
+                location.Kuva = m.kuva;
+                location.Kohdenimi = m.kohdenimi;
+                location.Paikkakunta = m.paikkakunta;
+                location.Maa = m.maa;
+                location.Kuvausteksti = m.kuvausteksti;
             }
           
 
@@ -103,16 +103,16 @@ namespace MyApi.Controllers
         // POST: api/Matkakohdes
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<matkakohdeDTO>> PostLocation(Matkakohde matkakohde)
+        public async Task<ActionResult<matkakohdeDTO>> PostLocation(matkakohdeDTO matkakohde)
         {
             if (!ModelState.IsValid) return BadRequest();
 
             Matkakohde m = new Matkakohde();
-            m.Kuva = matkakohde.Kuva;
-            m.Kohdenimi = matkakohde.Kohdenimi;
-            m.Paikkakunta = matkakohde.Paikkakunta;
-            m.Maa = matkakohde.Maa;
-            m.Kuvausteksti = matkakohde.Kuvausteksti;
+            m.Kuva = matkakohde.kuva;
+            m.Kohdenimi = matkakohde.kohdenimi;
+            m.Paikkakunta = matkakohde.paikkakunta;
+            m.Maa = matkakohde.maa;
+            m.Kuvausteksti = matkakohde.kuvausteksti;
 
             _context.Matkakohdes.Add(m);
             await _context.SaveChangesAsync();

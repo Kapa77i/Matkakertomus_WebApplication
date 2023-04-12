@@ -66,7 +66,7 @@
         @*NÄKYY KAIKILLE paitsi kirjautuneille*@
         @if(loginState.isLoggedIn.Equals(false)){
         <div class="nav-item px-3">
-            <NavLink class="nav-link" href="signup" id="rekisteroidy">
+                <NavLink class="nav-link" href="signup" id="rekisteroidy" @onclick="@(() => NavigationManager.NavigateTo("/signup"))">
                 <span class="oi oi-flag" aria-hidden="true"></span> Rekisteröidy
             </NavLink>
         </div>

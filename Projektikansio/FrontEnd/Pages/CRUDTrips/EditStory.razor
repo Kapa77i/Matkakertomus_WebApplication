@@ -94,7 +94,6 @@ else
             isSubmitting = true;
             var result = await Http.PutAsJsonAsync($"api/Tarinas/{IdTarina}", editstory);
 
-            //toimii swaggerissa mutta ei elävässä elämässä
             //saako tähän väliin pyöritettyä pyörää?
             NavigationManager.NavigateTo($"/trips");
         }

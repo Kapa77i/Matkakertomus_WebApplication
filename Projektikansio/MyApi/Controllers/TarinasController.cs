@@ -60,7 +60,7 @@ namespace MyApi.Controllers
         // PUT: api/Tarinas/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<ActionResult<tarinaDTO>> PutTarina(long id, tarinaDTO tarina)//tämä pitää olla joko Tarina -Tarina tai tarinaDTO -Tarina että swagger menee läpi
+        public async Task<ActionResult<tarinaDTO>> PutTarina(long id, tarinaDTO tarina)
         {
             Tarina? t = await _context.Tarinas.FindAsync(id);
             if (t == null) return NotFound();
@@ -69,11 +69,11 @@ namespace MyApi.Controllers
             if (id != tarina.idtarina) return BadRequest();
             else
             {
-                //t.Idtarina = tarina.Idtarina;
-                //t.Idmatka = tarina.Idmatka;
-                //t.Idmatkakohde = tarina.Idmatkakohde;
-                //t.Pvm = tarina.Pvm;
-                //t.Teksti = tarina.Teksti;
+                t.Idtarina = tarina.idtarina;
+                t.Idmatka = tarina.idmatka;
+                t.Idmatkakohde = tarina.idmatkakohde;
+                t.Pvm = tarina.pvm;
+                t.Teksti = tarina.teksti;
             }
 
             _context.Entry(t).State = EntityState.Modified;

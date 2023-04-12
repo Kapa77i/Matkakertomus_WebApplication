@@ -19,13 +19,6 @@ namespace ProjectTest
         {
             //using var ctx = new TestContext();
             //ctx.Services.AddSingleton<HttpClient>(new HttpClient());
-
-            Services.AddSingleton(new HttpClient { BaseAddress = new System.Uri("http://localhost") });
-            Services.AddSingleton<LoginState>();
-            var loginState = Services.GetRequiredService<LoginState>();
-
-            var page = RenderComponent<FrontEnd.Pages.Locations>();
-
             var loggeduser = new SharedLib.matkaajaDTO();
             loggeduser.idmatkaaja = 3000;
             loggeduser.etunimi = "Maija";
@@ -36,8 +29,16 @@ namespace ProjectTest
             loggeduser.kuva = "6.png";
             loggeduser.email = "m@m.com";
             loggeduser.password = "12345";
-
+            var loginState = new LoginState();
             loginState.loggedUser = loggeduser;
+
+            Services.AddSingleton(new HttpClient { BaseAddress = new System.Uri("http://localhost") });
+            Services.AddSingleton<LoginState>(loginState);
+           // var loginState = Services.GetRequiredService<LoginState>();
+
+            var page = RenderComponent<FrontEnd.Pages.Locations>();
+
+            
             Checkpoint1(page, loggeduser, loginState);
 
         }

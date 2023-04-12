@@ -60,20 +60,20 @@ namespace MyApi.Controllers
         // PUT: api/Tarinas/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<ActionResult<tarinaDTO>> PutTarina(long id, Tarina tarina)//tämä pitää olla joko Tarina -Tarina tai tarinaDTO -Tarina että swagger menee läpi
+        public async Task<ActionResult<tarinaDTO>> PutTarina(long id, tarinaDTO tarina)//tämä pitää olla joko Tarina -Tarina tai tarinaDTO -Tarina että swagger menee läpi
         {
             Tarina? t = await _context.Tarinas.FindAsync(id);
             if (t == null) return NotFound();
 
             if (tarina == null) return BadRequest();
-            if (id != tarina.Idtarina) return BadRequest();
+            if (id != tarina.idtarina) return BadRequest();
             else
             {
-                t.Idtarina = tarina.Idtarina;
-                t.Idmatka = tarina.Idmatka;
-                t.Idmatkakohde = tarina.Idmatkakohde;
-                t.Pvm = tarina.Pvm;
-                t.Teksti = tarina.Teksti;
+                //t.Idtarina = tarina.Idtarina;
+                //t.Idmatka = tarina.Idmatka;
+                //t.Idmatkakohde = tarina.Idmatkakohde;
+                //t.Pvm = tarina.Pvm;
+                //t.Teksti = tarina.Teksti;
             }
 
             _context.Entry(t).State = EntityState.Modified;
@@ -100,7 +100,7 @@ namespace MyApi.Controllers
         // POST: api/Tarinas
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<tarinaDTO>> PostTarina(Tarina tarina)
+        public async Task<ActionResult<tarinaDTO>> PostTarina(tarinaDTO tarina)
         {
             if (!ModelState.IsValid)
             {
@@ -109,11 +109,11 @@ namespace MyApi.Controllers
             }
 
             Tarina t = new Tarina();
-            t.Idtarina = tarina.Idtarina;
-            t.Idmatka = tarina.Idmatka;
-            t.Idmatkakohde = tarina.Idmatkakohde;
-            t.Teksti = tarina.Teksti;
-            t.Pvm = tarina.Pvm;
+            t.Idtarina = tarina.idtarina;
+            t.Idmatka = tarina.idmatka;
+            t.Idmatkakohde = tarina.idmatkakohde;
+            t.Teksti = tarina.teksti;
+            t.Pvm = tarina.pvm;
 
             _context.Tarinas.Add(t);
             await _context.SaveChangesAsync();

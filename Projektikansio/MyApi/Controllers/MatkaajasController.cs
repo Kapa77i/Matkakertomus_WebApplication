@@ -17,7 +17,7 @@ namespace MyApi.Controllers
             _context = context;
         }
         [HttpGet("/auth")]
-        public async Task<ActionResult<IEnumerable<matkaajaDTO>>> AuthMatkaaja(string email, string pass)
+        public async Task<ActionResult<matkaajaDTO>> AuthMatkaaja(string email, string pass)
         {
 
             //var auth = await Auth.Test(email , pass);

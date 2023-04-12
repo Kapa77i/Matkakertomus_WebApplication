@@ -13,6 +13,9 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SharedLib", "..\SharedLib\SharedLib.csproj", "{9DA9954B-91C8-4452-8052-8A06123C42C0}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjectTest", "..\Tests\ProjectTest\ProjectTest.csproj", "{35B0F280-FA6A-41E3-A963-B4627195D21D}"
+	ProjectSection(ProjectDependencies) = postProject
+		{34B71233-DAC4-448A-8090-3F582C32F4DB} = {34B71233-DAC4-448A-8090-3F582C32F4DB}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

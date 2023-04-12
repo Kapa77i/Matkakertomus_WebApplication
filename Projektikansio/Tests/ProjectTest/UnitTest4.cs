@@ -29,7 +29,60 @@ namespace ProjectTest
 
             await Task.Delay(500);
 
+            ////ALustetaan yhteys dbhen
+            //private static async Task<MydbContext> GetDbContext()
+            //{
+            //    var options = new DbContextOptionsBuilder<MydbContext>()
+            //        .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
+            //        .Options;
+            //    var databaseContext = new MydbContext(options);
+            //    databaseContext.Database.EnsureCreated();
+            //    //if(await databaseContext.Matkas.CountAsync() > 0)
+            //    //{
+            //    //    databaseContext.Matkas.Add(
 
+            //    //        new Matka()
+            //    //        {
+            //    //            Idmatkaaja = 1,
+            //    //            Alkupvm = DateTime.Parse("2023-03-03"),
+            //    //            Loppupvm = DateTime.Parse("2023-03-03"),
+            //    //            Yksityinen = 1
+            //    //        });
+
+            //    //    await databaseContext.SaveChangesAsync();
+            //    //}
+
+            //    return databaseContext;
+            //}
+
+            ////Tämä facta pittää olla että näkkyyy tuolla test explorelilla <-- Tiedoksi tyhmälle Kapatille
+            //[Fact]
+            //public async Task MatkaController_Get_Returns()
+            //{
+
+            //    //Arrange
+
+            //           //new Matka()
+            //           //{
+            //           //    Idmatkaaja = 1,
+            //           //    Alkupvm = DateTime.Parse("2023-03-03"),
+            //           //    Loppupvm = DateTime.Parse("2023-03-03"),
+            //           //    Yksityinen = 1
+            //           //};
+
+            //    var dbContext = await GetDbContext();
+            //    var matkasController = new MatkasController(dbContext);
+
+            //    //Act 
+
+            //    var result = matkasController.GetMatkas();
+
+            //    //Assert
+            //    result.IsCompletedSuccessfully.ToString();
+            //    result.ToString();
+
+
+            //}
         }
     }
 }

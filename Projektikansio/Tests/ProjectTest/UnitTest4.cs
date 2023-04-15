@@ -34,7 +34,6 @@ namespace ProjectTest
            
         }
 
-        //Tämä facta pittää olla että näkkyyy tuolla test explorelilla <-- Tiedoksi tyhmälle Kapatille
         [Fact]
         public async Task MatkaController_Get_Returns()
         {
@@ -52,6 +51,24 @@ namespace ProjectTest
             //Assert.IsType<OkObjectResult>(actionResult.Result);
             //var resultObject = GetObjectResultContent<List<Matka>>(actionResult);
 
+
+        }
+
+        [Fact]
+        public async void MatkasController_GetIdMatka_Returns()
+        {
+            //Arrange
+            MydbContext dbContext = new MydbContext();
+            MatkasController matkasController = new MatkasController(dbContext);
+            long matkaId = 1;
+
+            //Act
+            var actionResult = await matkasController.GetMatka(matkaId);
+            //Assert.IsType<OkObjectResult>(actionResult.Result);
+            //var actual = GetObjectResultContent<Matka>(actionResult);
+
+            //Assert
+            Assert.NotNull(actionResult.Value);
 
         }
 

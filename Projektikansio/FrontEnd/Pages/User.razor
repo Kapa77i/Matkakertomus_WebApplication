@@ -7,7 +7,7 @@
 @inject SharedLib.LoginState loginState;
 @inject IJSRuntime JSRuntime
 
-<h1>Käyttäjä</h1>
+<h1>@loginState.loggedUser.nimimerkki</h1>
 @if (user != null)
 {
    //Ladataan käyttäjän tiedot oliosta.

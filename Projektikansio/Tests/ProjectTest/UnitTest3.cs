@@ -69,6 +69,9 @@ namespace ProjectTest
 
             var infos = page.FindAll("#info");
             var pictures = page.FindAll("#picture");
+            var picturelinks = page.FindAll("#picturelink");
+            var places = page.FindAll("#placeandcountry");
+            var descriptions = page.FindAll("#description");
             var editlinks = page.FindAll("#editlink");
             var deletelinks = page.FindAll("#deletelink");
 
@@ -78,13 +81,17 @@ namespace ProjectTest
             Assert.NotNull(page.Instance.locations);
             Assert.True(page.Instance.locations.Count.Equals(11));
             Assert.NotNull(test);
-            Assert.NotNull(pictures);
             Assert.NotNull(infos);
+            Assert.NotNull(pictures);
+            Assert.NotNull(places);
+            Assert.NotNull(descriptions);
+            Assert.NotNull(picturelinks);
 
             //käyttäjä näkee myös kohteita, jotka voi nähdä vain jos on kirjautunut sisään
             Assert.NotNull(addlink);
             Assert.NotNull(editlinks);
             Assert.NotNull(deletelinks);
+            
         }
 
         //sivu renderöityy, kirjautumaton käyttäjä näkee vain matkakohteet
@@ -111,8 +118,17 @@ namespace ProjectTest
             }
             page.Instance.locations = locations;
 
-
             var test = page.Find("#locationsnotnull");
+            page.WaitForState(() => page.Instance.locations.Count.Equals(11)); //pitäisi tulla 11 matkakohdetta
+
+            var infos = page.FindAll("#info");
+            var pictures = page.FindAll("#picture");
+            var places = page.FindAll("#placeandcountry");
+            var descriptions = page.FindAll("#description");
+            
+            var picturelinks = page.FindAll("#picturelink");
+            var editlinks = page.FindAll("#editlink");
+            var deletelinks = page.FindAll("#deletelink");
 
             //Assert
             Assert.NotNull(otsikko);
@@ -120,7 +136,17 @@ namespace ProjectTest
             Assert.NotNull(page.Instance.locations);
             Assert.True(page.Instance.locations.Count.Equals(11));
             Assert.NotNull(test);
+            Assert.NotNull(infos);
+            Assert.NotNull(pictures);
+            Assert.NotNull(places);
+            Assert.NotNull(descriptions);
+            Assert.NotNull(picturelinks);
 
+            //ei olla kirjauduttu sisään, joten ei voida lisätä, muokata tai poistaa kohteita
+
+
+            Assert.True(editlinks.Count == 0);
+            Assert.True(deletelinks.Count == 0);
         }
 
         //Haetaan matkakohteet, matkakohteita on 11 kpl

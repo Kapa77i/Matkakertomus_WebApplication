@@ -15,17 +15,17 @@ namespace ProjectTest
     public class TripLocationTest : TestContext
     {
         /*Testataan locations -sivu. Mitä tulee esille jos on kirjautunut / kirjautumaton käyttäjä? (Linkit)?*/
+
+        //sivu renderöityy, kirjautunut käyttäjä näkee kaiken
         [Fact]
-        public async void TestLocations()
+        public async void LoggedUserSeesWholePage()
         {
             //Arrange
             MydbContext _db = new MydbContext();
             MatkakohdesController matkakohdesController = new MatkakohdesController(_db);
-            MatkaajasController matkaajasController = new MatkaajasController(_db);
             List<SharedLib.matkakohdeDTO>? locations = new List<SharedLib.matkakohdeDTO>();
+            var loginState = new LoginState();
 
-            //using var ctx = new TestContext();
-            //ctx.Services.AddSingleton<HttpClient>(new HttpClient());
             var loggeduser = new SharedLib.matkaajaDTO();
             loggeduser.idmatkaaja = 3000;
             loggeduser.etunimi = "Maija";
@@ -37,24 +37,22 @@ namespace ProjectTest
             loggeduser.email = "m@m.com";
             loggeduser.password = "12345";
 
-            var loginState = new LoginState();
+            
             loginState.loggedUser = loggeduser;
             loginState.isLoggedIn = true;
 
             Services.AddSingleton(new HttpClient { BaseAddress = new System.Uri("http://localhost") });
             Services.AddSingleton<LoginState>(loginState);
-           // var loginState = Services.GetRequiredService<LoginState>();
+
+            //Act
 
             var page = RenderComponent<FrontEnd.Pages.Locations>();
-            var otsikko = page.Find("#otsikko");
-            Assert.NotNull(otsikko);
-            Assert.NotNull(page.Find("#klikkaa"));
+            var otsikko = page.Find("#otsikko");           
 
             //kun on kirjauduttu sisään, nähdään linkki matkakohteiden lisäystä varten
             page.WaitForState(() => loginState.isLoggedIn == true);
             page.WaitForState(() => page.FindAll("#addlink").Count.Equals(1));
-            var addlink = page.Find("#addlink");
-            Assert.NotNull(addlink);
+            var addlink = page.Find("#addlink");      
 
             //kun on matkakohteita ja ollaan kirjauduttu, nähdään loput sivun osat ja toiminnot (edit ja poisto -linkit)
 
@@ -62,38 +60,62 @@ namespace ProjectTest
             foreach (var location in actionResult.Value)
             {
                 locations.Add(location);
-            }
-            Assert.NotNull(page.Instance.locations);
-            //page.WaitForState(() => page.FindAll("#picture").Count.Equals(11)); //pitäisi tulla 11 matkakohdetta
+            }   
+            page.Instance.locations = locations;
+            
+ 
+            var test = page.Find("#locationsnotnull");
+            
+
+
+            //page.WaitForState(() => page.FindAll("#info").Count.Equals(1)); //pitäisi tulla 11 matkakohdetta
             //var picture = page.Find("#picture");
             //Assert.NotNull(picture);
 
-            Checkpoint1(page, loggeduser, loginState);
-
-        }
-
-        //sivu renderöityy
-        private static async void Checkpoint1(IRenderedComponent<FrontEnd.Pages.Locations> page, SharedLib.matkaajaDTO loggeduser, LoginState loginstate)
-        {
-            SharedLib.AuthUser.CurrentUser = loggeduser;
-            Assert.NotNull(page);
-            Assert.NotNull(loginstate.loggedUser);
-
-            loginstate.isLoggedIn = true; 
-            Assert.True(loginstate.isLoggedIn);
-
+            //Assert
+            Assert.NotNull(otsikko);
+            Assert.NotNull(page.Find("#klikkaa"));
+            Assert.NotNull(addlink);
             Assert.NotNull(page.Instance.locations);
-
-
-            //var ctx = new TestContext();
-            //var cut = ctx.RenderComponent<EditForm>();
-            //var addbutton = cut.Find("button");
-
-
-            // var picture = page.Find("#picture");
-            // Assert.NotNull(picture);
+            Assert.True(page.Instance.locations.Count.Equals(11));
+            Assert.NotNull(test);
         }
 
+        //sivu renderöityy, kirjautumaton käyttäjä näkee vain matkakohteet
+        [Fact]
+        public async void UnknownUserSeesLocations()
+        {
+            //Arrange
+            MydbContext _db = new MydbContext();
+            MatkakohdesController matkakohdesController = new MatkakohdesController(_db);
+            List<SharedLib.matkakohdeDTO>? locations = new List<SharedLib.matkakohdeDTO>();
+            Services.AddSingleton(new HttpClient { BaseAddress = new System.Uri("http://localhost") });
+            var loginState = new LoginState();
+            Services.AddSingleton<LoginState>(loginState);
+
+            //Act
+
+            var page = RenderComponent<FrontEnd.Pages.Locations>();
+            var otsikko = page.Find("#otsikko");
+
+            var actionResult = await matkakohdesController.GetLocations();
+            foreach (var location in actionResult.Value)
+            {
+                locations.Add(location);
+            }
+            page.Instance.locations = locations;
+
+
+            var test = page.Find("#locationsnotnull");
+
+            //Assert
+            Assert.NotNull(otsikko);
+            Assert.NotNull(page.Find("#klikkaa"));
+            Assert.NotNull(page.Instance.locations);
+            Assert.True(page.Instance.locations.Count.Equals(11));
+            Assert.NotNull(test);
+
+        }
 
         //Haetaan matkakohteet, matkakohteita on 11 kpl
         [Fact]
@@ -110,6 +132,7 @@ namespace ProjectTest
    
         }
 
+        
 
     }
 }

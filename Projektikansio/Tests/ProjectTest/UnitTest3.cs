@@ -63,22 +63,28 @@ namespace ProjectTest
             }   
             page.Instance.locations = locations;
             
- 
             var test = page.Find("#locationsnotnull");
-            
 
+            page.WaitForState(() => page.Instance.locations.Count.Equals(11)); //pitäisi tulla 11 matkakohdetta
 
-            //page.WaitForState(() => page.FindAll("#info").Count.Equals(1)); //pitäisi tulla 11 matkakohdetta
-            //var picture = page.Find("#picture");
-            //Assert.NotNull(picture);
+            var infos = page.FindAll("#info");
+            var pictures = page.FindAll("#picture");
+            var editlinks = page.FindAll("#editlink");
+            var deletelinks = page.FindAll("#deletelink");
 
             //Assert
             Assert.NotNull(otsikko);
             Assert.NotNull(page.Find("#klikkaa"));
-            Assert.NotNull(addlink);
             Assert.NotNull(page.Instance.locations);
             Assert.True(page.Instance.locations.Count.Equals(11));
             Assert.NotNull(test);
+            Assert.NotNull(pictures);
+            Assert.NotNull(infos);
+
+            //käyttäjä näkee myös kohteita, jotka voi nähdä vain jos on kirjautunut sisään
+            Assert.NotNull(addlink);
+            Assert.NotNull(editlinks);
+            Assert.NotNull(deletelinks);
         }
 
         //sivu renderöityy, kirjautumaton käyttäjä näkee vain matkakohteet

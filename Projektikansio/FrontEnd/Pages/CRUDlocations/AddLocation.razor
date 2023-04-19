@@ -12,7 +12,7 @@
 
 @if (loginState.isLoggedIn) @*kuka tahansa ei voi lisätä matkakohteita, vaan pitää olla kirjautunut käyttäjä*@
 {
-    <h1 class="h1otsikot">Lisää matkakohde</h1>
+    <h1 id="lisaamatkakohde" class="h1otsikot">Lisää matkakohde</h1>
     <div class="flex-t">
         <EditForm Model="@newlocation" OnValidSubmit="@PostLocations">
             <DataAnnotationsValidator/>
@@ -72,14 +72,14 @@
 }
 else {
     <h2>  <img src="/images/loading.gif" width="150" /></h2>
-    <h2>Kirjaudu sisään lisätäksesi matkakohteita</h2>
+    <h2 id="notloggedin">Kirjaudu sisään lisätäksesi matkakohteita</h2>
 }
 
 @code {
 
     bool isSubmitting;
     SharedLib.matkakohdeDTO newlocation = new SharedLib.matkakohdeDTO();
-    private List<string>? images = new List<string>();
+    //private List<string>? images = new List<string>();
     //Nämä laitettu käsin, koska alla oleva dynaaminen kuvien nimien haku tiedostosta ei onnistunut -> PURKKARATKAISU
     private string[] pictures = { "Bellano.jpg", "Bellano2.jpg", "Fréhel.jpg", "Hollanti.jpg", "Hollanti2.jpg", "img.jpg", "Keukenhof.jpg", "Koli.jpg", "Kööpenhamina.jpg", 
     "Lyypekki.jpg", "Mont-Saint-Michel.jpg", "MualimanNapa2.jpg", "MualimanNapa.jpg", "Oulu.jpg", "Pariisi.jpg", "Pariisi2.jpg", "Uhrikivi.jpg", "Westport.jpg" };

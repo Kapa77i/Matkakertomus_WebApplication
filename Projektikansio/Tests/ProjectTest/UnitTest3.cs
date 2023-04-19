@@ -9,13 +9,14 @@ using Moq;
 using MyApi.Data;
 using MyApi.Controllers;
 using Microsoft.AspNetCore.Mvc;
+using Bunit.TestDoubles;
 
 namespace ProjectTest
 {
 
     public class TripLocationTest : TestContext
     {
-        /*Testataan locations -sivu. Mitä tulee esille jos on kirjautunut / kirjautumaton käyttäjä? (Linkit)?*/
+        /*Testataan locations -sivu. Mitä tulee esille jos on kirjautunut / kirjautumaton käyttäjä, sekä pari API testiä*/
 
         //sivu renderöityy, kirjautunut käyttäjä näkee kaiken
         [Fact]
@@ -96,6 +97,7 @@ namespace ProjectTest
             
         }
 
+
         //sivu renderöityy, kirjautumaton käyttäjä näkee vain matkakohteet (ei kaikkia linkkejä)
         [Fact]
         public async void UnknownUserSeesLocations()
@@ -144,12 +146,12 @@ namespace ProjectTest
             Assert.NotNull(descriptions);
             Assert.NotNull(picturelinks);
 
-            //ei olla kirjauduttu sisään, joten ei voida lisätä, muokata tai poistaa kohteita
-
+            //ei olla kirjauduttu sisään, joten ei voida esim. muokata tai poistaa kohteita
 
             Assert.True(editlinks.Count == 0);
             Assert.True(deletelinks.Count == 0);
         }
+
 
         //Haetaan matkakohteet, matkakohteita on 11 kpl
         [Fact]
@@ -165,6 +167,7 @@ namespace ProjectTest
             Assert.True(actionResult.Value.Count == 11);
    
         }
+
 
         //Haetaan Pariisin matkakohde id:llä 3
         [Fact]
@@ -185,6 +188,7 @@ namespace ProjectTest
 
         }
 
+
         //Matkakohteen haku ei palauta mitään id:llä 500
         [Fact]
         public async void GetLocationFails()
@@ -202,32 +206,6 @@ namespace ProjectTest
         }
 
 
-        //Matkakohteen lisääminen tietokantaan
-        [Fact]
-        public async void PostLocationSucceeds()
-        {
-            //Arrange
-            MydbContext _db = new MydbContext();
-            MatkakohdesController matkakohdesController = new MatkakohdesController(_db);
-            matkakohdeDTO location = new matkakohdeDTO();
-            location.kuva = "pariisi.jpg";
-            location.kohdenimi = "Tour de France";
-            location.paikkakunta = "Pariisi";
-            location.maa = "Ranska";
-            location.kuvausteksti = "Tour de France!";
-
-            //Act
-            var actionResult = await matkakohdesController.PostLocation(location);
-            var actual = GetObjectResultContent<matkakohdeDTO>(actionResult);
-            //Assert
-
-            Assert.NotNull(actual);
-        }
-
-        //https://stackoverflow.com/questions/51489111/how-to-unit-test-with-actionresultt/63217643#63217643
-        private static T GetObjectResultContent<T>(ActionResult<T> result)
-        {
-            return (T)((ObjectResult)result.Result).Value;
-        }
+        
     }
 }

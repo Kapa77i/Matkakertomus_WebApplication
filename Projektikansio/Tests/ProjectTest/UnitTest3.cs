@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Moq;
 using MyApi.Data;
 using MyApi.Controllers;
+using Microsoft.AspNetCore.Mvc;
 
 namespace ProjectTest
 {
@@ -72,6 +73,7 @@ namespace ProjectTest
             var picturelinks = page.FindAll("#picturelink");
             var places = page.FindAll("#placeandcountry");
             var descriptions = page.FindAll("#description");
+
             var editlinks = page.FindAll("#editlink");
             var deletelinks = page.FindAll("#deletelink");
 
@@ -94,7 +96,7 @@ namespace ProjectTest
             
         }
 
-        //sivu renderöityy, kirjautumaton käyttäjä näkee vain matkakohteet
+        //sivu renderöityy, kirjautumaton käyttäjä näkee vain matkakohteet (ei kaikkia linkkejä)
         [Fact]
         public async void UnknownUserSeesLocations()
         {
@@ -125,8 +127,8 @@ namespace ProjectTest
             var pictures = page.FindAll("#picture");
             var places = page.FindAll("#placeandcountry");
             var descriptions = page.FindAll("#description");
-            
             var picturelinks = page.FindAll("#picturelink");
+
             var editlinks = page.FindAll("#editlink");
             var deletelinks = page.FindAll("#deletelink");
 
@@ -151,7 +153,7 @@ namespace ProjectTest
 
         //Haetaan matkakohteet, matkakohteita on 11 kpl
         [Fact]
-        public async void GetLocations()
+        public async void GetLocationsSucceeds()
         {
             //Arrange
             MydbContext _db = new MydbContext();
@@ -164,7 +166,68 @@ namespace ProjectTest
    
         }
 
-        
+        //Haetaan Pariisin matkakohde id:llä 3
+        [Fact]
+        public async void GetLocationSucceeds()
+        {
+            //Arrange
+            MydbContext _db = new MydbContext();
+            MatkakohdesController matkakohdesController = new MatkakohdesController(_db);
+            long id = 3;
 
+            //Act
+            var actual = await matkakohdesController.GetLocation(id);
+            
+
+            //Assert
+            Assert.NotNull(actual.Value);
+            Assert.True(actual.Value.paikkakunta.Equals("Pariisi"));
+
+        }
+
+        //Matkakohteen haku ei palauta mitään id:llä 500
+        [Fact]
+        public async void GetLocationFails()
+        {
+            //Arrange
+            MydbContext _db = new MydbContext();
+            MatkakohdesController matkakohdesController = new MatkakohdesController(_db);
+            long id = 500;
+
+            //Act
+            var actual = await matkakohdesController.GetLocation(id);
+
+            //Assert
+            Assert.IsType<NotFoundResult>(actual.Result);
+        }
+
+
+        //Matkakohteen lisääminen tietokantaan
+        [Fact]
+        public async void PostLocationSucceeds()
+        {
+            //Arrange
+            MydbContext _db = new MydbContext();
+            MatkakohdesController matkakohdesController = new MatkakohdesController(_db);
+            matkakohdeDTO location = new matkakohdeDTO();
+            location.kuva = "pariisi.jpg";
+            location.kohdenimi = "Tour de France";
+            location.paikkakunta = "Pariisi";
+            location.maa = "Ranska";
+            location.kuvausteksti = "Tour de France!";
+
+            //Act
+            var actionResult = await matkakohdesController.PostLocation(location);
+            var actual = GetObjectResultContent<matkakohdeDTO>(actionResult);
+            //Assert
+
+            Assert.NotNull(actual);
+        }
+
+        //https://stackoverflow.com/questions/51489111/how-to-unit-test-with-actionresultt/63217643#63217643
+        private static T GetObjectResultContent<T>(ActionResult<T> result)
+        {
+            return (T)((ObjectResult)result.Result).Value;
+        }
     }
 }

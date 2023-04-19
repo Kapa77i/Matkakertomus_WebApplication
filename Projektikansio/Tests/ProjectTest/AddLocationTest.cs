@@ -21,9 +21,7 @@ namespace ProjectTest
         {
             //Arrange
             MydbContext _db = new MydbContext();
-            MatkakohdesController matkakohdesController = new MatkakohdesController(_db);
             MatkaajasController matkaajasController = new MatkaajasController(_db);
-            SharedLib.matkakohdeDTO newlocation = new SharedLib.matkakohdeDTO();
             var loginState = new LoginState();
             matkaajaDTO loggedUser = new matkaajaDTO();
             
@@ -66,8 +64,6 @@ namespace ProjectTest
         {
             //Arrange
             MydbContext _db = new MydbContext();
-            MatkakohdesController matkakohdesController = new MatkakohdesController(_db);
-            SharedLib.matkakohdeDTO newlocation = new SharedLib.matkakohdeDTO();
             var loginState = new LoginState();
             Services.AddSingleton(new HttpClient { BaseAddress = new System.Uri("http://localhost") });
             Services.AddSingleton<LoginState>(loginState);
@@ -77,12 +73,64 @@ namespace ProjectTest
 
             //koska ei olla kirjauduttu sisään, nähdään vain "Kirjaudu sisään lisätäksesi matkakohteita"  -teksti
             var NotLoggedIn = page.Find("#notloggedin");
+            var loading = page.Find("#loading");
 
             //Assert
             Assert.NotNull(NotLoggedIn);
+            Assert.NotNull(loading);
 
         }
 
+
+        //Napin painaminen (kirjautunut käyttäjä)
+        [Fact]
+        public async void ClickButton()
+        {
+            //Arrange
+            MydbContext _db = new MydbContext();
+            MatkakohdesController matkakohdesController = new MatkakohdesController(_db);
+            MatkaajasController matkaajasController = new MatkaajasController(_db);
+            SharedLib.matkakohdeDTO newlocation = new SharedLib.matkakohdeDTO();
+            var loginState = new LoginState();
+            matkaajaDTO loggedUser = new matkaajaDTO();
+
+            long id = 3;
+            var actionResult = await matkaajasController.GetMatkaaja(id);
+
+            loggedUser.idmatkaaja = actionResult.Value.Idmatkaaja;
+            loggedUser.etunimi = actionResult.Value.Etunimi;
+            loggedUser.sukunimi = actionResult.Value.Sukunimi;
+            loggedUser.nimimerkki = actionResult.Value.Nimimerkki;
+            loggedUser.paikkakunta = actionResult.Value.Paikkakunta;
+            loggedUser.esittely = actionResult.Value.Esittely;
+            loggedUser.kuva = actionResult.Value.Kuva;
+            loggedUser.email = actionResult.Value.Email;
+            loggedUser.password = actionResult.Value.Password;
+
+            loginState.loggedUser = loggedUser;
+            loginState.isLoggedIn = true;
+
+            Services.AddSingleton(new HttpClient { BaseAddress = new System.Uri("http://localhost") });
+            Services.AddSingleton<LoginState>(loginState);
+
+            newlocation.kuva = "pariisi.jpg";
+            newlocation.kohdenimi = "Tour de France";
+            newlocation.paikkakunta = "Pariisi";
+            newlocation.maa = "Ranska";
+            newlocation.kuvausteksti = "Tour de France!";
+
+            //Act
+            var page = RenderComponent<FrontEnd.Pages.CRUDlocations.AddLocation>();
+
+            //kun on kirjauduttu sisään, nähdään sivu
+            page.WaitForState(() => loginState.isLoggedIn == true);
+            page.Instance.newlocation = newlocation;
+            await page.Find("button").ClickAsync(new Microsoft.AspNetCore.Components.Web.MouseEventArgs());
+
+            //Assert, kun nappia painetaan niin isSubmitting arvo vaihtuu todeksi
+            Assert.True(page.Instance.isSubmitting == true);
+            
+        }
 
         //Matkakohteen lisääminen tietokantaan
         [Fact]

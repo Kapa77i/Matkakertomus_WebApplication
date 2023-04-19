@@ -113,7 +113,7 @@ namespace ProjectTest
             Services.AddSingleton(new HttpClient { BaseAddress = new System.Uri("http://localhost") });
             Services.AddSingleton<LoginState>(loginState);
 
-            newlocation.kuva = "pariisi.jpg";
+            newlocation.kuva = "Pariisi.jpg";
             newlocation.kohdenimi = "Tour de France";
             newlocation.paikkakunta = "Pariisi";
             newlocation.maa = "Ranska";
@@ -140,7 +140,7 @@ namespace ProjectTest
             MydbContext _db = new MydbContext();
             MatkakohdesController matkakohdesController = new MatkakohdesController(_db);
             matkakohdeDTO location = new matkakohdeDTO();
-            location.kuva = "pariisi.jpg";
+            location.kuva = "Pariisi.jpg";
             location.kohdenimi = "Tour de France";
             location.paikkakunta = "Pariisi";
             location.maa = "Ranska";

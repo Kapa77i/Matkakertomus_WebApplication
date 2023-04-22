@@ -35,6 +35,45 @@ namespace ProjectTest
         }
 
         [Fact]
+        public async void GroupTripsRenderWithLoggedUserSuccess()
+        {
+            //Arrange
+            MydbContext _db = new MydbContext();
+            MatkaajasController matkaajasController = new MatkaajasController(_db);
+            var loginState = new LoginState();
+            matkaajaDTO loggedUser = new matkaajaDTO();
+
+            long id = 3;
+            var actionResult = await matkaajasController.GetMatkaaja(id);
+
+            loggedUser.idmatkaaja = actionResult.Value.Idmatkaaja;
+            loggedUser.etunimi = actionResult.Value.Etunimi;
+            loggedUser.sukunimi = actionResult.Value.Sukunimi;
+            loggedUser.nimimerkki = actionResult.Value.Nimimerkki;
+            loggedUser.paikkakunta = actionResult.Value.Paikkakunta;
+            loggedUser.esittely = actionResult.Value.Esittely;
+            loggedUser.kuva = actionResult.Value.Kuva;
+            loggedUser.email = actionResult.Value.Email;
+            loggedUser.password = actionResult.Value.Password;
+
+            loginState.loggedUser = loggedUser;
+            loginState.isLoggedIn = true;
+
+            Services.AddSingleton(new HttpClient { BaseAddress = new System.Uri("http://localhost") });
+            Services.AddSingleton<LoginState>(loginState);
+
+            //Act
+            var page = RenderComponent<FrontEnd.Pages.Grouptrips>();
+
+            //kun on kirjauduttu sisään, nähdään sivu
+            page.WaitForState(() => loginState.isLoggedIn == true);
+            var addlocation = page.Find("#AloitusOtsikko");
+
+            //Assert
+            Assert.NotNull(addlocation);
+        }
+
+        [Fact]
         public async Task MatkaController_Get_Returns()
         {
 
@@ -46,10 +85,6 @@ namespace ProjectTest
 
             //Assert
             Assert.NotNull(result);
-
-            //var actionResult = await matkasController.GetMatkas();
-            //Assert.IsType<OkObjectResult>(actionResult.Result);
-            //var resultObject = GetObjectResultContent<List<Matka>>(actionResult);
 
 
         }

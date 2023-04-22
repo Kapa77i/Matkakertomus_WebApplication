@@ -34,6 +34,7 @@ namespace ProjectTest
            
         }
 
+        //Testataan, että sivu renderöityy kirjautuneelle käyttäjälle
         [Fact]
         public async void GroupTripsRenderWithLoggedUserSuccess()
         {

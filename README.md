@@ -1,5 +1,7 @@
 # Matkakertomus - websovellus
 
+(Did this with my school account Kapatt1)
+
 Harrasteporukkamme Kuopion Kulkijat haluaa tilata teiltä web-sovelluksen, johon voimme tallettaa matkakertomuksiamme, esitellä uusia matkakohteita ja tutustua toistemme matkoihin. Sovellus tulee sekä meidän porukkamme omaan käyttöön että julkiseen käyttöön. Jotkut reissut ovat niin henkilökohtaisia, että vain tekijä itse saa niitä katsella.
 
 Tekniset vaatimukset: web-sovellus, jossa on erillinen selainkäyttöliittymä ja erillinen backend-koodi, jotka keskustelevat keskenään REST-rajapinnan kautta. Tiedot pitää tallettaa tietokantaan, kannaksi käy joku SQL-kanta tai vaikka MongoDB-kanta. Meillä ei ole vielä palvelinympäristöä tarjota, joten sovelluksen täytyy pyöriä kehityksen aikana kokonaan toimittajan ympäristössä.
